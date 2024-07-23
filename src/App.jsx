@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import Sidenav from "./components/Sidenav";
 import { GlobalCss } from "./styles/index.style";
 
 const App = () => {
@@ -6,9 +7,9 @@ const App = () => {
     <div>
       <GlobalCss />
       <Header />
+      <Sidenav />
     </div>
   );
 };
 
 export default App;
-
