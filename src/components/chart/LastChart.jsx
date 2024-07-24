@@ -22,7 +22,7 @@ ChartJS.register(
 );
 
 function Lastweek() {
-  const [chatData, setChatData] = useState([
+  const chatData = [
     { x: "kvo", y: "92" },
     { x: "qbp", y: "65" },
     { x: "lno", y: "29" },
@@ -35,7 +35,7 @@ function Lastweek() {
     { x: "zeq", y: "3" },
     { x: "qrq", y: "3" },
     { x: "jtj", y: "42" },
-  ]);
+  ];
 
   const options = {
     responsive: true,

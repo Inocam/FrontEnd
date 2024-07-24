@@ -1,14 +1,5 @@
 import styled from "styled-components";
 
-export const Sbody = styled.div`
-  padding-left: ${({ $isOpen }) => ($isOpen ? "400px" : "0")};
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 export const Ssdiv = styled.div`
   width: 200px;
   background-color: #eaeaea;
@@ -72,4 +63,3 @@ export const SLogo = styled.div`
     margin-right: 10px;
   }
 `;
-

@@ -1,17 +1,14 @@
-import { useSelector } from "react-redux";
 //내부 데이터
 import Header from "../components/Header";
 import Sidenav from "../components/Sidenav";
-import Topsummary from "../components/Topsummary";
 import * as S from "../styles/index.style";
 import * as C from "../components/chart/index.chart";
+import Topsummary from "../components/Topsummary";
 const DashBoard = () => {
-  const isNavOpen = useSelector((state) => state.nav.isNavOpen);
   return (
     <div>
       <Header />
-      <Sidenav />
-      <S.dashboard.Sbody $isOpen={isNavOpen}>
+      <Sidenav>
         <S.dashboard.SGreeting>박광열 님, 안녕하세요 </S.dashboard.SGreeting>
         <S.dashboard.SProjectDetails>
           프로젝트 세부 정보
@@ -36,11 +33,6 @@ const DashBoard = () => {
               <p>프로젝트 전반에서 일어나는 일 확인 !</p>
               <p>프로젝트 전반에서 일어나는 일 확인 !</p>
               <p>프로젝트 전반에서 일어나는 일 확인 !</p>
-              <p>프로젝트 전반에서 일어나는 일 확인 !</p>
-              <p>프로젝트 전반에서 일어나는 일 확인 !</p>
-              <p>프로젝트 전반에서 일어나는 일 확인 !</p>
-              <p>프로젝트 전반에서 일어나는 일 확인 !</p>
-              <p>프로젝트 전반에서 일어나는 일 확인 !</p>
             </S.dashboard.Sscroll>
           </S.dashboard.FlexDiv>
           <S.dashboard.FlexDiv>
@@ -54,7 +46,7 @@ const DashBoard = () => {
             <C.BarChart></C.BarChart>
           </S.dashboard.FlexDiv>
         </S.dashboard.SMaindiv>
-      </S.dashboard.Sbody>
+      </Sidenav>
     </div>
   );
 };
