@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 export * as header from "./styles.header";
 export * as sidenav from "./styles.sidenav";
+export * as dashboard from "./styles.dashboard";
 
 export const GlobalCss = createGlobalStyle`
 *{
