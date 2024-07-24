@@ -24,10 +24,11 @@ export const options = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: "top",
+      display: false,
+      position: "none",
     },
     title: {
-      display: true,
+      display: false,
       text: "Chart.js Bar Chart",
     },
   },
@@ -61,7 +62,7 @@ export const data = {
   labels,
   datasets: [
     {
-      label: "분류 1",
+      label: "만료임박",
       data: [1, 2, 3, 4, 5, 6, 7],
       backgroundColor: colors,
     },

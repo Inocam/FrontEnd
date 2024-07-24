@@ -134,16 +134,17 @@ const Sbody = styled.div`
 `;
 const Ssdiv = styled.div`
   width: 200px;
-  background-color: #e8ffb1;
+  background-color: #eaeaea;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0px;
+  padding: 30px 10px;
   border-radius: 5px;
 `;
 const Sdiv = styled.div`
   display: flex;
-  gap: 100px;
+  width: 1130px;
+  justify-content: space-between;
 `;
 const SGreeting = styled.p`
   font-size: 18px;
