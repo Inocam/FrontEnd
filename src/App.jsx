@@ -1,4 +1,4 @@
-import Message from "./components/Message"
+import Setting from "./components/Setting"
 
 import { GlobalCss } from "./styles/index.style";
 
@@ -6,7 +6,7 @@ const App = () => {
   return (
     <div>
       <GlobalCss />
-      <Message/>
+      <Setting/>
     </div>
   );
 };
