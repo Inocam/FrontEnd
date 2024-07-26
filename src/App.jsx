@@ -1,4 +1,5 @@
 
+
 import { GlobalCss } from "./styles/index.style";
 
 const App = () => {
