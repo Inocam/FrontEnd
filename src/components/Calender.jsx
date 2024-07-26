@@ -35,6 +35,10 @@ const Calendarcom = () => {
   //     );
   //   };
 
+  const DayHandler = (day) => {
+    setTargetDay(day);
+    setTargetId(null);
+  };
   const renderCalendar = () => {
     const totalDays = daysInMonth(currentDate);
     const startingDay = startDay(currentDate);
@@ -47,7 +51,7 @@ const Calendarcom = () => {
           <DayHeader key={day}>{day}</DayHeader>
         ))}
         {allDays.map((day, index) => (
-          <Day key={index} onClick={() => setTargetDay(day)}>
+          <Day key={index} onClick={() => DayHandler(day)}>
             {<p>{day}</p>}
           </Day>
         ))}
@@ -118,7 +122,7 @@ const Fdiv = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.25rem;
+  font-size: 18px;
   font-weight: bold;
 `;
 
@@ -131,12 +135,12 @@ const CalendarGrid = styled.div`
 const DayHeader = styled.div`
   text-align: center;
   font-weight: bold;
-  padding: 0.5rem;
+  padding: 9px;
 `;
 
 const Day = styled.div`
   text-align: center;
-  padding: 0.5rem 2rem;
+  padding: 9px 18px;
   border: 1px solid #e5e7eb;
   background-color: red;
   cursor: pointer;
@@ -144,7 +148,7 @@ const Day = styled.div`
 
 const ResultTitle = styled.div`
   margin-top: 70px;
-  font-size: 1rem;
+  font-size: 18px;
 `;
 const Resultdiv = styled.div`
   display: flex;
