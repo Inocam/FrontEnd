@@ -18,6 +18,7 @@ export const SToggleButton = styled.button`
 
 export const SNav = styled.nav`
   position: fixed;
+  display: block;
   left: ${({ $isOpen }) => ($isOpen ? "0" : "-300px")};
   width: 300px;
   height: 100vh;
@@ -47,4 +48,14 @@ export const SParagraph = styled.p`
   margin-left: 30px;
   margin-bottom: 20px;
   cursor: pointer;
+`;
+
+export const Sbody = styled.div`
+  padding-left: ${({ $isOpen }) => ($isOpen ? "400px" : "0")};
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
