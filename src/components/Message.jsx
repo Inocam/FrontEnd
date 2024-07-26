@@ -15,7 +15,6 @@ import * as S from "../styles/index.style";
 const Message = () => {
     const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
     const {  reset } = useForm();
-
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState("");
 

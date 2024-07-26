@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 //내부파일
 import * as S from "../styles/index.style";
-import { useDispatch } from "react-redux";
 import { navopenHandler } from "../store/module/Dashboard";
 
-const Sidenav = ({ children}) => {
+const Sidenav = ({ children }) => {
   const isNavOpen = useSelector((state) => state.nav.isNavOpen);
   const dispatch = useDispatch();
-  console.log(isNavOpen);
   const toggleNav = () => {
     dispatch(navopenHandler());
   };
