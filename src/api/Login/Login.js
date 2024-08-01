@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { http } from "../interceptor";
 
 const MUTATION_KEY = {
@@ -7,7 +8,7 @@ const MUTATION_KEY = {
 
 export const usePostSignInData = () => {
   const queryClient = useQueryClient();
-  const URL = "api/user/login";
+  const URL = "/api/user/login";
 
   return useMutation({
     mutationKey: [MUTATION_KEY.SIGN_IN],
@@ -15,10 +16,14 @@ export const usePostSignInData = () => {
       const response = await http.post(URL, body);
       return response;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [MUTATION_KEY.SIGN_IN] });
-      // 로그인 성공 후 추가 작업 (예: 사용자 정보 저장)
-      // localStorage.setItem("user", JSON.stringify(data.user));
+    onSuccess: (data) => {
+      Cookies.remove("AccessToken");
+      Cookies.remove("RefreshToken")
+      // console.log(data);
+      Cookies.set("AccessToken", data.data.accessToken, {
+        expires: 30 / 770,
+      });
+      Cookies.set("RefreshToken", data.data.refreshToken, { expires: 7 });
     },
     onError: (error) => {
       console.error(error.message);
