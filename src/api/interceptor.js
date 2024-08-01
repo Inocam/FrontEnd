@@ -10,7 +10,7 @@ axios.interceptors.request.use(
     const accessToken = Cookies.get("AccessToken");
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-      config.headers['Content-Type'] = 'application/json'
+      config.headers["Content-Type"] = "application/json";
     }
     return config;
   },
@@ -19,7 +19,7 @@ axios.interceptors.request.use(
 
 export const http = {
   get: (url) => axios.get(url).then((res) => res.data),
-  post: (url, data = "") => axios.post(url, data).then((res) => res.data),
+  post: (url, data = "") => axios.post(url, data).then((res) => res),
   put: (url, data = "") => axios.put(url, data).then((res) => res.data),
   patch: (url, data = "") => axios.patch(url, data).then((res) => res.data),
   delete: (url) => axios.delete(url).then((res) => res.data),
