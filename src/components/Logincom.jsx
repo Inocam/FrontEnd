@@ -7,7 +7,7 @@ import GithubIcon from '../assets/icons/github.svg?react';
 import * as S from "../styles/index.style";
 
 
-const Login = () => {
+const Logincom = () => {
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
@@ -15,10 +15,6 @@ const Login = () => {
     };
 
     return (
-        <S.login.MainContainer>
-    <S.login.LogoContainer>
-        <LoginIcon/>
-    </S.login.LogoContainer>
         
     <S.login.LoginContainer>
         <LoginIcon/>
@@ -57,11 +53,11 @@ const Login = () => {
         <a href="#">SIGN UP</a>
         </S.login.SignUpLink>
     </S.login.LoginContainer>
-    </S.login.MainContainer>
+
     );
 };
 
-export default Login;
+export default Logincom;
 
 
 

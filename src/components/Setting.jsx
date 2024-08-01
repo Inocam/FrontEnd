@@ -27,7 +27,7 @@
                 <S.setting.SettingInput id="name" {...register('name')} required />
             </S.setting.Section>
     
-            <S.setting.Section>
+            <S.setting.Section>s
                 <S.setting.SettingLabel htmlFor="key">키</S.setting.SettingLabel>
                 <S.setting.SettingInput id="key" {...register('key')} required />
             </S.setting.Section>

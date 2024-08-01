@@ -6,7 +6,8 @@ import { store } from "./store/config/configure.js";
 
 import Header from "./components/Header"
 import Sidenav from "./components/Sidenav"
-import Setting from "./components/Setting"
+import Access from "./components/Access"
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -14,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <App />
       <Header/>
       <Sidenav/>
-      <Setting/>
+      <Access/>
     </Provider>
   </React.StrictMode>
 );

@@ -6,6 +6,7 @@ export * as message from "./styles.message";
 export * as sidenav from "./styles.sidenav";
 export * as dashboard from "./styles.dashboard";
 export * as setting from "./styles.setting";
+export * as access from "./styles.access";
 
 export const GlobalCss = createGlobalStyle`
 *{
