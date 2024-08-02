@@ -7,6 +7,7 @@ export * as sidenav from "./styles.sidenav";
 export * as dashboard from "./styles.dashboard";
 export * as setting from "./styles.setting";
 export * as access from "./styles.access";
+export * as team from "./styles.team";
 
 export const GlobalCss = createGlobalStyle`
 *{

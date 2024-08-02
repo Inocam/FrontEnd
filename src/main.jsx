@@ -6,7 +6,7 @@ import { store } from "./store/config/configure.js";
 
 import Header from "./components/Header"
 import Sidenav from "./components/Sidenav"
-import Access from "./components/Access"
+import Team from "./components/Team"
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <App />
       <Header/>
       <Sidenav/>
-      <Access/>
+      <Team/>
     </Provider>
   </React.StrictMode>
 );
