@@ -4,6 +4,7 @@ export * as login from "./styles.login";
 export * as message from "./styles.message";
 export * as sidenav from "./styles.sidenav";
 export * as dashboard from "./styles.dashboard";
+export * as calender from "./style.calender";
 
 export const GlobalCss = createGlobalStyle`
 *{
@@ -17,5 +18,8 @@ export const GlobalCss = createGlobalStyle`
     src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
+}
+body{
+  min-width: 1200px;
 }
 `;
