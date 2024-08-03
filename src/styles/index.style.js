@@ -5,6 +5,7 @@ export * as message from "./styles.message";
 export * as sidenav from "./styles.sidenav";
 export * as dashboard from "./styles.dashboard";
 export * as calender from "./style.calender";
+export * as team from "./styles.team";
 
 export const GlobalCss = createGlobalStyle`
 *{
