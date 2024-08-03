@@ -1,14 +1,17 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { http } from "../interceptor";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/module/User";
 
 const MUTATION_KEY = {
   SIGN_IN: "SIGN_IN",
 };
 
 export const usePostSignInData = () => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const URL = "/api/user/login";
+  const dispatch = useDispatch();
 
   return useMutation({
     mutationKey: [MUTATION_KEY.SIGN_IN],
@@ -17,8 +20,10 @@ export const usePostSignInData = () => {
       return response;
     },
     onSuccess: (data) => {
+      console.log(data);
+      dispatch(setUser({ Id: data.data.id, UserName: data.data.username }));
       Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken")
+      Cookies.remove("RefreshToken");
       // console.log(data);
       Cookies.set("AccessToken", data.data.accessToken, {
         expires: 30 / 770,

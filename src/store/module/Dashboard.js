@@ -11,6 +11,12 @@ const user = createSlice({
     navopenHandler: (state) => {
       return { ...state, isNavOpen: !state.isNavOpen };
     },
+    massagecloseHandler: (state) => {
+      return { ...state, isNavOpen: !state.isNavOpen };
+    },
+    massageopenHandler: (state) => {
+      return { ...state, isNavOpen: !state.isNavOpen };
+    },
   },
 });
 
