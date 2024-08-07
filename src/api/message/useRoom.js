@@ -1,22 +1,18 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "../interceptor";
-
 const MUTATION_KEY = {
-  TEAM_CREATE: "TEAM_CREATE",
+  CREATE_ROOM: "CREATE_ROOM",
 };
+export const useCreateRoom = () => {
+  const URL = "/foot/teams/invite";
 
-export const useCreateTeam = () => {
-  const usequery = useQueryClient();
-  const URL = "/foot/teams";
-
-  return useMutation({
-    mutationKey: [MUTATION_KEY.TEAM_CREATE],
+  return  ({
+    mutationKey: [MUTATION_KEY.CREATE_ROOM],
     mutationFn: async (body) => {
       const response = await http.post(URL, body);
       return response;
     },
-    onSuccess: () => {
-      usequery.invalidateQueries("getTeam");
+    onSuccess: (data) => {
+      console.log(data)
     },
     onError: (error) => {
       console.error(error.message);

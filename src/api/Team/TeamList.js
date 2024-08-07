@@ -13,7 +13,6 @@ export const useGetMessage = () => {
       if (!userId) throw new Error("userId가 없습니다");
       try {
         const response = await http.get(`${BASE_URL}${userId}/teams`);
-        console.log(response);
         return response;
       } catch (error) {
         if (error.response && error.response.status === 404) {

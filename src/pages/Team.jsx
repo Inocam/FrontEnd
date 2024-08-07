@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Message from "../components/Messsage";
 import Team from "../components/Team";
 
 const TeamPage = () => {
@@ -6,6 +7,7 @@ const TeamPage = () => {
     <div>
       <Header />
       <Team></Team>
+      {/* <Message/> */}
     </div>
   );
 };

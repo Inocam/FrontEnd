@@ -5,10 +5,10 @@ export const MessageOverlay = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 45px;
   backdrop-filter: blur(0.2rem);
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: flex-end;
 `;
 
@@ -59,6 +59,12 @@ export const ConversationHeader = styled.h3`
 export const Flexdiv = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  svg{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
 `;
 
 export const ConversationBox = styled.div`

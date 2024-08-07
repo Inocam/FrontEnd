@@ -25,10 +25,18 @@ const Header = () => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (isProjectDropdownOpen && projectDropdownRef.current && !projectDropdownRef.current.contains(event.target)) {
+      if (
+        isProjectDropdownOpen &&
+        projectDropdownRef.current &&
+        !projectDropdownRef.current.contains(event.target)
+      ) {
         setIsProjectDropdownOpen(false);
       }
-      if (isTeamDropdownOpen && teamDropdownRef.current && !teamDropdownRef.current.contains(event.target)) {
+      if (
+        isTeamDropdownOpen &&
+        teamDropdownRef.current &&
+        !teamDropdownRef.current.contains(event.target)
+      ) {
         setIsTeamDropdownOpen(false);
       }
     };

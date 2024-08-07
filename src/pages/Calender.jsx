@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Calendarcom from "../components/Calender";
 import { useEffect } from "react";
 import * as S from "../styles/index.style";
+import Message from "../components/Messsage";
 // Styled components
 
 const Dashboard = () => {
@@ -81,6 +82,7 @@ const Dashboard = () => {
           </S.calender.BCard>
         </S.calender.DashboardContainer>
       </Sidenav>
+        <Message />
     </div>
   );
 };

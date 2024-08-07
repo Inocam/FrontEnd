@@ -100,7 +100,7 @@ export const ConfirmButton = styled.button`
 // 팀 목록
 
 export const ListContainer = styled.div`
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
 export const ListBox = styled.div`
