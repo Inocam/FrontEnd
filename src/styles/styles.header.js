@@ -8,6 +8,8 @@ export const HeaderWrapper = styled.header`
   background-color: #0278ae;
   color: white;
   min-width: 1200px;
+  position: sticky;
+  top:0;
 `;
 
 export const Icon = styled.div`

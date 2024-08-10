@@ -11,12 +11,22 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^2.2.6
         version: 2.2.6(react-redux@9.1.2(@types/react@18.3.3)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
+
+      '@tanstack/react-query':
+        specifier: ^5.51.15
+        version: 5.51.15(react@18.3.1)
       axios:
-        specifier: ^1.7.3
-        version: 1.7.3
+        specifier: ^1.7.2
+        version: 1.7.2
       chart.js:
         specifier: ^4.4.3
         version: 4.4.3
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
+      lucide-react:
+        specifier: ^0.419.0
+        version: 0.419.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -32,9 +42,16 @@ importers:
       react-redux:
         specifier: ^9.1.2
         version: 9.1.2(@types/react@18.3.3)(react@18.3.1)(redux@5.0.1)
+
+      react-router-dom:
+        specifier: ^6.25.1
+        version: 6.25.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       redux:
         specifier: ^5.0.1
         version: 5.0.1
+      redux-persist:
+        specifier: ^6.0.0
+        version: 6.0.0(react@18.3.1)(redux@5.0.1)
       styled-components:
         specifier: ^6.1.12
         version: 6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -398,6 +415,10 @@ packages:
       react-redux:
         optional: true
 
+  '@remix-run/router@1.18.0':
+    resolution: {integrity: sha512-L3jkqmqoSVBVKHfpGZmLrex0lxR5SucGA0sUfFzGctehw+S/ggL9L/0NnC5mw6P8HUWpFZ3nQw3cRApjjWx9Sw==}
+    engines: {node: '>=14.0.0'}
+
   '@rollup/pluginutils@5.1.0':
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
     engines: {node: '>=14.0.0'}
@@ -555,6 +576,14 @@ packages:
     peerDependencies:
       '@svgr/core': '*'
 
+  '@tanstack/query-core@5.51.15':
+    resolution: {integrity: sha512-xyobHDJ0yhPE3+UkSQ2/4X1fLSg7ICJI5J1JyU9yf7F3deQfEwSImCDrB1WSRrauJkMtXW7YIEcC0oA6ZZWt5A==}
+
+  '@tanstack/react-query@5.51.15':
+    resolution: {integrity: sha512-UgFg23SrdIYrmfTSxAUn9g+J64VQy11pb9/EefoY/u2+zWuNMeqEOnvpJhf52XQy0yztQoyM9p6x8PFyTNaxXg==}
+    peerDependencies:
+      react: ^18.0.0
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -657,8 +686,9 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.7.3:
-    resolution: {integrity: sha512-Ar7ND9pU99eJ9GpoGQKhKf58GpUOgnzuaB7ueNQ5BMi0p+LZ5oaEnfF999fAArcTIBwXTCHAmGcHOZJaWPq9Nw==}
+  axios@1.7.2:
+    resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
+
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -1169,6 +1199,10 @@ packages:
   iterator.prototype@1.1.2:
     resolution: {integrity: sha512-DR33HMMr8EzwuRL8Y9D3u2BMj8+RqSE850jfGu59kS7tbmPLzGkZmVSfyCFSDxuZiEY6Rzt3T2NA/qU+NwVj1w==}
 
+  js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -1229,6 +1263,11 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+
+  lucide-react@0.419.0:
+    resolution: {integrity: sha512-YkOHuc1uGH2A4G0NRZyeCW6mMFGb8z3amep0fARuKIri68nveAT5C8OuXOPJXpb/iIgSfsjdMjjII7bnEtGkvw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
   mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
@@ -1402,9 +1441,34 @@ packages:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
 
+
+  react-router-dom@6.25.1:
+    resolution: {integrity: sha512-0tUDpbFvk35iv+N89dWNrJp+afLgd+y4VtorJZuOCXK0kkCWjEvb3vTJM++SYvMEpbVwXKf3FjeVveVEb6JpDQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  react-router@6.25.1:
+    resolution: {integrity: sha512-u8ELFr5Z6g02nUtpPAggP73Jigj1mRePSwhS/2nkTrlPU5yEkH1vYzWNyvSnSzeeE2DNqWdH+P8OhIh9wuXhTw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
+
+
+  redux-persist@6.0.0:
+    resolution: {integrity: sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==}
+    peerDependencies:
+      react: '>=16'
+      redux: '>4.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+
 
   redux-thunk@3.1.0:
     resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
@@ -1969,6 +2033,8 @@ snapshots:
       react: 18.3.1
       react-redux: 9.1.2(@types/react@18.3.3)(react@18.3.1)(redux@5.0.1)
 
+  '@remix-run/router@1.18.0': {}
+
   '@rollup/pluginutils@5.1.0(rollup@4.19.0)':
     dependencies:
       '@types/estree': 1.0.5
@@ -2094,6 +2160,13 @@ snapshots:
       svg-parser: 2.0.4
     transitivePeerDependencies:
       - supports-color
+
+  '@tanstack/query-core@5.51.15': {}
+
+  '@tanstack/react-query@5.51.15(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.51.15
+      react: 18.3.1
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -2233,7 +2306,8 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
-  axios@1.7.3:
+
+  axios@1.7.2:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
@@ -2863,6 +2937,8 @@ snapshots:
       reflect.getprototypeof: 1.0.6
       set-function-name: 2.0.2
 
+  js-cookie@3.0.5: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@4.1.0:
@@ -2917,6 +2993,10 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+
+  lucide-react@0.419.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
   mime-db@1.52.0: {}
 
   mime-types@2.1.35:
@@ -3076,9 +3156,30 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
+
+  react-router-dom@6.25.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@remix-run/router': 1.18.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router: 6.25.1(react@18.3.1)
+
+  react-router@6.25.1(react@18.3.1):
+    dependencies:
+      '@remix-run/router': 1.18.0
+      react: 18.3.1
+
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
+
+
+  redux-persist@6.0.0(react@18.3.1)(redux@5.0.1):
+    dependencies:
+      redux: 5.0.1
+    optionalDependencies:
+      react: 18.3.1
+
 
   redux-thunk@3.1.0(redux@5.0.1):
     dependencies:
