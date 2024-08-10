@@ -7,6 +7,8 @@ import MDashboard from "./ModalChart";
 import { useCreateTeam } from "../api/Team/createTeam";
 import { useGetMessage } from "../api/Team/TeamList";
 import { startTransition } from "react";
+import { Sdiv } from "../styles/styles.dashboard";
+import styled from "styled-components";
 
 const Team = () => {
   const creatorId = useSelector((state) => state.user.Id);
@@ -93,12 +95,9 @@ const Team = () => {
             <S.team.TeamExampleContainer>
               {TeamList?.map((data) => {
                 return (
-                  <S.team.ExampleBox
-                    key={data.teamId}
-                    onClick={() => selectIdHandler(data.teamId)}
-                  >
+                  <S.team.ExampleBox key={data.teamId}>
                     <S.team.ExampleIcon>
-                      <img src={data.imageUrl}/>
+                      <img src={data.imageUrl} />
                     </S.team.ExampleIcon>
                     <S.team.TeamInfo>
                       <S.team.TeamName>{data.name}</S.team.TeamName>
@@ -107,6 +106,14 @@ const Team = () => {
                       </S.team.TeamExplain>
                       <S.team.TeamLeader>{data.creatorId}</S.team.TeamLeader>
                     </S.team.TeamInfo>
+                    <Stdiv>
+                      <S.team.ResetButton
+                        onClick={() => selectIdHandler(data.teamId)}
+                      >
+                        요약
+                      </S.team.ResetButton>
+                      <S.team.ConfirmButton>들어가기</S.team.ConfirmButton>
+                    </Stdiv>
                   </S.team.ExampleBox>
                 );
               })}
@@ -127,3 +134,10 @@ const Team = () => {
 };
 
 export default Team;
+
+const Stdiv = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+`;

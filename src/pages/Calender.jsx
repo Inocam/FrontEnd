@@ -82,7 +82,7 @@ const Dashboard = () => {
           </S.calender.BCard>
         </S.calender.DashboardContainer>
       </Sidenav>
-        <Message />
+      <Message />
     </div>
   );
 };

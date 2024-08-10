@@ -16,9 +16,13 @@ import { setTeamId } from "../store/module/User.js";
 import { useEffect } from "react";
 import styled from "styled-components";
 const SMessageButton = styled.button`
-  position: sticky;
-  bottom: 0;
-  right: 0;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  border: none;
 `;
 const Message = () => {
   const Queryclient = useQueryClient();
