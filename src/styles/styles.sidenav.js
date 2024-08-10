@@ -51,7 +51,7 @@ export const SParagraph = styled.p`
 `;
 
 export const Sbody = styled.div`
-  padding-left: ${({ $isOpen }) => ($isOpen ? "400px" : "0")};
+  padding-left: ${({ $isOpen }) => ($isOpen ? "300px" : "0")};
   width: 100%;
   height: 100%;
   display: flex;
