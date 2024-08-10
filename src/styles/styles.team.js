@@ -152,6 +152,7 @@ export const TeamExampleContainer = styled.div`
 `;
 
 export const ExampleBox = styled.div`
+  position: relative;
   background-color: white;
   border-radius: 5px;
   border: 1px solid #b4b4b4;

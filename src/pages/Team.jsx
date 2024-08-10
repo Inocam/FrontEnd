@@ -5,7 +5,7 @@ import Team from "../components/Team";
 
 const TeamPage = () => {
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <Suspense fallback={<div>Loading...</div>}>
         <Header />
         <Team></Team>
