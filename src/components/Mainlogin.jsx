@@ -20,13 +20,12 @@ const MainLogin = ({ signHandler }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      // 로그인 성공 시 처리
-      navigate("/dashboard"); // 예: 대시보드로 리다이렉트
+      navigate("/team"); // 예: 대시보드로 리다이렉트
     }
   }, [isSuccess, navigate]);
 
   const onSubmit = (data) => {
-    mutate({ username: data.email, password: data.password });
+    mutate({ email: data.email, password: data.password });
   };
 
   return (

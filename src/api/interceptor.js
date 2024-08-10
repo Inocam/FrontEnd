@@ -17,6 +17,7 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+
 export const http = {
   get: (url) => axios.get(url).then((res) => res.data),
   post: (url, data = "") => axios.post(url, data).then((res) => res),

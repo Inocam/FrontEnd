@@ -3,7 +3,6 @@ import * as S from "../styles/index.style";
 import { useState } from "react";
 import Signup from "../components/Signup";
 import MainLogin from "../components/Mainlogin";
-
 const Login = () => {
   const [isSign, setisSign] = useState(false);
   return (
