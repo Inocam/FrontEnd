@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Container = styled.div`
   height: 80%;
   width: 80%;
-  min-width: 1200px;
+  min-width: 800px;
   margin: 0 auto;
   padding: 16px;
 `;
@@ -49,7 +49,7 @@ const BoardContainer = styled.div`
 
 const Column = styled.div`
   flex: 1;
-  min-width: 250px;
+  min-width: 200px;
   background-color: #f7fafc;
   border-radius: 8px;
   padding: 16px;

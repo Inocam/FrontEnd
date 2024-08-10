@@ -15,6 +15,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { setTeamId } from "../store/module/User.js";
 import { useEffect } from "react";
 import styled from "styled-components";
+const SMessageButton = styled.button`
+  position: sticky;
+  bottom: 0;
+  right: 0;
+`;
 const Message = () => {
   const Queryclient = useQueryClient();
   const [messages, setMessages] = useState([]);
@@ -23,7 +28,7 @@ const Message = () => {
   const isMessageOpen = useSelector((state) => state.nav.ismassageOpen);
   const isTeam = useSelector((state) => state.user.TeamId);
   const { data: teamData, isLoading } = useGetTeam();
-  const { data: messageData, isMessageLoading } = useGetMessage();
+  // const { data: messageData, isMessageLoading } = useGetMessage();
 
   useEffect(() => {
     Queryclient.invalidateQueries(["getMessage"]);
@@ -35,8 +40,6 @@ const Message = () => {
       inputMessage.current.value = "";
     }
   };
-  // const TeamList = [];
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSendMessage();
@@ -46,16 +49,11 @@ const Message = () => {
     return <p>loading</p>;
   }
 
-  const SMessageButton = styled.button`
-    position: sticky;
-    bottom: 0;
-    left: 0;
-  `;
   return (
     <>
       <SMessageButton
         onClick={() => {
-          Queryclient.invalidateQueries(["getTeam"]);
+          Queryclient.invalidateQueries(["getMuser"]);
           dispatch(massageopenHandler());
         }}
       >
@@ -110,19 +108,15 @@ const Message = () => {
                 </S.message.TalkingBoxHeader>
 
                 <S.message.TalkingRoom>
-                  {!isMessageLoading &&
+                  {/* {!isMessageLoading &&
                     messageData?.map((msg) => (
                       <S.message.MessageBubble key={msg.sendDate}>
                         {msg.message}
                       </S.message.MessageBubble>
-                    ))}
+                    ))} */}
                 </S.message.TalkingRoom>
 
                 <S.message.TalkingBar>
-                  {/* <S.message.TalkingBarLeft>
-                      <MessageEmoIcon />
-                    </S.message.TalkingBarLeft> */}
-
                   <S.message.TalkingBarRight>
                     <S.message.MessageInput
                       type="text"
@@ -144,3 +138,6 @@ const Message = () => {
 };
 
 export default Message;
+
+//무한스크롤링
+//s3 이미지처리

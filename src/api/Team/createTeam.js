@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "../interceptor";
+// import { header } from "../../styles/index.style";
 
 const MUTATION_KEY = {
   TEAM_CREATE: "TEAM_CREATE",
@@ -12,7 +13,19 @@ export const useCreateTeam = () => {
   return useMutation({
     mutationKey: [MUTATION_KEY.TEAM_CREATE],
     mutationFn: async (body) => {
-      const response = await http.post(URL, body);
+      const formData = new FormData();
+
+      console.log(body.team);
+      formData.append(
+        "team",
+        new Blob([JSON.stringify(body.team)], { type: "application/json" })
+      );
+      if (body.image) {
+        formData.append("image", body.image);
+      } else {
+        formData.append("image", []);
+      }
+      const response = await http.post(URL, formData);
       return response;
     },
     onSuccess: () => {
@@ -20,7 +33,6 @@ export const useCreateTeam = () => {
     },
     onError: (error) => {
       console.error(error.message);
-      // 여기서 에러를 처리하거나 에러 상태를 설정할 수 있습니다.
     },
   });
 };

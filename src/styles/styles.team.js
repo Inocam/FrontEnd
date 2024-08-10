@@ -163,7 +163,7 @@ export const ExampleBox = styled.div`
 
 export const ExampleIcon = styled.div`
   margin-left: 25px;
-  svg {
+  img {
     width: 70px;
     height: 70px;
   }

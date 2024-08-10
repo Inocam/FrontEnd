@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 import * as S from "../styles/index.style";
 import { useDispatch } from "react-redux";
 import { navopenHandler } from "../store/module/Dashboard";
-import { useNavigation } from "react-router-dom";
+// import { useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Sidenav = ({ children }) => {
-  const navigation = useNavigation();
+  const navigate = useNavigate();
   const isNavOpen = useSelector((state) => state.nav.isNavOpen);
   const dispatch = useDispatch();
   const toggleNav = () => {
@@ -23,10 +24,10 @@ const Sidenav = ({ children }) => {
           <S.sidenav.STitle>Project Title</S.sidenav.STitle>
           <S.sidenav.SSubtitle>Widgets</S.sidenav.SSubtitle>
           <S.sidenav.SParagraph>Timeline</S.sidenav.SParagraph>
-          <S.sidenav.SParagraph onClick={navigation("/calender")}>
+          <S.sidenav.SParagraph onClick={()=>navigate("/calender")}>
             Calendar
           </S.sidenav.SParagraph>
-          <S.sidenav.SParagraph onClick={navigation("/Kanban")}>
+          <S.sidenav.SParagraph onClick={()=>navigate("/Kanban")}>
             Kanban Board
           </S.sidenav.SParagraph>
           <S.sidenav.SSubtitle>Git</S.sidenav.SSubtitle>

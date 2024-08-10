@@ -9,10 +9,8 @@ const MUTATION_KEY = {
 };
 
 export const usePostSignInData = () => {
-
   const URL = "/api/user/login";
   const dispatch = useDispatch();
-
   return useMutation({
     mutationKey: [MUTATION_KEY.SIGN_IN],
     mutationFn: async (body) => {
@@ -20,15 +18,10 @@ export const usePostSignInData = () => {
       return response;
     },
     onSuccess: (data) => {
-      console.log(data);
       dispatch(setUser({ Id: data.data.id, UserName: data.data.username }));
+      //가지고있는 정보 만료
       Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken");
-      // console.log(data);
-      Cookies.set("AccessToken", data.data.accessToken, {
-        expires: 30 / 770,
-      });
-      Cookies.set("RefreshToken", data.data.refreshToken, { expires: 7 });
+      Cookies.set("AccessToken", data.data.accessToken);
     },
     onError: (error) => {
       console.error(error.message);

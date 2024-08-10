@@ -1,32 +1,44 @@
 import * as S from "../styles/index.style";
 import * as L from "../assets/icons/index.Logo";
-import { useCreateTeam } from "../api/Team/createTeam";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
-import { useGetMessage } from "../api/Team/TeamList";
 import { useState } from "react";
 import MDashboard from "./ModalChart";
+import { useCreateTeam } from "../api/Team/createTeam";
+import { useGetMessage } from "../api/Team/TeamList";
+import { startTransition } from "react";
 
 const Team = () => {
-  const { mutate } = useCreateTeam();
-  const { data: TeamList, isLoading } = useGetMessage();
-  console.log(TeamList);
   const creatorId = useSelector((state) => state.user.Id);
+  const { mutate } = useCreateTeam();
+  const { data: TeamList = [], isLoading } = useGetMessage();
+  console.log(TeamList);
   const [selectId, setselectId] = useState("");
   console.log(creatorId);
   const selectIdHandler = (Id) => {
-    setselectId(Id);
+    startTransition(() => {
+      setselectId(Id);
+    });
   };
-
   const name = useRef();
   const description = useRef();
   const sendHandler = () => {
+    if (
+      name.current.value.trim() == "" &&
+      description.current.value.trim() == ""
+    ) {
+      alert("빈값은 넣을수없습니다");
+      return;
+    }
     mutate({
-      name: name.current.value,
-      description: description.current.value,
-      creatorId,
+      team: {
+        name: name.current.value,
+        description: description.current.value,
+        creatorId,
+      },
     });
   };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -46,6 +58,7 @@ const Team = () => {
                 <S.team.TeamNameInput
                   ref={name}
                   placeholder={"팀 이름을 입력해 주세요"}
+                  required
                 />
               </S.team.TeamNameBox>
               <S.team.ExplainBox>
@@ -53,6 +66,7 @@ const Team = () => {
                 <S.team.ExplainInput
                   ref={description}
                   placeholder={"설명을 입력해 주세요"}
+                  required
                 />
               </S.team.ExplainBox>
               <S.team.ButtonSet>
@@ -77,14 +91,14 @@ const Team = () => {
               </S.team.IconRight>
             </S.team.FindInputContainer>
             <S.team.TeamExampleContainer>
-              {TeamList?.map((data,index) => {
+              {TeamList?.map((data) => {
                 return (
                   <S.team.ExampleBox
-                    key={index}
-                    onClick={() => selectIdHandler(data.team_id)}
+                    key={data.teamId}
+                    onClick={() => selectIdHandler(data.teamId)}
                   >
                     <S.team.ExampleIcon>
-                      <L.TeamIcon />
+                      <img src={data.imageUrl}/>
                     </S.team.ExampleIcon>
                     <S.team.TeamInfo>
                       <S.team.TeamName>{data.name}</S.team.TeamName>

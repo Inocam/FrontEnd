@@ -25,7 +25,7 @@ const MainLogin = ({ signHandler }) => {
   }, [isSuccess, navigate]);
 
   const onSubmit = (data) => {
-    mutate({ username: data.email, password: data.password });
+    mutate({ email: data.email, password: data.password });
   };
 
   return (
