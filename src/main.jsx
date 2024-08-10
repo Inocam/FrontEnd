@@ -6,7 +6,7 @@ import { store } from "./store/config/configure.js";
 
 import Header from "./components/Header"
 import Sidenav from "./components/Sidenav"
-import Team from "./components/Team"
+import Setting from "./components/Setting"
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -14,8 +14,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <App />
       <Header/>
-      <Sidenav/>
-      <Team/>
+      <Sidenav><Setting/></Sidenav>
+      
     </Provider>
   </React.StrictMode>
 );

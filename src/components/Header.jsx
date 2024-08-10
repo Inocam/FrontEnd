@@ -9,7 +9,7 @@ import * as S from "../styles/index.style";
 
 const Header = () => {
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
-  const [isTeamDropdownOpen, setIsTeamDropdownOpen] = useState(false);
+  const [isTeamDropdownOpen,setIsTeamDropdownOpen] = useState(false);
   const projectDropdownRef = useRef(null);
   const teamDropdownRef = useRef(null);
 

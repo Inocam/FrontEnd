@@ -1,16 +1,17 @@
 import styled from "styled-components";
 
 export const AccessContainer = styled.div`
-    margin-top: 40px;
-    margin-left: 80px;
-    margin-right: 80px;
+    margin-top: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: calc(100% - 250px);
 `;
 
 export const AccessTop = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 `;
 
 export const UserAddButton = styled.button`
@@ -93,7 +94,7 @@ export const SearchContainer = styled.div`
 `;
 
 export const SearchInput = styled.input`
-    padding: 12px 100px 12px 10px;
+    padding: 10px 100px 10px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 10px;
