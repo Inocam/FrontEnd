@@ -16,7 +16,6 @@ export const useCreateRoom = () => {
     },
     onError: (error) => {
       console.error(error.message);
-      // 여기서 에러를 처리하거나 에러 상태를 설정할 수 있습니다.
     },
   };
 };
