@@ -7,12 +7,16 @@ import MDashboard from "./ModalChart";
 import { useCreateTeam } from "../api/Team/createTeam";
 import { useGetMessage } from "../api/Team/TeamList";
 import { startTransition } from "react";
-import { Sdiv } from "../styles/styles.dashboard";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { setTeamId } from "../store/module/User";
+import { useNavigate } from "react-router-dom";
 
 const Team = () => {
+  const navigate = useNavigate();
   const creatorId = useSelector((state) => state.user.Id);
   const { mutate } = useCreateTeam();
+  const dispatch = useDispatch();
   const { data: TeamList = [], isLoading } = useGetMessage();
   console.log(TeamList);
   const [selectId, setselectId] = useState("");
@@ -21,6 +25,10 @@ const Team = () => {
     startTransition(() => {
       setselectId(Id);
     });
+  };
+  const selectTeamIdHandler = (Id) => {
+    dispatch(setTeamId({ TeamId: Id }));
+    navigate("/calender");
   };
   const name = useRef();
   const description = useRef();
@@ -112,7 +120,11 @@ const Team = () => {
                       >
                         요약
                       </S.team.ResetButton>
-                      <S.team.ConfirmButton>들어가기</S.team.ConfirmButton>
+                      <S.team.ConfirmButton
+                        onClick={() => selectTeamIdHandler(data.teamId)}
+                      >
+                        들어가기
+                      </S.team.ConfirmButton>
                     </Stdiv>
                   </S.team.ExampleBox>
                 );
@@ -139,5 +151,4 @@ const Stdiv = styled.div`
   position: absolute;
   bottom: 10px;
   right: 10px;
-
 `;

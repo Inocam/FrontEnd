@@ -22,7 +22,6 @@ const user = createSlice({
     setTeamId: (state, action) => {
       state.TeamId = action.payload.TeamId;
     },
-
   },
 });
 

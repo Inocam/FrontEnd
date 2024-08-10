@@ -13,7 +13,7 @@ const user = createSlice({
       return { ...state, isNavOpen: !state.isNavOpen };
     },
     massagecloseHandler: (state) => {
-      return { ...state, ismassageOpen: false};
+      return { ...state, ismassageOpen: false };
     },
     massageopenHandler: (state) => {
       return { ...state, ismassageOpen: true };

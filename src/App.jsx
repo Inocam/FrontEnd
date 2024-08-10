@@ -12,7 +12,7 @@ const App = () => {
     <BrowserRouter>
       <GlobalCss></GlobalCss>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/calender" element={<Dashboard />} />
         <Route path="/kanban" element={<CanbanB />} />

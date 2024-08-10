@@ -12,17 +12,19 @@ import {
 } from "../store/module/Dashboard.js";
 import { useGetMessage, useGetTeam } from "../api/message/useMessage.js";
 import { useQueryClient } from "@tanstack/react-query";
-import { setTeamId } from "../store/module/User.js";
 import { useEffect } from "react";
 import styled from "styled-components";
+import { setMessageId } from "../store/module/Message.js";
 const SMessageButton = styled.button`
-  position: absolute;
+  position: sticky;
   bottom: 10px;
   right: 10px;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   border: none;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1000000;
 `;
 const Message = () => {
   const Queryclient = useQueryClient();
@@ -82,7 +84,7 @@ const Message = () => {
                       return (
                         <S.message.ConversationBox
                           onClick={() => {
-                            dispatch(setTeamId({ TeamId: state.roomId }));
+                            dispatch(setMessageId({ TeamId: state.roomId }));
                           }}
                           key={state.roomId}
                         >
