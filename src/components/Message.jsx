@@ -2,13 +2,8 @@ import ReactDOM from "react-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import MessageUserIcon from '../assets/icons/messageuser.svg?react';
-import MessageBellIcon from '../assets/icons/messagebell.svg?react';
-import MessageSettingIcon from '../assets/icons/messagesetting.svg?react';
-import MessagePlusIcon from '../assets/icons/messageplus.svg?react';
-import MessageEmoIcon from '../assets/icons/messageemo.svg?react';
-import MessageSendIcon from '../assets/icons/messagesend.svg?react';
 import * as S from "../styles/index.style";
+import * as L from "../assets/icons/index.Logo";
 
 
 
@@ -81,12 +76,12 @@ const Message = () => {
                 <S.message.TalkingBox>                   
                     <S.message.TalkingBoxHeader> 
                         <S.message.HeaderLeft>
-                        <MessageUserIcon/>
+                        <L.MessageUserIcon/>
                         <a>Name</a>
                         </S.message.HeaderLeft>
                         <S.message.HeaderRight>
-                        <MessageBellIcon/>
-                        <MessageSettingIcon/>
+                        <L.MessageBellIcon/>
+                        <L.MessageSettingIcon/>
                         </S.message.HeaderRight>
                     </S.message.TalkingBoxHeader>
 
@@ -99,8 +94,8 @@ const Message = () => {
 
                     <S.message.TalkingBar>                       
                     <S.message.TalkingBarLeft>
-                        <MessagePlusIcon/>
-                        <MessageEmoIcon/>
+                        <L.MessagePlusIcon/>
+                        <L.MessageEmoIcon/>
                     </S.message.TalkingBarLeft>
 
                     <S.message.TalkingBarRight>
@@ -110,7 +105,7 @@ const Message = () => {
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}/>
                     <S.message.MessageSendButton onClick={handleSendMessage}>
-                    <MessageSendIcon/>
+                    <L.MessageSendIcon/>
                     </S.message.MessageSendButton>
                     </S.message.TalkingBarRight>            
                     </S.message.TalkingBar>

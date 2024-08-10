@@ -22,7 +22,6 @@ const Signup = ({ signHandler }) => {
       signHandler();
     }
   };
-
   return (
     <S.login.Container>
       <LoginIcon />
@@ -93,3 +92,4 @@ const Signup = ({ signHandler }) => {
 };
 
 export default Signup;
+
