@@ -1,23 +1,28 @@
-import { useState } from 'react';
-import LoginIcon from '../assets/icons/loginlogo.svg?react';
+
+import LoginIcon from "../assets/icons/loginlogo.svg?react";
 import * as S from "../styles/index.style";
-import Logincom from '../components/Logincom';
-import Signup from '../components/Signup';
+import { useState } from "react";
+import Signup from "../components/Signup";
+import MainLogin from "../components/Mainlogin";
 
 const Login = () => {
-    const [isSign, setisSign] = useState(true)
-    return (
-        <S.login.MainContainer>
-            <S.login.LogoContainer>
-                <LoginIcon />
-            </S.login.LogoContainer>
-            {isSign ? <Logincom oc={() => setisSign(prevstate => !prevstate)}></Logincom> :
-                <Signup oc={() => setisSign(prevstate => !prevstate)}></Signup>}
-        </S.login.MainContainer>
-    );
+  const [isSign, setisSign] = useState(false);
+  return (
+    <S.login.MainContainer>
+      <S.login.LogoContainer>
+        <LoginIcon />
+      </S.login.LogoContainer>
+      {!isSign ? (
+        <MainLogin
+          signHandler={() => setisSign((prevState) => !prevState)}
+        ></MainLogin>
+      ) : (
+        <Signup
+          signHandler={() => setisSign((prevState) => !prevState)}
+        ></Signup>
+      )}
+    </S.login.MainContainer>
+  );
 };
 
 export default Login;
-
-
-

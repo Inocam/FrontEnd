@@ -1,7 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 export * as header from "./styles.header";
 export * as login from "./styles.login";
-export * as signup from "./styles.signup";
 export * as message from "./styles.message";
 export * as sidenav from "./styles.sidenav";
 export * as dashboard from "./styles.dashboard";
