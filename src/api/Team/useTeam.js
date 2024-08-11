@@ -52,33 +52,6 @@ export const useGetUsersprefix = () => {
 
   return query;
 };
-export const useGetMTeamUserList = () => {
-  const BASE_URL = "/foot/teams/";
-  const userId = useSelector((state) => state.user.Id);
-  //foot/teams/{teamId}/members
-  //유저가 속한 팀 목록 받아오기
-  const query = useQuery({
-    queryKey: ["getTeamUserList"],
-    queryFn: async () => {
-      if (!userId) throw new Error("userId가 없습니다");
-      try {
-        const response = await http.get(`${BASE_URL}${userId}/members`);
-        return response;
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          return [];
-        }
-        throw error;
-      }
-    },
-    onError: (error) => {
-      console.error("Error fetching messages:", error);
-    },
-  });
-
-  return query;
-};
-
 
 export const useInviteTeam = () => {
   const usequery = useQueryClient();

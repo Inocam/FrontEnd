@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import MDashboard from "./useless/ModalChart";
 import { useCreateTeam } from "../api/Team/createTeam";
-import { useGetMTeamList } from "../api/Team/TeamList";
+import { useGetMTeamList } from "../api/Team/useTeam";
 import { startTransition } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";

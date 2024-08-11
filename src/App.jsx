@@ -10,6 +10,7 @@ import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import AddSchedule from "./components/AddSchedule";
 import AccessPage from "./pages/Access";
+import SettingPage from "./pages/Setting";
 
 const Authorization = ({ children }) => {
   const accessToken = Cookies.get("AccessToken");
@@ -27,7 +28,7 @@ const App = () => {
     <BrowserRouter>
       <GlobalCss></GlobalCss>
       <Routes>
-        <Route path="/" element={<AccessPage />} />
+        <Route path="/" element={<SettingPage />} />
         <Route
           path="/team"
           element={Authorization(
@@ -69,10 +70,10 @@ const App = () => {
           }
         />
         <Route
-          path="/access"
+          path="/teamsetting"
           element={
             <Authorization>
-              <AccessPage />
+              <SettingPage />
             </Authorization>
           }
         />

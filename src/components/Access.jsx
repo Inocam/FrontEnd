@@ -4,11 +4,11 @@ import ReactDOM from "react-dom";
 import { throttle } from "lodash";
 import { useCallback } from "react";
 import { useRef } from "react";
-import {
-  useGetMTeamUserList,
-  useGetUsersprefix,
-  useInviteTeam,
-} from "../api/Team/TeamList";
+// import {
+//   useGetMTeamUserList,
+//   useGetUsersprefix,
+//   useInviteTeam,
+// } from "../api/Team/useTeam";
 const Access = () => {
   const [users, setUsers] = useState([
     {
