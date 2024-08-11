@@ -1,13 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 export * as header from "./styles.header";
 export * as login from "./styles.login";
-export * as signup from "./styles.signup";
 export * as message from "./styles.message";
 export * as sidenav from "./styles.sidenav";
 export * as dashboard from "./styles.dashboard";
 export * as setting from "./styles.setting";
 export * as access from "./styles.access";
 export * as team from "./styles.team";
+export * as tododetail from "./styles.tododetail";
 
 export const GlobalCss = createGlobalStyle`
 *{

@@ -4,18 +4,10 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store/config/configure.js";
 
-import Header from "./components/Header"
-import Sidenav from "./components/Sidenav"
-import Setting from "./components/Setting"
-
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
-      <Header/>
-      <Sidenav><Setting/></Sidenav>
-      
     </Provider>
   </React.StrictMode>
 );
