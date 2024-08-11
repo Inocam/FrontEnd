@@ -20,7 +20,7 @@ const MainLogin = ({ signHandler }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/team"); // 예: 대시보드로 리다이렉트
+      navigate("/team");
     }
   }, [isSuccess, navigate]);
 

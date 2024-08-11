@@ -1,4 +1,3 @@
-
 import { BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
 import { Routes } from "react-router-dom";
@@ -9,6 +8,8 @@ import CanbanB from "./pages/Canban";
 import TeamPage from "./pages/Team";
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import AddSchedule from "./components/AddSchedule";
+import AccessPage from "./pages/Access";
 
 const Authorization = ({ children }) => {
   const accessToken = Cookies.get("AccessToken");
@@ -26,7 +27,7 @@ const App = () => {
     <BrowserRouter>
       <GlobalCss></GlobalCss>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<AccessPage />} />
         <Route
           path="/team"
           element={Authorization(
@@ -51,10 +52,33 @@ const App = () => {
             </Authorization>
           }
         />
+        <Route
+          path="/kanban"
+          element={
+            <Authorization>
+              <CanbanB />
+            </Authorization>
+          }
+        />
+        <Route
+          path="/access"
+          element={
+            <Authorization>
+              <AccessPage />
+            </Authorization>
+          }
+        />
+        <Route
+          path="/access"
+          element={
+            <Authorization>
+              <AccessPage />
+            </Authorization>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
 };
 
 export default App;
-
