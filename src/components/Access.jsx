@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const Access = () => {
   const [isUserAddModalOpen, setIsUserAddModalOpen] = useState(false);
   const [serchname, setserchName] = useState(""); // State for the input value
-  const { data: TeamUserList } = useGetMTeamUserList();
+  const { data: TeamUserList, doREfetch } = useGetMTeamUserList();
   const userinfo = useSelector((state) => state.user);
 
   console.log(userinfo);
@@ -20,7 +20,7 @@ const Access = () => {
 
   const handleRemoveUser = (id) => {
     mutate({ targetId: id });
-    // setUsers(users.filter((user) => user.id !== id));
+    doREfetch();
   };
 
   const handleKeyDown = (e) => {

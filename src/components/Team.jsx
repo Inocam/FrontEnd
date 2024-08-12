@@ -5,7 +5,11 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import MDashboard from "./useless/ModalChart";
 import { useCreateTeam } from "../api/Team/createTeam";
-import { useGetMTeamList } from "../api/Team/useTeam";
+import {
+  useAcceptTeam,
+  useGetinvite,
+  useGetMTeamList,
+} from "../api/Team/useTeam";
 import { startTransition } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -18,9 +22,11 @@ const Team = () => {
   const { mutate } = useCreateTeam();
   const dispatch = useDispatch();
   const { data: TeamList = [], isLoading } = useGetMTeamList();
-  console.log(TeamList);
+  const { data: inviteList = [] } = useGetinvite();
+  const { mutate: Accpet } = useAcceptTeam();
+  // console.log(TeamList);
   const [selectId, setselectId] = useState("");
-  console.log(creatorId);
+  // console.log(creatorId);
   const selectIdHandler = (Id) => {
     startTransition(() => {
       setselectId(Id);
@@ -30,6 +36,12 @@ const Team = () => {
     console.log(Id, Leader);
     dispatch(setTeamId({ TeamId: Id, TeamLeader: Leader }));
     navigate("/calender");
+  };
+  const acceptHandler = (Id, bool) => {
+    Accpet({
+      invitationId: Id,
+      Accept: bool,
+    });
   };
   const name = useRef();
   const description = useRef();
@@ -102,6 +114,34 @@ const Team = () => {
               </S.team.IconRight>
             </S.team.FindInputContainer>
             <S.team.TeamExampleContainer>
+              {inviteList?.map((data) => {
+                return (
+                  <S.team.ExampleBox key={data.teamId}>
+                    <S.team.ExampleIcon>
+                      <img src={data.imageUrl} />
+                    </S.team.ExampleIcon>
+                    <S.team.TeamInfo>
+                      <S.team.TeamName>{data.name}</S.team.TeamName>
+                      <S.team.TeamExplain>
+                        {data.description}
+                      </S.team.TeamExplain>
+                      <S.team.TeamLeader>{data.creatorId}</S.team.TeamLeader>
+                    </S.team.TeamInfo>
+                    <Stdiv>
+                      <S.team.ResetButton
+                        onClick={() => acceptHandler(data.invitationId, true)}
+                      >
+                        초대받기
+                      </S.team.ResetButton>
+                      <S.team.ConfirmButton
+                        onClick={() => acceptHandler(data.invitationId, false)}
+                      >
+                        거절
+                      </S.team.ConfirmButton>
+                    </Stdiv>
+                  </S.team.ExampleBox>
+                );
+              })}
               {TeamList?.map((data) => {
                 return (
                   <S.team.ExampleBox key={data.teamId}>

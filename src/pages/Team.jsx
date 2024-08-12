@@ -6,11 +6,11 @@ import Team from "../components/Team";
 const TeamPage = () => {
   return (
     <div style={{ position: "relative" }}>
-      {/* <Suspense fallback={<div>Loading...</div>}> */}
-      <Header />
-      <Team></Team>
-      <Message />
-      {/* </Suspense> */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <Header />
+        <Team></Team>
+        <Message />
+      </Suspense>
     </div>
   );
 };
