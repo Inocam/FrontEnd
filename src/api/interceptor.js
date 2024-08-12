@@ -31,11 +31,11 @@ axios.interceptors.response.use(
       try {
         const res = await axios.get("/api/user/refresh", {
           headers: {
-            refresh: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }); // 리프레시 토큰을 이용하여 새로운 엑세스 토큰 발급 요청 아직 * api 만들어있지않음 임의 주소
-        if (res.data.data.newAccessToken) {
-          Cookies.set("AccessToken", res.data.data.newAccessToken, {
+        if (res.data.data.accessToken) {
+          Cookies.set("AccessToken", res.data.data.accessToken, {
             expires: 1 / 24,
             overwrite: true,
           }); // 발급받은 새로운 엑세스 토큰을 저장

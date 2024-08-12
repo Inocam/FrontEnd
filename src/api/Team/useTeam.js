@@ -29,6 +29,29 @@ export const useGetMTeamList = () => {
 
   return query;
 };
+// export const useGetMTeamList = () => {
+//   const BASE_URL = "/foot/teams/user/";
+//   const userId = useSelector((state) => state.user.Id);
+//   //유저가 초대 받은팀 목록 받아오기
+//   const query = useQuery({
+//     queryKey: ["getTeaminvite"],
+//     queryFn: async () => {
+//       try {
+//         const response = await http.get(`${BASE_URL}${userId}/all`);
+//         return response;
+//       } catch (error) {
+//         if (error.response && error.response.status === 404) {
+//           return [];
+//         }
+//         throw error;
+//       }
+//     },
+//     onError: (error) => {
+//       console.error("Error fetching messages:", error);
+//     },
+//   });
+//   return query;
+// };
 // export const useGetMTeamUserList = () => {
 //   const BASE_URL = "/foot/teams/";
 //   const teamId = useSelector((state) => state.user.TeamId);
