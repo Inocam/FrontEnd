@@ -15,6 +15,16 @@ const Tododetail = () => {
     const [status, setStatus] = useState('');
     const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
 
+    const INITIAL_STATE = {
+        title: 'Title',
+        explain: '',
+        startDate: '',
+        endDate: '',
+        status: ''
+    };
+
+    const [originalData, setOriginalData] = useState({});
+
     const dropdownRef = useRef(null);
     
     useEffect(() => {
@@ -24,11 +34,20 @@ const Tododetail = () => {
             }
         };
 
+        
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [dropdownRef]);
+
+
+    useEffect(() => {
+        if (isModalOpen) {
+            setOriginalData({ title, explain, startDate, endDate, status });
+        }
+    }, [isModalOpen]);
+
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -55,6 +74,33 @@ const Tododetail = () => {
     };
 
     const statusOptions = ['진행전', '진행중', '완료', '지연'];
+
+    // 삭제 버튼 
+    const handleDelete = () => {
+        setTitle(INITIAL_STATE.title);
+        setExplain(INITIAL_STATE.explain);
+        setStartDate(INITIAL_STATE.startDate);
+        setEndDate(INITIAL_STATE.endDate);
+        setStatus(INITIAL_STATE.status);
+        setIsModalOpen(false);
+        console.log("모든 정보가 초기화되었습니다.");
+    };
+
+    // 취소 버튼 
+    const handleCancel = () => {
+        setTitle(originalData.title);
+        setExplain(originalData.explain);
+        setStartDate(originalData.startDate);
+        setEndDate(originalData.endDate);
+        setStatus(originalData.status);
+        setIsModalOpen(false);
+    };
+
+    // 수정 버튼 
+    const handleEdit = () => {
+        console.log("수정된 데이터가 저장되었습니다.", { title, explain, startDate, endDate, status });
+        setIsModalOpen(false);
+    };
 
     return (
         <>
@@ -84,6 +130,7 @@ const Tododetail = () => {
                                     </S.tododetail.Title>
                                 )}
                             </S.tododetail.TitleContainer>
+                            <S.tododetail.DeleteButton onClick={handleDelete}>삭제</S.tododetail.DeleteButton>
                         </S.tododetail.TodoHeader>
 
                         <S.tododetail.TodoContentWrapper>
@@ -155,9 +202,8 @@ const Tododetail = () => {
                         </S.tododetail.TodoContentWrapper>
 
                         <S.tododetail.ButtonContainer>
-                            <S.tododetail.EditButton onClick={() => console.log("수정 버튼이 클릭되었습니다.")}>수정</S.tododetail.EditButton>
-                            <S.tododetail.DeleteButton onClick={() => console.log("삭제 버튼이 클릭되었습니다.")}>삭제</S.tododetail.DeleteButton>
-                            <S.tododetail.BackButton onClick={() => setIsModalOpen(false)}>취소</S.tododetail.BackButton>
+                            <S.tododetail.EditButton onClick={handleEdit}>수정</S.tododetail.EditButton>
+                            <S.tododetail.BackButton onClick={handleCancel}>취소</S.tododetail.BackButton>
                         </S.tododetail.ButtonContainer>
                     </S.tododetail.TodoModalContent>
                 </S.tododetail.TodoModalOverlay>

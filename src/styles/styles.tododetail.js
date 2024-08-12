@@ -48,6 +48,7 @@ export const TitleContainer = styled.div`
 export const Title = styled.h1`
     font-size: 35px;
     margin-left: 10px;
+    margin-bottom: 20px;
     cursor: pointer;
     line-height: 40px;
     color: #333;
@@ -73,7 +74,7 @@ export const TitleInput = styled.input`
 export const ButtonGroup = styled.div`
     display: inline-flex;
     margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 `;
 
 export const Button = styled.button`
@@ -105,7 +106,7 @@ export const CancelButton = styled(Button)`
 export const WarningText = styled.p`
     color: red;
     font-size: 14px;
-    margin-top: 3px;
+    margin-top: -8px;
     margin-left: 10px;
 `;
 
@@ -290,19 +291,15 @@ export const EditButton = styled(Button)`
 `;
 
 export const DeleteButton = styled(Button)`
-    padding: 10px 20px;
-
-    /* background-color:#EF5350;
+    background-color:#EF5350;
+    margin-bottom: 12px;
+    margin-left: 15px;
     color: white;
     &:hover {
         background-color: #D32F2F;
-    } */
+    } 
 
-    background-color: #6c757d;
-    color: white;
-    &:hover {
-        background-color: #5a6268;
-    }
+
 `;
 
 export const BackButton = styled(Button)`
