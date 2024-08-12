@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Calendarcom from "../components/Calender";
 import { useSelector } from "react-redux";
 import {
+  useGetTask,
   // useGetTask,
   useGetTaskstatuscount,
 } from "../api/task/useTask";
@@ -14,24 +15,39 @@ import {
 
 const Calenderboard = () => {
   const date = useSelector((state) => state.Date.date);
-  // const {
-  //   data: Taskdata,
-  //   isLoading: isTaskdataLoading,
-  //   isTaskdataError,
-  // } = useGetTask();
+  console.log(date);
+  const { TaskData } = useGetTask();
   const { TaskStatuscount: statusCount } = useGetTaskstatuscount();
-  console.log(statusCount);
-  // const values = Object.values(statusCount).reduce((a, b) => {
-  //   return a + b;
-  // }, 0);
-  // const projectProgress = [
-  // { name: "진행전", progress: statusCount["진행 전"]/values*100||0 },
-  // { name: "진행중", progress: statusCount["IN_PROGRESS"]/values*100||0},
-  // { name: "완료", progress: statusCount["done"]/values*100||0 },
-  // { name: "중단", progress: statusCount["delay"]/values*100||0 },
-  // ];
-
-  useEffect(() => {}, [date]);
+  const values = Object.values(statusCount).reduce((a, b) => {
+    return a + b;
+  }, 0);
+  console.log(TaskData);
+  const projectProgress = [
+    {
+      name: "진행전",
+      progress: !isNaN(statusCount["todo"])
+        ? ((statusCount["todo"] / values) * 100).toFixed(2)
+        : 0,
+    },
+    {
+      name: "진행중",
+      progress: !isNaN(statusCount["ongoing"])
+        ? ((statusCount["ongoing"] / values) * 100).toFixed(2)
+        : 0,
+    },
+    {
+      name: "완료",
+      progress: !isNaN(statusCount["done"])
+        ? ((statusCount["done"] / values) * 100).toFixed(2)
+        : 0,
+    },
+    {
+      name: "중단",
+      progress: !isNaN(statusCount["delay"])
+        ? ((statusCount["delay"] / values) * 100).toFixed(2)
+        : 0,
+    },
+  ];
 
   return (
     <S.calender.DashboardContainer style={{ margin: "0 20px" }}>
@@ -48,21 +64,25 @@ const Calenderboard = () => {
           <S.calender.CardHeader>
             <S.calender.CardTitle>일정 상세</S.calender.CardTitle>
           </S.calender.CardHeader>
-          <div>
-            {task.map((data) => {
-              return (
-                <div key={data.taskID}>
-                  <p>title : {data.title}</p>
-                  <p>description : {data.description}</p>
-                  <p>user : {data.user}</p>
-                  <p>status : {data.status}</p>
-                  <p>startDate : {data.startDate}</p>
-                  <p>dueDate : {data.dueDate}</p>
-                  <p>startDate : {data.startDate}</p>
-                </div>
-              );
-            })}
-          </div>
+          {TaskData.length != 0 ? (
+            <div>
+              {TaskData.map((data) => {
+                return (
+                  <div key={data.taskId}>
+                    <p>title : {data.title}</p>
+                    <p>description : {data.description}</p>
+                    <p>user : {data.user}</p>
+                    <p>status : {data.status}</p>
+                    <p>startDate : {data.startDate}</p>
+                    <p>dueDate : {data.dueDate}</p>
+                    <p>endDate : {data.endDate}</p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p>{`${date.year}-${date.month}-${date.day} 일정없음`} </p>
+          )}
         </S.calender.InfoCard>
       </S.calender.CardFlexDiv>
       <S.calender.BCard>

@@ -146,7 +146,6 @@ export const useGetUsersprefix = (name) => {
         setIsLoading(false);
       }
     };
-
     fetchData();
   }, [TeamId, name]);
   return { data, isLoading, isError };
@@ -158,10 +157,10 @@ export const useInviteTeam = () => {
     mutationKey: ["TEAM_INVITE"],
     mutationFn: async (body) => {
       const response = await http.post(URL, {
-        status: "pending",
         teamId: user.TeamId,
         userId: body.targetId,
         requesterId: user.Id,
+        status: "pending",
       });
       return response;
     },

@@ -3,8 +3,7 @@ import { http } from "../interceptor";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
-
-const BASE_URL = "/foot/task/mainview";
+const BASE_URL = "/foot/task/read/";
 //탠스택 쿼리로 불러오는과정에서
 export const useGetTaskcount = () => {
   const TeamId = useSelector((state) => state.user.TeamId);
@@ -20,7 +19,7 @@ export const useGetTaskcount = () => {
       setIsError(false);
       try {
         const response = await http.get(
-          `${BASE_URL}/countTask?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`
+          `${BASE_URL}taskListQuantity/MonthByTeam?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`
         );
         setTaskcount(response);
       } catch (error) {
@@ -56,7 +55,44 @@ export const useGetTaskcount = () => {
 
 //   return query;
 // };
+//
+// http://54.180.227.191:8080/foot/task/read/taskList/DayByTeam?dueDate=2024-08-12&teamId=2
+// http://54.180.227.191:8080/foot/task/read/taskList/DayByTeam?dueDate=2024-08-02&teamId=1
 
+export const useGetTask = () => {
+  const TeamId = useSelector((state) => state.user.TeamId);
+  const date = useSelector((state) => state.Date.date);
+
+  const [TaskData, setTaskData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setIsError(false);
+      try {
+        const response = await http.get(
+          `${BASE_URL}taskList/DayByTeam?dueDate=${date.year}-${date.month
+            .toString()
+            .padStart(2, "0")}-${date.day
+            .toString()
+            .padStart(2, "0")}&teamId=${TeamId}`
+        );
+        setTaskData(response);
+      } catch (error) {
+        setIsError(true);
+        console.error("Error fetching task count:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [TeamId, date]);
+
+  return { TaskData, isLoading, isError };
+};
 export const useGetTaskstatuscount = () => {
   const TeamId = useSelector((state) => state.user.TeamId);
   const date = useSelector((state) => state.Date.date);
@@ -71,7 +107,7 @@ export const useGetTaskstatuscount = () => {
       setIsError(false);
       try {
         const response = await http.get(
-          `${BASE_URL}/countTaskStatus?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`
+          `${BASE_URL}taskStatusQuantity/MonthByTeam?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`
         );
         setTaskStatuscount(response);
       } catch (error) {

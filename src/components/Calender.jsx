@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import * as S from "../styles/index.style";
 import { setDate } from "../store/module/Date";
 import { useDispatch } from "react-redux";
 import { useGetTaskcount } from "../api/task/useTask";
-import { useQueryClient } from "@tanstack/react-query";
 const Calendarcom = () => {
   const { Taskcount = {}, isLoading, isError } = useGetTaskcount();
   console.log(Taskcount);
@@ -56,7 +54,6 @@ const Calendarcom = () => {
     const backBlanks = Array(back == 7 ? 0 : back).fill(null);
     const days = Array.from({ length: totalDays }, (_, i) => i + 1);
     const allDays = [...blanks, ...days, ...backBlanks];
-    console.log(Math.max(...allDays));
     return (
       <S.calender.CalendarGrid>
         {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
