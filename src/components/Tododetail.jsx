@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactDOM from 'react-dom';
 import * as S from "../styles/index.style";
-import Xbutton from '../assets/icons/tododetailx.svg?react';
 
 const Tododetail = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,13 +17,28 @@ const Tododetail = () => {
 
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [manager, setManager] = useState('');
+    const [status, setStatus] = useState('');
+    const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
 
     const { register, handleSubmit, setValue, watch } = useForm();
+    const dropdownRef = useRef(null);
     
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsStatusDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownRef]);
+
     const onSubmit = (data) => {
         if (data.title.trim() === '') {
             setShowTitleWarning(true);
@@ -59,11 +73,23 @@ const Tododetail = () => {
         setEndDate(e.target.value);
     };
 
-    const handleManagerChange = (e) => {
-        setManager(e.target.value);
+    const handleStatusChange = (newStatus) => {
+        setStatus(newStatus);
+        setIsStatusDropdownOpen(false);
     };
 
+    const statusOptions = ['진행전', '진행중', '완료', '지연'];
+
     const explainContent = watch('explain') || explain;
+
+
+    const handleEdit = () => {
+        console.log("수정 버튼이 클릭되었습니다.");
+    };
+
+    const handleDelete = () => {
+        console.log("삭제 버튼이 클릭되었습니다.");
+    };
 
     return (
         <>
@@ -96,7 +122,6 @@ const Tododetail = () => {
                                     </S.tododetail.Title>
                                 )}
                             </S.tododetail.TitleContainer>
-                            <S.tododetail.CloseButton onClick={closeModal}><Xbutton /></S.tododetail.CloseButton>
                         </S.tododetail.TodoHeader>
 
                         <S.tododetail.TodoContentWrapper>
@@ -128,15 +153,28 @@ const Tododetail = () => {
                             </S.tododetail.LeftSection>
 
                             <S.tododetail.RightSection>
-                                <S.tododetail.DetailbarItem>
-                                    <S.tododetail.DetailbarTitle>담당자</S.tododetail.DetailbarTitle>
-                                    <S.tododetail.DetailInput
-                                        type="text"
-                                        value={manager}
-                                        onChange={handleManagerChange}
-                                        placeholder="담당자를 입력하세요"
-                                    />
+                                <S.tododetail.DetailbarItem ref={dropdownRef}>
+                                    <S.tododetail.DetailbarTitle>현재상태</S.tododetail.DetailbarTitle>
+                                    <S.tododetail.DropdownButton 
+                                        onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
+                                    >
+                                        {status || '-'}
+                                        <S.tododetail.ArrowIcon $isOpen={isStatusDropdownOpen}>▼</S.tododetail.ArrowIcon>
+                                    </S.tododetail.DropdownButton>
+                                    {isStatusDropdownOpen && (
+                                        <S.tododetail.DropdownContent>
+                                            {statusOptions.map((option) => (
+                                                <S.tododetail.DropdownItem 
+                                                    key={option} 
+                                                    onClick={() => handleStatusChange(option)}
+                                                >
+                                                    {option}
+                                                </S.tododetail.DropdownItem>
+                                            ))}
+                                        </S.tododetail.DropdownContent>
+                                    )}
                                 </S.tododetail.DetailbarItem>
+                                
                                 <S.tododetail.DetailbarItem>
                                     <S.tododetail.DetailbarTitle>시작 날짜</S.tododetail.DetailbarTitle>
                                     <S.tododetail.DetailInput
@@ -156,6 +194,14 @@ const Tododetail = () => {
                                 </S.tododetail.DetailbarItem>
                             </S.tododetail.RightSection>
                         </S.tododetail.TodoContentWrapper>
+
+                        <S.tododetail.ButtonContainer>
+
+                            <S.tododetail.EditButton onClick={handleEdit}>수정</S.tododetail.EditButton>
+                            <S.tododetail.DeleteButton onClick={handleDelete}>삭제</S.tododetail.DeleteButton>
+                            <S.tododetail.BackButton onClick={closeModal}>취소</S.tododetail.BackButton>
+
+                        </S.tododetail.ButtonContainer>
                     </S.tododetail.TodoModalContent>
                 </S.tododetail.TodoModalOverlay>
                 , document.body
@@ -163,6 +209,5 @@ const Tododetail = () => {
         </>
     );
 };
-
 
 export default Tododetail;

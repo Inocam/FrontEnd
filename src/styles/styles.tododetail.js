@@ -6,7 +6,7 @@ export const TodoModalOverlay = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(199, 214, 255, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,24 +14,25 @@ export const TodoModalOverlay = styled.div`
 
 export const TodoModalContent = styled.div`
     background-color: white;
-    padding: 30px;
+    padding: 40px;
     border-radius: 8px;
-    width: 800px;
-    max-width: 90%;
-    height: 420px;
+    width: 1000px;
+    max-width: 95%;
+    height: 700px;
     position: relative;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 export const TodoHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    height: 60px;
-    padding: 0 10px;
+    margin-bottom: 32px;
+    height: 70px;
+    padding: 0;
+    width: 100%;
 `;
 
 export const TitleContainer = styled.div`
@@ -40,11 +41,13 @@ export const TitleContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    border-bottom: 1px solid #ced4da;
+    
 `;
 
 export const Title = styled.h1`
-    font-size: 28px;
-    margin: 0;
+    font-size: 35px;
+    margin-left: 10px;
     cursor: pointer;
     line-height: 40px;
     color: #333;
@@ -54,11 +57,11 @@ export const Title = styled.h1`
 `;
 
 export const TitleInput = styled.input`
-    font-size: 28px;
+    font-size: 27px;
     padding: 5px 10px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    width: calc(100% - 180px);
+    width: calc(100% - 150px);
     height: 40px;
     &:focus {
         outline: none;
@@ -70,6 +73,7 @@ export const TitleInput = styled.input`
 export const ButtonGroup = styled.div`
     display: inline-flex;
     margin-left: 10px;
+    margin-bottom: 10px;
 `;
 
 export const Button = styled.button`
@@ -91,59 +95,46 @@ export const SaveButton = styled(Button)`
 `;
 
 export const CancelButton = styled(Button)`
-    background-color: #EAEAEA;
-    color: #333;
+    background-color: #6c757d;
+    color: white;
     &:hover {
-        background-color: #D1D1D1;
-    }
-`;
-
-export const CloseButton = styled.button`
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 5px;
-    svg {
-        width: 24px;
-        height: 24px;
-    }
-    &:hover svg {
-        color: #5a6268;
+        background-color: #5a6268;
     }
 `;
 
 export const WarningText = styled.p`
-    color: #dc3545;
+    color: red;
     font-size: 14px;
-    margin-top: 5px;
+    margin-top: 3px;
+    margin-left: 10px;
 `;
 
+// 
 export const TodoContentWrapper = styled.div`
     display: flex;
-    gap: 30px;
+    gap: 40px;
     flex: 1;
     overflow: hidden;
+    width: 100%;
 `;
 
+// 왼쪽
 export const LeftSection = styled.div`
     flex: 1;
     overflow-y: auto;
 `;
 
-export const RightSection = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-`;
 
 export const TodoExplainSection = styled.div`
-    margin-top: 0;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const ExplainTitle = styled.h2`
     font-size: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    margin-left: 10px;
     color: #495057;
 `;
 
@@ -152,10 +143,12 @@ export const ExplainContent = styled.p`
     line-height: 1.5;
     color: #495057;
     cursor: pointer;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid transparent;
     border-radius: 4px;
-    min-height: 100px;
+    min-height: 150px;
+    flex: 1;
+    overflow-y: auto;
     &:hover {
         background-color: #f8f9fa;
         border-color: #ced4da;
@@ -164,8 +157,8 @@ export const ExplainContent = styled.p`
 
 export const ExplainTextarea = styled.textarea`
     width: 100%;
-    height: 150px;
-    padding: 10px;
+    height: 280px;
+    padding: 15px;
     font-size: 16px;
     border: 1px solid #ced4da;
     border-radius: 4px;
@@ -178,16 +171,27 @@ export const ExplainTextarea = styled.textarea`
     }
 `;
 
+// 오른쪽
+
+export const RightSection = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+`;
+
+
 export const DetailbarItem = styled.div`
-    margin-bottom: 30px; 
+    margin-bottom: 45px; 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
 `;
 
 export const DetailbarTitle = styled.h3`
     font-size: 16px;
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
     color: #495057;
 `;
 
@@ -203,3 +207,111 @@ export const DetailInput = styled.input`
         box-shadow: 0 0 0 1px #025E8A;
     }
 `;
+
+export const DetailSelect = styled.select`
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+    border-radius: 4px;
+    width: 100%;
+    background-color: white;
+    cursor: pointer;
+    &:focus {
+        outline: none;
+        border-color: #025E8A;
+        box-shadow: 0 0 0 1px #025E8A;
+    }
+`;
+
+export const DropdownContainer = styled.div`
+    position: relative;
+    width: 100%;
+    
+`;
+
+export const DropdownButton = styled.div`
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+    border-radius: 4px;
+    width: 100%;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const ArrowIcon = styled.span`
+    transition: transform 0.3s ease;
+    transform: ${props => props.$isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};
+`;
+
+export const DropdownContent = styled.div`
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 1;
+    
+`;
+
+export const DropdownItem = styled.div`
+    padding: 8px 12px;
+    cursor: pointer;
+    &:hover {
+        background-color: #f8f9fa;
+    }
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    padding: 10px;
+    // border-top: 1px solid #ced4da;
+    margin-bottom: 10px;
+    gap: 15px
+    
+`;
+
+
+export const EditButton = styled(Button)`
+    padding: 10px 20px;
+    background-color: #0278AE;
+    color: white;
+    &:hover {
+        background-color: #025E8A;
+    }
+`;
+
+export const DeleteButton = styled(Button)`
+    padding: 10px 20px;
+
+    /* background-color:#EF5350;
+    color: white;
+    &:hover {
+        background-color: #D32F2F;
+    } */
+
+    background-color: #6c757d;
+    color: white;
+    &:hover {
+        background-color: #5a6268;
+    }
+`;
+
+export const BackButton = styled(Button)`
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    &:hover {
+        background-color: #5a6268;
+    }
+`;
+
+
