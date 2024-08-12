@@ -3,12 +3,14 @@ import Cookies from "js-cookie";
 import { http } from "../interceptor";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/module/User";
+import { useNavigate } from "react-router-dom";
 
 const MUTATION_KEY = {
   SIGN_IN: "SIGN_IN",
 };
 
 export const usePostSignInData = () => {
+  const navigate = useNavigate();
   const URL = "/api/user/login";
   const dispatch = useDispatch();
   return useMutation({
@@ -24,6 +26,7 @@ export const usePostSignInData = () => {
       Cookies.set("AccessToken", data.data.accessToken, {
         expires: 1 / 24,
       });
+      navigate("/team");
     },
     onError: (error) => {
       console.error(error.message);

@@ -26,8 +26,9 @@ const Team = () => {
       setselectId(Id);
     });
   };
-  const selectTeamIdHandler = (Id) => {
-    dispatch(setTeamId({ TeamId: Id }));
+  const selectTeamIdHandler = (Id, Leader) => {
+    console.log(Id, Leader);
+    dispatch(setTeamId({ TeamId: Id, TeamLeader: Leader }));
     navigate("/calender");
   };
   const name = useRef();
@@ -121,7 +122,9 @@ const Team = () => {
                         요약
                       </S.team.ResetButton>
                       <S.team.ConfirmButton
-                        onClick={() => selectTeamIdHandler(data.teamId)}
+                        onClick={() =>
+                          selectTeamIdHandler(data.teamId, data.creatorId)
+                        }
                       >
                         들어가기
                       </S.team.ConfirmButton>

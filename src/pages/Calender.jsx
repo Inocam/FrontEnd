@@ -10,13 +10,13 @@ import Calenderboard from "../components/Calenderboard";
 const Dashboard = () => {
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Header />
-        <Sidenav>
-          <Calenderboard />
-        </Sidenav>
-        {/* <Message /> */}
-      </Suspense>
+      {/* <Suspense> */}
+      <Header />
+      <Sidenav>
+        <Calenderboard />
+      </Sidenav>
+      {/* <Message /> */}
+      {/* </Suspense> */} 
     </div>
   );
 };

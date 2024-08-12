@@ -4,6 +4,7 @@ const initialState = {
   Id: "",
   UserName: "",
   TeamId: 1,
+  TeamLeader: "",
 };
 
 const user = createSlice({
@@ -21,6 +22,7 @@ const user = createSlice({
     },
     setTeamId: (state, action) => {
       state.TeamId = action.payload.TeamId;
+      state.TeamLeader = action.payload.TeamLeader;
     },
   },
 });

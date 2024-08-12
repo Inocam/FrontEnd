@@ -7,13 +7,17 @@ import UserIcon from "../assets/icons/user.svg?react";
 import ArrowIcon from "../assets/icons/arrow.svg?react";
 import * as S from "../styles/index.style";
 import AddSchedule from "./AddSchedule";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
   const [isTeamDropdownOpen, setIsTeamDropdownOpen] = useState(false);
   const projectDropdownRef = useRef(null);
   const teamDropdownRef = useRef(null);
-
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  console.log(user);
   const toggleProjectDropdown = () => {
     setIsProjectDropdownOpen((prevState) => !prevState);
     setIsTeamDropdownOpen(false);
@@ -59,7 +63,11 @@ const Header = () => {
           <S.header.NavItem onClick={toggleProjectDropdown}>
             프로젝트 <ArrowIcon />
           </S.header.NavItem>
-          <S.header.NavItem>팀</S.header.NavItem>
+          {user.Id == user.TeamLeader && (
+            <S.header.NavItem onClick={() => navigate("/access")}>
+              팀
+            </S.header.NavItem>
+          )}
           <S.header.NavItem onClick={toggleTeamDropdown}>
             Task추가
           </S.header.NavItem>

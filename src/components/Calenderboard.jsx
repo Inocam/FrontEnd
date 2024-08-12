@@ -7,30 +7,30 @@ import Header from "../components/Header";
 import Calendarcom from "../components/Calender";
 import { useSelector } from "react-redux";
 import {
-  useGetTask,
-  useGetTaskcount,
+  // useGetTask,
   useGetTaskstatuscount,
 } from "../api/task/useTask";
 // Styled components
 
 const Calenderboard = () => {
   const date = useSelector((state) => state.Date.date);
-  const {
-    data: Taskcount,
-    isLoading: isTaskcountLoaing,
-    isTaskcountError,
-  } = useGetTaskcount();
-  const {
-    data: Taskdata,
-    isLoading: isTaskdataLoading,
-    isTaskdataError,
-  } = useGetTask();
-  const {
-    data: statusCount,
-    isstatusCountLoading,
-    isstatusCountError,
-  } = useGetTaskstatuscount();
-  console.log(date);
+  // const {
+  //   data: Taskdata,
+  //   isLoading: isTaskdataLoading,
+  //   isTaskdataError,
+  // } = useGetTask();
+  const { TaskStatuscount: statusCount } = useGetTaskstatuscount();
+  console.log(statusCount);
+  // const values = Object.values(statusCount).reduce((a, b) => {
+  //   return a + b;
+  // }, 0);
+  // const projectProgress = [
+  // { name: "진행전", progress: statusCount["진행 전"]/values*100||0 },
+  // { name: "진행중", progress: statusCount["IN_PROGRESS"]/values*100||0},
+  // { name: "완료", progress: statusCount["done"]/values*100||0 },
+  // { name: "중단", progress: statusCount["delay"]/values*100||0 },
+  // ];
+
   useEffect(() => {}, [date]);
 
   return (
@@ -91,9 +91,9 @@ export default Calenderboard;
 
 const projectProgress = [
   { name: "진행전", progress: 80 },
-  { name: "진행중", progress: 60 },
-  { name: "완료", progress: 40 },
-  { name: "중단", progress: 20 },
+  { name: "진행중", progress: 80 },
+  { name: "완료", progress: 80 },
+  { name: "중단", progress: 80 },
 ];
 
 const task = [

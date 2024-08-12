@@ -22,7 +22,7 @@ const user = createSlice({
     },
   },
 });
-
+ 
 export default user.reducer;
 
 export const { setDate } = user.actions;

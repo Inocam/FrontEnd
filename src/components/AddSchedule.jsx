@@ -5,6 +5,8 @@ import Header from "./Header";
 import Sidenav from "./Sidenav";
 import * as S from "../styles/index.style";
 import UserIcon from "../assets/icons/user.svg";
+import { useCreateTask } from "../api/task/useCreateTask";
+import { useSelector } from "react-redux";
 
 const s = {};
 
@@ -114,32 +116,27 @@ const AddSchedule = ({ onClickHandler }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [details, setDetails] = useState("");
-  const [status, setStatus] = useState("");
-
+  const [status, setStatus] = useState("진행 전");
+  const { mutate ,isSuccess,isError } = useCreateTask();
+  const user = useSelector((state) => state.user);
   const handleSubmit = async () => {
     const payload = {
-      title,
-      startDate,
-      endDate,
-      details,
-      status,
+      teamId: user.TeamId,
+      userId: user.Id,
+      title: title,
+      description: details,
+      status: status,
+      startDate: startDate,
+      dueDate: endDate,
+      endDate: "",
+      parentTask: null,
     };
-
-    try {
-      const response = await axios.post("/foot/task", payload);
-
-      if (response.status === 200) {
-        setTitle("");
-        setStartDate("");
-        setEndDate("");
-        setDetails("");
-        setStatus("");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("등록 중 오류가 발생했습니다.");
-    }
+    mutate(payload);
+    onClickHandler()
   };
+  if(isSuccess){
+    
+  }
 
   return (
     <ModalOverlay>
@@ -152,6 +149,7 @@ const AddSchedule = ({ onClickHandler }) => {
               placeholder="일정 제목을 입력하세요"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
             <s.Image src={UserIcon} alt="작성자 이미지" />
           </s.SectionItem>
@@ -163,6 +161,7 @@ const AddSchedule = ({ onClickHandler }) => {
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
+              required
             />
           </s.SectionItem>
         </s.Section>
@@ -172,7 +171,9 @@ const AddSchedule = ({ onClickHandler }) => {
             <s.Input
               type="date"
               value={endDate}
+              min={startDate}
               onChange={(e) => setEndDate(e.target.value)}
+              required
             />
           </s.SectionItem>
         </s.Section>

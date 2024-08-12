@@ -63,7 +63,7 @@ export const Table = styled.table`
 export const Th = styled.th`
   background-color: #f8f9fa;
   padding: 1rem;
-  text-align: left;
+  text-align: center;
   font-weight: bold;
   color: #333;
 `;
@@ -71,6 +71,7 @@ export const Th = styled.th`
 export const Td = styled.td`
   padding: 1rem;
   border-bottom: 1px solid #e9ecef;
+  text-align: center;
 `;
 
 export const UserIcon = styled.div`

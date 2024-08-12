@@ -16,13 +16,6 @@ const MainLogin = ({ signHandler }) => {
   } = useForm();
 
   const { mutate, isSuccess, isError, error } = usePostSignInData();
-  console.log(error);
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("/team");
-    }
-  }, [isSuccess, navigate]);
 
   const onSubmit = (data) => {
     mutate({ email: data.email, password: data.password });
