@@ -61,7 +61,6 @@ export const useGetMessage = () => {
     onError: (error) => {
       console.error("Error fetching messages:", error);
     },
-    enabled: !!teamId,
   });
 
   return query;

@@ -3,6 +3,7 @@ import * as S from "../styles/index.style";
 import { setDate } from "../store/module/Date";
 import { useDispatch } from "react-redux";
 import { useGetTaskcount } from "../api/task/useTask";
+
 const Calendarcom = () => {
   const { Taskcount = {}, isLoading, isError } = useGetTaskcount();
   console.log(Taskcount);
@@ -33,7 +34,12 @@ const Calendarcom = () => {
       currentDate.getMonth() - 1,
       1
     );
-    onDayClick(prevDate.getFullYear(), prevDate.getMonth() + 1, 1, 31); // month에 +1 추가
+    onDayClick(
+      prevDate.getFullYear(),
+      prevDate.getMonth() + 1,
+      1,
+      daysInMonth(prevDate)
+    ); // month에 +1 추가
     setCurrentDate(prevDate);
   };
 
@@ -43,7 +49,13 @@ const Calendarcom = () => {
       currentDate.getMonth() + 1,
       1
     );
-    onDayClick(nextDate.getFullYear(), nextDate.getMonth() + 1, 1, 31); // month에 +1 추가
+    onDayClick(
+      nextDate.getFullYear(),
+      nextDate.getMonth() + 1,
+      1,
+      daysInMonth(nextDate)
+    ); // month에 +1 추가
+    console.log(daysInMonth(nextDate));
     setCurrentDate(nextDate);
   };
   const renderCalendar = () => {

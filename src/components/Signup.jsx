@@ -29,18 +29,6 @@ const Signup = ({ signHandler }) => {
       <S.login.Title>SIGN UP</S.login.Title>
       <form onSubmit={handleSubmit(onSubmit)}>
         <S.login.InputGroup>
-          <S.login.Label htmlFor="username">User Name</S.login.Label>
-          <S.login.Input
-            type="text"
-            id="username"
-            {...register("username", { required: true })}
-            aria-invalid={errors.mail ? "true" : "false"}
-          />
-          {errors.username?.type === "required" && (
-            <S.login.Error role="alert">유저이름은 필수입니다.</S.login.Error>
-          )}
-        </S.login.InputGroup>
-        <S.login.InputGroup>
           <S.login.Label htmlFor="email">Email address</S.login.Label>
           <S.login.Input
             type="email"
@@ -50,6 +38,18 @@ const Signup = ({ signHandler }) => {
           />
           {errors.email?.type === "required" && (
             <S.login.Error role="alert">이메일은 필수입니다.</S.login.Error>
+          )}
+        </S.login.InputGroup>
+        <S.login.InputGroup>
+          <S.login.Label htmlFor="username">User Name</S.login.Label>
+          <S.login.Input
+            type="text"
+            id="username"
+            {...register("username", { required: true })}
+            aria-invalid={errors.mail ? "true" : "false"}
+          />
+          {errors.username?.type === "required" && (
+            <S.login.Error role="alert">유저이름은 필수입니다.</S.login.Error>
           )}
         </S.login.InputGroup>
 
@@ -78,9 +78,7 @@ const Signup = ({ signHandler }) => {
           <S.login.SignUpButton onClick={() => signHandler()} type="button">
             <RArrowIcon />
           </S.login.SignUpButton>
-          <S.login.SignUpButton type="submit">
-            <ArrowIcon />
-          </S.login.SignUpButton>
+          <S.login.SignUpButton type="submit">SIGN UP</S.login.SignUpButton>
         </S.login.Div>
         {isError && (
           <S.login.Error role="alert">
