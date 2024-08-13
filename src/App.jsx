@@ -1,6 +1,6 @@
 import { GlobalCss } from "./styles/index.style";
 import { BrowserRouter } from "react-router-dom";
-import Tododetail from "./components/Tododetail";
+import Alert from "./components/Alert";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const App = () => {
     <BrowserRouter>
     <GlobalCss></GlobalCss>
       <Routes>
-        <Route path="/" element={<Tododetail />} />
+        <Route path="/" element={<Alert />} />
       </Routes>
     </BrowserRouter>
   );

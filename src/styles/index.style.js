@@ -8,6 +8,7 @@ export * as setting from "./styles.setting";
 export * as access from "./styles.access";
 export * as team from "./styles.team";
 export * as tododetail from "./styles.tododetail";
+export * as alert from "./styles.alert";
 
 export const GlobalCss = createGlobalStyle`
 *{
