@@ -12,32 +12,42 @@ import {
 } from "../store/module/Dashboard.js";
 import { useGetMessage, useGetTeam } from "../api/message/useMessage.js";
 import { useQueryClient } from "@tanstack/react-query";
-import { setTeamId } from "../store/module/User.js";
 import { useEffect } from "react";
 import styled from "styled-components";
+import { setMessageId } from "../store/module/Message.js";
+import SelectUser from "./SelectUser.jsx";
+import { useCreateChatRoom } from "../api/message/useRoom.js";
 const SMessageButton = styled.button`
-  position: absolute;
+  position: sticky;
   bottom: 10px;
   right: 10px;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   border: none;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1000000;
 `;
 const Message = () => {
   const Queryclient = useQueryClient();
   const [messages, setMessages] = useState([]);
+  const [isUserAddModalOpen, setIsUserAddModalOpen] = useState(false);
   const inputMessage = useRef("");
   const dispatch = useDispatch();
   const isMessageOpen = useSelector((state) => state.nav.ismassageOpen);
   const isTeam = useSelector((state) => state.user.TeamId);
   const { data: teamData, isLoading } = useGetTeam();
-  // const { data: messageData, isMessageLoading } = useGetMessage();
+  const { data: messageData, isLoading: isMessageLoading } = useGetMessage();
+  const { mutate } = useCreateChatRoom();
 
   useEffect(() => {
     Queryclient.invalidateQueries(["getMessage"]);
   }, [Queryclient, isTeam]);
 
+  const openUserAddModal = () => {
+    setIsUserAddModalOpen(true);
+  };
+  const closeUserAddModal = () => setIsUserAddModalOpen(false);
   const handleSendMessage = () => {
     if (inputMessage.current.value.trim() !== "") {
       setMessages((state) => [...state, inputMessage]);
@@ -52,7 +62,12 @@ const Message = () => {
   if (isLoading) {
     return <p>loading</p>;
   }
-
+  const submitHandler = (e, selectedUser) => {
+    e.preventDefault();
+    console.log(selectedUser);
+    mutate({ userId: selectedUser.id });
+    closeUserAddModal();
+  };
   return (
     <>
       <SMessageButton
@@ -74,15 +89,16 @@ const Message = () => {
                   <S.message.ConversationHeader>
                     conversations
                   </S.message.ConversationHeader>
-                  <MessagePlusIcon onClick={() => console.log("클릭")} />
+                  <MessagePlusIcon onClick={() => openUserAddModal()} />
                 </S.message.Flexdiv>
                 <div>
                   {teamData.length != 0 ? (
                     teamData.map((state) => {
+                      console.log(state);
                       return (
                         <S.message.ConversationBox
                           onClick={() => {
-                            dispatch(setTeamId({ TeamId: state.roomId }));
+                            dispatch(setMessageId({ TeamId: state.roomId }));
                           }}
                           key={state.roomId}
                         >
@@ -112,12 +128,14 @@ const Message = () => {
                 </S.message.TalkingBoxHeader>
 
                 <S.message.TalkingRoom>
-                  {/* {!isMessageLoading &&
-                    messageData?.map((msg) => (
+                  {console.log(messageData.content)}
+                  {!isMessageLoading &&
+                    messageData.content &&
+                    messageData.content?.map((msg) => (
                       <S.message.MessageBubble key={msg.sendDate}>
                         {msg.message}
                       </S.message.MessageBubble>
-                    ))} */}
+                    ))}
                 </S.message.TalkingRoom>
 
                 <S.message.TalkingBar>
@@ -127,9 +145,17 @@ const Message = () => {
                       ref={inputMessage}
                       onKeyPress={handleKeyPress}
                     />
-                    <S.message.MessageSendButton onClick={handleSendMessage}>
+                    <S.message.MessageSendButton
+                      onClick={() => console.log("클릭")}
+                    >
                       <MessageSendIcon />
                     </S.message.MessageSendButton>
+                    {isUserAddModalOpen && (
+                      <SelectUser
+                        closeUserAddModal={closeUserAddModal}
+                        submitHandler={submitHandler}
+                      />
+                    )}
                   </S.message.TalkingBarRight>
                 </S.message.TalkingBar>
               </S.message.TalkingBox>

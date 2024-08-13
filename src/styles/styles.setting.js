@@ -7,7 +7,7 @@ margin-top: 35px;
 padding: 20px;
 `;
 
-export const SettingForm = styled.div`
+export const SettingForm = styled.form`
 display: flex;
 flex-direction: column;
 `;

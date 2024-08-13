@@ -6,6 +6,8 @@ export * as sidenav from "./styles.sidenav";
 export * as dashboard from "./styles.dashboard";
 export * as calender from "./style.calender";
 export * as team from "./styles.team";
+export * as access from "./styles.access";
+export * as setting from "./styles.setting";
 
 export const GlobalCss = createGlobalStyle`
 *{

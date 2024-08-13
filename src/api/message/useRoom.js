@@ -1,22 +1,62 @@
+import { useSelector } from "react-redux";
 import { http } from "../interceptor";
-const MUTATION_KEY = {
-  CREATE_ROOM: "CREATE_ROOM",
-};
-export const useCreateRoom = () => {
-  const URL = "/foot/teams/invite";
+import { useMutation } from "@tanstack/react-query";
+// export const useCreateRoom = () => {
+//   const URL = "/foot/teams/invite";
 
-  return {
-    mutationKey: [MUTATION_KEY.CREATE_ROOM],
+//   return {
+//     mutationKey: [ "CREATE_ROOM"],
+//     mutationFn: async (body) => {
+//       const response = await http.post(URL, body);
+//       return response;
+//     },
+//     onSuccess: (data) => {
+//       console.log(data);
+//     },
+//     onError: (error) => {
+//       console.error(error.message);
+//     },
+//   };
+// };
+export const useCreateChatRoom = () => {
+  const URL = "/foot/chat/rooms";
+  const userId = useSelector((state) => state.user.Id);
+  console.log(userId);
+  return useMutation({
+    mutationKey: ["CREATE_ROOM"],
     mutationFn: async (body) => {
-      const response = await http.post(URL, body);
-      return response;
+      const response = await http.post(URL, {
+        userId: userId,
+        roomName: String(body.userId) + String(userId),
+      });
+      const response2 = await http.post(URL + "/join", {
+        roomId: response.data.roomId,
+        userId: body.userId,
+      });
+      return response2;
     },
     onSuccess: (data) => {
       console.log(data);
     },
     onError: (error) => {
       console.error(error.message);
-      // 여기서 에러를 처리하거나 에러 상태를 설정할 수 있습니다.
     },
-  };
+  });
 };
+// export const useCreateRoom = () => {
+//   const URL = "/foot/teams/invite";
+
+//   return {
+//     mutationKey: [MUTATION_KEY.CREATE_ROOM],
+//     mutationFn: async (body) => {
+//       const response = await http.post(URL, body);
+//       return response;
+//     },
+//     onSuccess: (data) => {
+//       console.log(data);
+//     },
+//     onError: (error) => {
+//       console.error(error.message);
+//     },
+//   };
+// };

@@ -37,13 +37,20 @@ export const useGetTeam = () => {
 };
 
 export const useGetMessage = () => {
-  const teamId = useSelector((state) => state.user.TeamId);
+  const teamId = useSelector((state) => state.team.MessageId);
   const query = useQuery({
-    queryKey: ["getMessage"],
+    queryKey: ["getMessage", teamId],
     queryFn: async () => {
-      if (!teamId) throw new Error("선택된 teamId 없습니다");
-      const response = await http.get(`${MESSEGE_URL(teamId)}`);
-      return response;
+      try {
+        const response = await http.get(`${MESSEGE_URL(teamId)}`);
+        return response;
+      } catch (error) {
+        //에러 발생 핸들링
+        if (error.response && error.response.status === 404) {
+          return []; // 404 에러 발생 시 빈 배열 반환
+        }
+        throw error;
+      }
     },
     retry: (error) => {
       if (error.response && error.response.status === 404) {
@@ -54,7 +61,6 @@ export const useGetMessage = () => {
     onError: (error) => {
       console.error("Error fetching messages:", error);
     },
-    enabled: !!teamId,
   });
 
   return query;

@@ -25,7 +25,11 @@ export const useCreateTeam = () => {
       } else {
         formData.append("image", []);
       }
-      const response = await http.post(URL, formData);
+      const response = await http.post(URL, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response;
     },
     onSuccess: () => {

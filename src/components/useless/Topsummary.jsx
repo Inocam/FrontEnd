@@ -1,5 +1,5 @@
-import * as S from "../styles/index.style";
-import * as L from "../assets/icons/index.Logo";
+import * as S from "../../styles/index.style";
+import * as L from "../../assets/icons/index.Logo";
 
 const Topsummary = () => {
   return (

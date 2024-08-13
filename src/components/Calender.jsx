@@ -1,16 +1,24 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import * as S from "../styles/index.style";
-const Calendarcom = ({ onDayClick }) => {
+import { setDate } from "../store/module/Date";
+import { useDispatch } from "react-redux";
+import { useGetTaskcount } from "../api/task/useTask";
+
+const Calendarcom = () => {
+  const { Taskcount = {}, isLoading, isError } = useGetTaskcount();
+  console.log(Taskcount);
+  const dispatch = useDispatch();
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const Tdate = {
     Year: currentDate.getFullYear(),
     Month: currentDate.getMonth() + 1,
   };
-  useEffect(() => {
-    onDayClick(null);
-  }, [currentDate]);
+
+  const onDayClick = (year, month, day, lastday) => {
+    dispatch(setDate({ Date: { year, month, day, lastday } }));
+  };
 
   const daysInMonth = (date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -21,17 +29,35 @@ const Calendarcom = ({ onDayClick }) => {
   };
 
   const prevMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+    const prevDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      1
     );
+    onDayClick(
+      prevDate.getFullYear(),
+      prevDate.getMonth() + 1,
+      1,
+      daysInMonth(prevDate)
+    ); // month에 +1 추가
+    setCurrentDate(prevDate);
   };
 
   const nextMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+    const nextDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      1
     );
+    onDayClick(
+      nextDate.getFullYear(),
+      nextDate.getMonth() + 1,
+      1,
+      daysInMonth(nextDate)
+    ); // month에 +1 추가
+    console.log(daysInMonth(nextDate));
+    setCurrentDate(nextDate);
   };
-
   const renderCalendar = () => {
     const totalDays = daysInMonth(currentDate);
     const startingDay = startDay(currentDate);
@@ -45,16 +71,37 @@ const Calendarcom = ({ onDayClick }) => {
         {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
           <S.calender.DayHeader key={day}>{day}</S.calender.DayHeader>
         ))}
-        {allDays.map((day, index) => (
-          <S.calender.Day
-            key={index}
-            onClick={
-              day ? () => onDayClick(Tdate.Year, Tdate.Month, day) : () => {}
-            }
-          >
-            {<p>{day}</p>}
-          </S.calender.Day>
-        ))}
+        {allDays.map((day, index) => {
+          return (
+            <S.calender.Day
+              key={index}
+              onClick={
+                day
+                  ? () =>
+                      onDayClick(
+                        Tdate.Year,
+                        Tdate.Month,
+                        day,
+                        Math.max(...allDays)
+                      )
+                  : () => {}
+              }
+            >
+              {<p>{day}</p>}
+              {
+                <div>
+                  {day &&
+                    Taskcount[
+                      `${Tdate.Year}-${Tdate.Month.toString().padStart(
+                        2,
+                        "0"
+                      )}-${day?.toString().padStart(2, "0")}`
+                    ]}
+                </div>
+              }
+            </S.calender.Day>
+          );
+        })}
       </S.calender.CalendarGrid>
     );
   };
