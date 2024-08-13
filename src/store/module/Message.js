@@ -9,7 +9,7 @@ const user = createSlice({
   initialState,
   reducers: {
     setMessageId: (state, action) => {
-      state.TeamId = action.payload.MessageId;
+      state.MessageId = action.payload.TeamId;
     },
   },
 });

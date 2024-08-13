@@ -68,9 +68,11 @@ const Header = () => {
               팀
             </S.header.NavItem>
           )}
-          <S.header.NavItem onClick={toggleTeamDropdown}>
-            Task추가
-          </S.header.NavItem>
+          {user.TeamLeader && user.TeamId && (
+            <S.header.NavItem onClick={toggleTeamDropdown}>
+              Task추가
+            </S.header.NavItem>
+          )}
         </S.header.NavItems>
       </S.header.LeftSection>
 

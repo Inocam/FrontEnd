@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
-import Header from "./Header";
-import Sidenav from "./Sidenav";
 import * as S from "../styles/index.style";
 import UserIcon from "../assets/icons/user.svg";
 import { useCreateTask } from "../api/task/useCreateTask";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setRefetch } from "../store/module/Date";
 
 const s = {};
 
@@ -117,7 +116,7 @@ const AddSchedule = ({ onClickHandler }) => {
   const [endDate, setEndDate] = useState("");
   const [details, setDetails] = useState("");
   const [status, setStatus] = useState("진행 전");
-  const { mutate ,isSuccess,isError } = useCreateTask();
+  const { mutate, isSuccess, isError } = useCreateTask();
   const user = useSelector((state) => state.user);
   const handleSubmit = async () => {
     const payload = {
@@ -125,18 +124,22 @@ const AddSchedule = ({ onClickHandler }) => {
       userId: user.Id,
       title: title,
       description: details,
-      status: status,
+      status:
+        status == "진행 전"
+          ? "todo"
+          : status == "진행 중"
+          ? "ongoing"
+          : status == "완료"
+          ? "done"
+          : "delay",
       startDate: startDate,
       dueDate: endDate,
       endDate: "",
       parentTask: null,
     };
     mutate(payload);
-    onClickHandler()
+    onClickHandler();
   };
-  if(isSuccess){
-    
-  }
 
   return (
     <ModalOverlay>
@@ -190,6 +193,7 @@ const AddSchedule = ({ onClickHandler }) => {
         <s.Section>
           <s.SectionItem>
             <s.Label>진행 상황</s.Label>
+            {/* todo ongoing done delay */}
             <div>
               {["진행 전", "진행 중", "완료", "지연"].map((statusOption) => (
                 <s.Button

@@ -15,6 +15,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { setTeamId } from "../store/module/User";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ const Team = () => {
       setselectId(Id);
     });
   };
+  useEffect(() => {
+    dispatch(setTeamId({ TeamId: "", TeamLeader: "" }));
+  });
   const selectTeamIdHandler = (Id, Leader) => {
     console.log(Id, Leader);
     dispatch(setTeamId({ TeamId: Id, TeamLeader: Leader }));

@@ -11,6 +11,7 @@ const initialState = {
       currentDate.getMonth() + 1,
       0
     ).getDate(), // 해당 월의 마지막 날 계산
+    refetch: false,
   },
 };
 const user = createSlice({
@@ -18,11 +19,14 @@ const user = createSlice({
   initialState,
   reducers: {
     setDate: (state, action) => {
-      state.date = action.payload.Date;
+      state.date = { ...action.payload.Date, refetch: false };
+    },
+    setRefetch: (state) => {
+      state.date.refetch = !state.date.refetch;
     },
   },
 });
- 
+
 export default user.reducer;
 
-export const { setDate } = user.actions;
+export const { setDate, setRefetch } = user.actions;

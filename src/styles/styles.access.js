@@ -165,4 +165,5 @@ export const ModalAddButton = styled.button`
 `;
 export const nameSpace = styled.div`
   padding: 20px;
+
 `;

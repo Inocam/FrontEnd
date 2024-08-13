@@ -1,18 +1,21 @@
 import { useState } from "react";
 import * as S from "../styles/index.style";
 import SelectUser from "./SelectUser";
-import { useDeleteTeam, useGetMTeamUserList } from "../api/Team/useTeam";
+import {
+  useInviteTeam,
+  useDeleteTeam,
+  useGetMTeamUserList,
+} from "../api/Team/useTeam";
 import { useSelector } from "react-redux";
+import {} from "../api/Team/useTeam";
 
 const Access = () => {
   const [isUserAddModalOpen, setIsUserAddModalOpen] = useState(false);
   const [serchname, setserchName] = useState(""); // State for the input value
   const { data: TeamUserList, doREfetch } = useGetMTeamUserList();
   const userinfo = useSelector((state) => state.user);
-
-  console.log(userinfo);
   const { mutate } = useDeleteTeam();
-
+  const { mutate: InviteMutate } = useInviteTeam();
   const openUserAddModal = () => {
     setIsUserAddModalOpen(true);
   };
@@ -23,13 +26,12 @@ const Access = () => {
     doREfetch();
   };
 
-  const handleKeyDown = (e) => {
-    // Prevent form submission on Enter key
-    if (e.key === "Enter") {
-      e.preventDefault();
-    }
+  const submitHandler = (e, selectedUser) => {
+    e.preventDefault();
+    console.log(selectedUser);
+    InviteMutate({ targetId: selectedUser.id });
+    closeUserAddModal();
   };
-
   return (
     <S.access.AccessContainer>
       <S.access.AccessTop>
@@ -40,8 +42,8 @@ const Access = () => {
       </S.access.AccessTop>
       {isUserAddModalOpen && (
         <SelectUser
-          handleKeyDown={handleKeyDown}
           closeUserAddModal={closeUserAddModal}
+          submitHandler={submitHandler}
         />
       )}
 

@@ -1,15 +1,13 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as S from "../styles/index.style";
-import { useGetUsersprefix, useInviteTeam } from "../api/Team/useTeam";
+import { useGetUsersprefix } from "../api/Team/useTeam";
 
-
-const SelectUser = ({ handleKeyDown, closeUserAddModal }) => {
+const SelectUser = ({ closeUserAddModal, submitHandler }) => {
   const [name, setName] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [debouncedName, setDebouncedName] = useState("");
   const nameInput = useRef();
-  const { mutate } = useInviteTeam();
   const {
     data: usersPrefix,
     isLoading,
@@ -25,17 +23,17 @@ const SelectUser = ({ handleKeyDown, closeUserAddModal }) => {
   const handleChange = useCallback((e) => {
     setName(e.target.value);
   }, []);
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log(selectedUser);
-    mutate({targetId:selectedUser.id})
-    closeUserAddModal();
-  };
 
   const handleUserSelect = useCallback((user) => {
     setSelectedUser(user);
     setName(user.email);
   }, []);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
 
   return ReactDOM.createPortal(
     <S.access.ModalOverlay>
@@ -44,9 +42,9 @@ const SelectUser = ({ handleKeyDown, closeUserAddModal }) => {
         onKeyDown={handleKeyDown}
         tabIndex="0"
       >
-        <h2>프로젝트에 사용자 추가</h2>
+        <h2>사용자 초대</h2>
 
-        <form onSubmit={(e) => submitHandler(e)}>
+        <form onSubmit={(e) => submitHandler(e, selectedUser)}>
           <S.access.ModalSection>
             <S.access.ModalLabel htmlFor="name">이름</S.access.ModalLabel>
             <S.access.ModalInput
