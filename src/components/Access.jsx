@@ -8,10 +8,12 @@ import {
 } from "../api/Team/useTeam";
 import { useSelector } from "react-redux";
 import {} from "../api/Team/useTeam";
+import { useEffect } from "react";
 
 const Access = () => {
   const [isUserAddModalOpen, setIsUserAddModalOpen] = useState(false);
   const [serchname, setserchName] = useState(""); // State for the input value
+  const [first, setfirst] = useState(true);
   const { data: TeamUserList, doREfetch } = useGetMTeamUserList();
   const userinfo = useSelector((state) => state.user);
   const { mutate } = useDeleteTeam();
@@ -20,10 +22,12 @@ const Access = () => {
     setIsUserAddModalOpen(true);
   };
   const closeUserAddModal = () => setIsUserAddModalOpen(false);
-
+  useEffect(() => {
+    doREfetch;
+  }, [doREfetch, first]);
   const handleRemoveUser = (id) => {
     mutate({ targetId: id });
-    doREfetch();
+    setfirst((prevstate) => !prevstate);
   };
 
   const submitHandler = (e, selectedUser) => {

@@ -106,7 +106,7 @@ const EnhancedTeamOverview = ({ isLoading, TeamId, createDate }) => {
           <CardContent>
             <GridContainer>
               <StatItem>
-                <StatValue>{TaskStatuscount["delay"]}</StatValue>
+                <StatValue>{TaskStatuscount["delay"] || 0}</StatValue>
                 <StatLabel>Delay Projects</StatLabel>
               </StatItem>
               <StatItem>
@@ -114,11 +114,13 @@ const EnhancedTeamOverview = ({ isLoading, TeamId, createDate }) => {
                 <StatLabel>팀 멤버수</StatLabel>
               </StatItem>
               <StatItem>
-                <StatValue>{TaskStatuscount["ongoing"]}</StatValue>
+                <StatValue>{TaskStatuscount["ongoing"] || 0}</StatValue>
                 <StatLabel>Ongoing Projects</StatLabel>
               </StatItem>
               <StatItem>
-                <StatValue>{(TaskStatuscount["done"] / sum) * 100}%</StatValue>
+                <StatValue>
+                  {parseInt((TaskStatuscount["done"] / sum) * 100) || 0}%
+                </StatValue>
                 <StatLabel>project Complete</StatLabel>
               </StatItem>
             </GridContainer>
@@ -164,12 +166,14 @@ const MDashboard = ({ TeamId, isLoading, setItemHandler, createDate }) => {
   return (
     <>
       {isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}
-      <LoadingOverlay onClick={() => setItemHandler()}>
-        <EnhancedTeamOverview
-          createDate={createDate}
-          TeamId={TeamId}
-          isLoading={isLoading}
-        />
+      <LoadingOverlay onClick={setItemHandler}>
+        <div onClick={(e) => e.stopPropagation()}>
+          <EnhancedTeamOverview
+            createDate={createDate}
+            TeamId={TeamId}
+            isLoading={isLoading}
+          />
+        </div>
       </LoadingOverlay>
     </>
   );

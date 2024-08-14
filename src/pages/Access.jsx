@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Sidenav from "../components/Sidenav";
 import Access from "../components/Access";
 import { Suspense } from "react";
+import Message from "../components/Messsage";
 
 const AccessPage = () => {
   // const [isSign, setisSign] = useState(false);
@@ -9,8 +10,7 @@ const AccessPage = () => {
     <div>
       <Header />
       <Sidenav>
-        <Access></Access>F
-        
+        <Access></Access>
       </Sidenav>
       <Message></Message>
     </div>

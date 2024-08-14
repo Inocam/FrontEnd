@@ -65,7 +65,7 @@ const SelectUser = ({ closeUserAddModal, submitHandler }) => {
                     key={user.email}
                     onClick={() => handleUserSelect(user)}
                   >
-                    {user.email}
+                    {user.email}ㅌ
                   </S.access.nameSpace>
                 ))
               ) : (

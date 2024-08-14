@@ -61,6 +61,7 @@ const MessageBox = () => {
         `/topic/room/${isTeam}`,
         (message) => {
           const receivedMessage = JSON.parse(message.body);
+          console.log(receivedMessage);
           setMessages((prevMessages) => [...prevMessages, receivedMessage]);
         }
       );
@@ -93,7 +94,6 @@ const MessageBox = () => {
         userId: 2, // 여기에 실제 사용자 이름이나 ID를 넣으세요
         roomId: isTeam,
       };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
       // 메시지를 STOMP 서버로 전송
       stompClient.current.publish({
         destination: `/foot/chat/rooms/sendMessage`,
@@ -180,7 +180,7 @@ const MessageBox = () => {
                 ))}
               {messages?.map((msg) => (
                 <S.message.MessageBubble key={Date.now()}>
-                  {msg}
+                  {msg.message}
                 </S.message.MessageBubble>
               ))}
             </S.message.TalkingRoom>
