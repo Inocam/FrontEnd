@@ -4,7 +4,14 @@ import Sidenav from "../components/Sidenav";
 import * as S from "../styles/index.style";
 import * as C from "../components/chart/index.chart";
 import Topsummary from "../components/Topsummary";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const DashBoard = () => {
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.user);
+  if(user.TeamLeader && user.TeamId ){
+    navigate("/team")
+  }
   return (
     <div>
       <Header />

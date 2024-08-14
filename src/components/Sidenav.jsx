@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Sidenav = ({ children }) => {
   const navigate = useNavigate();
   const isNavOpen = useSelector((state) => state.nav.isNavOpen);
+  const teamName = useSelector((state) => state.user.TeamName);
   const dispatch = useDispatch();
   const toggleNav = () => {
     dispatch(navopenHandler());
@@ -21,13 +22,13 @@ const Sidenav = ({ children }) => {
           <S.sidenav.SToggleButton onClick={toggleNav}>
             {isNavOpen ? "<" : ">"}
           </S.sidenav.SToggleButton>
-          <S.sidenav.STitle>Project Title</S.sidenav.STitle>
+          <S.sidenav.STitle>{teamName}</S.sidenav.STitle>
           <S.sidenav.SSubtitle>Widgets</S.sidenav.SSubtitle>
-          <S.sidenav.SParagraph>Timeline</S.sidenav.SParagraph>
-          <S.sidenav.SParagraph onClick={()=>navigate("/calender")}>
+          {/* <S.sidenav.SParagraph>Timeline</S.sidenav.SParagraph> */}
+          <S.sidenav.SParagraph onClick={() => navigate("/calender")}>
             Calendar
           </S.sidenav.SParagraph>
-          <S.sidenav.SParagraph onClick={()=>navigate("/Kanban")}>
+          <S.sidenav.SParagraph onClick={() => navigate("/Kanban")}>
             Kanban Board
           </S.sidenav.SParagraph>
           <S.sidenav.SSubtitle>Git</S.sidenav.SSubtitle>

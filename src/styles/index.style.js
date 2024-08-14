@@ -8,6 +8,7 @@ export * as calender from "./style.calender";
 export * as team from "./styles.team";
 export * as access from "./styles.access";
 export * as setting from "./styles.setting";
+export * as tododetail from "./styles.todos";
 
 export const GlobalCss = createGlobalStyle`
 *{

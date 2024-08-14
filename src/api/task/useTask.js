@@ -5,22 +5,25 @@ import { useEffect } from "react";
 import { useState } from "react";
 const BASE_URL = "/foot/task/read/";
 //탠스택 쿼리로 불러오는과정에서
-export const useGetTaskcount = () => {
+export const useGetTaskcount = (subdate = []) => {
   const TeamId = useSelector((state) => state.user.TeamId);
   const date = useSelector((state) => state.Date.date);
-
+  let URL = `${BASE_URL}taskListQuantity/MonthByTeam?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`;
+  if (subdate.year) {
+    URL = `${BASE_URL}taskListQuantity/MonthByTeam?startDate=${subdate.year}-01-01&endDate=${subdate.year}-12-31&teamId=${subdate.TeamId}`;
+  }
+  if (subdate.createDate) {
+    URL = `${BASE_URL}taskListQuantity/MonthByTeam?startDate=${subdate.createDate}&endDate=${date.year}-${date.month}-${date.day}&teamId=${subdate.TeamId}`;
+  }
   const [Taskcount, setTaskcount] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setIsError(false);
       try {
-        const response = await http.get(
-          `${BASE_URL}taskListQuantity/MonthByTeam?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`
-        );
+        const response = await http.get(URL);
         setTaskcount(response);
       } catch (error) {
         setIsError(true);
@@ -93,10 +96,17 @@ export const useGetTask = () => {
 
   return { TaskData, isLoading, isError };
 };
-export const useGetTaskstatuscount = () => {
-  const TeamId = useSelector((state) => state.user.TeamId);
-  const date = useSelector((state) => state.Date.date);
 
+export const useGetTaskstatuscount = (subdate = []) => {
+  let TeamId = useSelector((state) => state.user.TeamId);
+  const date = useSelector((state) => state.Date.date);
+  if (subdate.length != 0) {
+    TeamId = subdate.TeamId;
+  }
+  let URL = `${BASE_URL}taskStatusQuantity/MonthByTeam?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`;
+  if (subdate.createDate) {
+    URL = `${BASE_URL}taskStatusQuantity/MonthByTeam?startDate=${subdate.createDate}&endDate=${date.year}-${date.month}-${date.day}&teamId=${subdate.TeamId}`;
+  }
   const [TaskStatuscount, setTaskStatuscount] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -106,9 +116,7 @@ export const useGetTaskstatuscount = () => {
       setIsLoading(true);
       setIsError(false);
       try {
-        const response = await http.get(
-          `${BASE_URL}taskStatusQuantity/MonthByTeam?startDate=${date.year}-${date.month}-01&endDate=${date.year}-${date.month}-${date.lastday}&teamId=${TeamId}`
-        );
+        const response = await http.get(URL);
         setTaskStatuscount(response);
       } catch (error) {
         setIsError(true);

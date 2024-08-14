@@ -5,6 +5,7 @@ const initialState = {
   UserName: "",
   TeamId: 1,
   TeamLeader: "",
+  name: "",
 };
 
 const user = createSlice({
@@ -12,7 +13,6 @@ const user = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      console.log(action);
       state.Id = action.payload.Id;
       state.UserName = action.payload.UserName;
     },
@@ -23,6 +23,7 @@ const user = createSlice({
     setTeamId: (state, action) => {
       state.TeamId = action.payload.TeamId;
       state.TeamLeader = action.payload.TeamLeader;
+      state.TeamName = action.payload.name;
     },
   },
 });

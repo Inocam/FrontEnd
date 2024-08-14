@@ -21,7 +21,6 @@ import { useMutation } from "@tanstack/react-query";
 export const useCreateChatRoom = () => {
   const URL = "/foot/chat/rooms";
   const userId = useSelector((state) => state.user.Id);
-  console.log(userId);
   return useMutation({
     mutationKey: ["CREATE_ROOM"],
     mutationFn: async (body) => {
@@ -35,9 +34,7 @@ export const useCreateChatRoom = () => {
       });
       return response2;
     },
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    onSuccess: () => {},
     onError: (error) => {
       console.error(error.message);
     },

@@ -29,56 +29,12 @@ export const useGetMTeamList = () => {
 
   return query;
 };
-// export const useGetMTeamList = () => {
-//   const BASE_URL = "/foot/teams/user/";
-//   const userId = useSelector((state) => state.user.Id);
-//   //유저가 초대 받은팀 목록 받아오기
-//   const query = useQuery({
-//     queryKey: ["getTeaminvite"],
-//     queryFn: async () => {
-//       try {
-//         const response = await http.get(`${BASE_URL}${userId}/all`);
-//         return response;
-//       } catch (error) {
-//         if (error.response && error.response.status === 404) {
-//           return [];
-//         }
-//         throw error;
-//       }
-//     },
-//     onError: (error) => {
-//       console.error("Error fetching messages:", error);
-//     },
-//   });
-//   return query;
-// };
-// export const useGetMTeamUserList = () => {
-//   const BASE_URL = "/foot/teams/";
-//   const teamId = useSelector((state) => state.user.TeamId);
-//   //유저가 속한 팀 목록 받아오기
-//   const query = useQuery({
-//     queryKey: ["getTeamuser"],
-//     queryFn: async () => {
-//       try {
-//         const response = await http.get(`${BASE_URL}${teamId}/members`);
-//         return response;
-//       } catch (error) {
-//         if (error.response && error.response.status === 404) {
-//           return [];
-//         }
-//         throw error;
-//       }
-//     },
-//     onError: (error) => {
-//       console.error("Error fetching messages:", error);
-//     },
-//   });
-
-//   return query;
-// };
-export const useGetMTeamUserList = () => {
+export const useGetMTeamUserList = (teamNum) => {
   const BASE_URL = "/foot/teams/";
-  const teamId = useSelector((state) => state.user.TeamId);
+  let teamId = useSelector((state) => state.user.TeamId);
+  if (teamNum) {
+    teamId = teamNum;
+  }
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -105,29 +61,6 @@ export const useGetMTeamUserList = () => {
   }, [teamId, refetch]);
   return { data, isLoading, isError, doREfetch };
 };
-// export const useGetUsersprefix = (name) => {
-//   const BASE_URL = "/api/users?prefix=";
-//   //prefix 가 포함된 유저 불러오기
-//   const query = useQuery({
-//     queryKey: ["getPreUsers", name],
-//     queryFn: async () => {
-//       try {
-//         const response = await http.get(`${BASE_URL}${name}`);
-//         return response;
-//       } catch (error) {
-//         if (error.response && error.response.status === 404) {
-//           return [];
-//         }
-//         throw error;
-//       }
-//     },
-//     onError: (error) => {
-//       console.error("Error fetching messages:", error);
-//     },
-//   });
-
-//   return query;
-// };
 export const useGetUsersprefix = (name) => {
   const TeamId = useSelector((state) => state.user.TeamId);
   const BASE_URL = "/api/users?prefix=";
