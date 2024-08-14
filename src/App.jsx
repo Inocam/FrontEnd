@@ -34,7 +34,7 @@ const App = () => {
     <BrowserRouter>
       <GlobalCss></GlobalCss>
       <Routes>
-        <Route path="/" element={<Message />} />
+        <Route path="/" element={<Login />} />
         <Route
           path="/team"
           element={
