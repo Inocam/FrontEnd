@@ -47,9 +47,9 @@ export default Message;
 //무한스크롤링
 //s3 이미지처리
 const SMessageButton = styled.button`
-  position: sticky;
+  position: fixed;
   bottom: 10px;
-  right: 10px;
+  left: 10px;
   border-radius: 50%;
   width: 80px;
   height: 80px;
