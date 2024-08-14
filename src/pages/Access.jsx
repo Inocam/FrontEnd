@@ -9,8 +9,10 @@ const AccessPage = () => {
     <div>
       <Header />
       <Sidenav>
-        <Access></Access>
+        <Access></Access>F
+        
       </Sidenav>
+      <Message></Message>
     </div>
   );
 };

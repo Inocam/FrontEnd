@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import Sidenav from "../components/Sidenav";
 import Canbancom from "../components/Canban";
+import Message from "../components/Messsage";
 
 const CanbanB = () => {
   // const [isSign, setisSign] = useState(false);
@@ -9,6 +10,7 @@ const CanbanB = () => {
       <Header />
       <Sidenav>
         <Canbancom></Canbancom>
+        <Message></Message>
       </Sidenav>
     </div>
   );

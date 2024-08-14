@@ -14,8 +14,6 @@ export const useCreateTeam = () => {
     mutationKey: [MUTATION_KEY.TEAM_CREATE],
     mutationFn: async (body) => {
       const formData = new FormData();
-
-      console.log(body.team);
       formData.append(
         "team",
         new Blob([JSON.stringify(body.team)], { type: "application/json" })

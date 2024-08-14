@@ -3,7 +3,7 @@ import * as L from "../assets/icons/index.Logo";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import MDashboard from "./useless/ModalChart";
+import MDashboard from "./ModalChart";
 import { useCreateTeam } from "../api/Team/createTeam";
 import {
   useAcceptTeam,
@@ -16,29 +16,31 @@ import { useDispatch } from "react-redux";
 import { setTeamId } from "../store/module/User";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import TeamInviteList from "./teamInviteList";
+import { Suspense } from "react";
 
 const Team = () => {
   const navigate = useNavigate();
   const creatorId = useSelector((state) => state.user.Id);
   const { mutate } = useCreateTeam();
   const dispatch = useDispatch();
-  const { data: TeamList = [], isLoading } = useGetMTeamList();
-  const { data: inviteList = [] } = useGetinvite();
   const { mutate: Accpet } = useAcceptTeam();
   // console.log(TeamList);
   const [selectId, setselectId] = useState("");
+  const [selectDate, setselectDate] = useState("");
+  const [selectTeamName, setselectTeamName] = useState("");
   // console.log(creatorId);
-  const selectIdHandler = (Id) => {
+  const selectIdHandler = (Id, Date) => {
     startTransition(() => {
       setselectId(Id);
+      setselectDate(Date);
     });
   };
   useEffect(() => {
     dispatch(setTeamId({ TeamId: "", TeamLeader: "" }));
   });
-  const selectTeamIdHandler = (Id, Leader) => {
-    console.log(Id, Leader);
-    dispatch(setTeamId({ TeamId: Id, TeamLeader: Leader }));
+  const selectTeamIdHandler = (Id, Leader, name) => {
+    dispatch(setTeamId({ TeamId: Id, TeamLeader: Leader, name: name }));
     navigate("/calender");
   };
   const acceptHandler = (Id, bool) => {
@@ -66,9 +68,6 @@ const Team = () => {
     });
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
   return (
     <div>
       <S.team.Container>
@@ -112,77 +111,30 @@ const Team = () => {
               <S.team.IconLeft>
                 <L.TeamBarIcon />
               </S.team.IconLeft>
-              <S.team.FindInput placeholder={"원하는 팀 찾기"} />
+              <S.team.FindInput
+                onChange={(e) => setselectTeamName(e.target.value)}
+                value={selectTeamName}
+                placeholder={"원하는 팀 찾기"}
+              />
               <S.team.IconRight>
                 <L.TeamLensIcon />
               </S.team.IconRight>
             </S.team.FindInputContainer>
-            <S.team.TeamExampleContainer>
-              {inviteList?.map((data) => {
-                return (
-                  <S.team.ExampleBox key={data.teamId}>
-                    <S.team.ExampleIcon>
-                      <img src={data.imageUrl} />
-                    </S.team.ExampleIcon>
-                    <S.team.TeamInfo>
-                      <S.team.TeamName>{data.name}</S.team.TeamName>
-                      <S.team.TeamExplain>
-                        {data.description}
-                      </S.team.TeamExplain>
-                      <S.team.TeamLeader>{data.creatorId}</S.team.TeamLeader>
-                    </S.team.TeamInfo>
-                    <Stdiv>
-                      <S.team.ResetButton
-                        onClick={() => acceptHandler(data.invitationId, true)}
-                      >
-                        초대받기
-                      </S.team.ResetButton>
-                      <S.team.ConfirmButton
-                        onClick={() => acceptHandler(data.invitationId, false)}
-                      >
-                        거절
-                      </S.team.ConfirmButton>
-                    </Stdiv>
-                  </S.team.ExampleBox>
-                );
-              })}
-              {TeamList?.map((data) => {
-                return (
-                  <S.team.ExampleBox key={data.teamId}>
-                    <S.team.ExampleIcon>
-                      <img src={data.imageUrl} />
-                    </S.team.ExampleIcon>
-                    <S.team.TeamInfo>
-                      <S.team.TeamName>{data.name}</S.team.TeamName>
-                      <S.team.TeamExplain>
-                        {data.description}
-                      </S.team.TeamExplain>
-                      <S.team.TeamLeader>{data.creatorId}</S.team.TeamLeader>
-                    </S.team.TeamInfo>
-                    <Stdiv>
-                      <S.team.ResetButton
-                        onClick={() => selectIdHandler(data.teamId)}
-                      >
-                        요약
-                      </S.team.ResetButton>
-                      <S.team.ConfirmButton
-                        onClick={() =>
-                          selectTeamIdHandler(data.teamId, data.creatorId)
-                        }
-                      >
-                        들어가기
-                      </S.team.ConfirmButton>
-                    </Stdiv>
-                  </S.team.ExampleBox>
-                );
-              })}
-            </S.team.TeamExampleContainer>
+            <Suspense>
+              <TeamInviteList
+                selectTeamName={selectTeamName}
+                acceptHandler={acceptHandler}
+                selectIdHandler={selectIdHandler}
+                selectTeamIdHandler={selectTeamIdHandler}
+              ></TeamInviteList>
+            </Suspense>
           </S.team.ListBox>
         </S.team.ListContainer>
       </S.team.Container>
       {selectId != "" && (
         <MDashboard
           TeamId={selectId}
+          createDate={selectDate}
           setItemHandler={() => {
             selectIdHandler("");
           }}
@@ -193,9 +145,3 @@ const Team = () => {
 };
 
 export default Team;
-
-const Stdiv = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-`;

@@ -6,7 +6,6 @@ import { useGetTaskcount } from "../api/task/useTask";
 
 const Calendarcom = () => {
   const { Taskcount = {}, isLoading, isError } = useGetTaskcount();
-  console.log(Taskcount);
   const dispatch = useDispatch();
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -55,7 +54,6 @@ const Calendarcom = () => {
       1,
       daysInMonth(nextDate)
     ); // month에 +1 추가
-    console.log(daysInMonth(nextDate));
     setCurrentDate(nextDate);
   };
   const renderCalendar = () => {

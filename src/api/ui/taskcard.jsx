@@ -34,7 +34,7 @@ const DueDate = styled.span`
 
 const CardContent = styled.div`
   padding: 0 16px;
-  max-height: ${(props) => (props.isOpen ? "300px" : "0")};
+  max-height: ${(props) => (props.$isOpen ? "300px" : "0")};
   overflow: hidden;
   transition: max-height 0.3s ease, padding 0.3s ease;
 `;
@@ -66,7 +66,7 @@ const ExpandableScheduleCard = ({ scheduleData }) => {
           {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </div>
       </CardHeader>
-      <CardContent isOpen={isOpen}>
+      <CardContent $isOpen={isOpen}>
         <InfoItem>
           <Label>설명:</Label> {scheduleData.description}
         </InfoItem>

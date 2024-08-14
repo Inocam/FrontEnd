@@ -28,7 +28,6 @@ const Access = () => {
 
   const submitHandler = (e, selectedUser) => {
     e.preventDefault();
-    console.log(selectedUser);
     InviteMutate({ targetId: selectedUser.id });
     closeUserAddModal();
   };
@@ -36,9 +35,11 @@ const Access = () => {
     <S.access.AccessContainer>
       <S.access.AccessTop>
         <S.access.Title>엑세스</S.access.Title>
-        <S.access.Button onClick={openUserAddModal}>
-          사용자 추가
-        </S.access.Button>
+        {userinfo.Id == userinfo.TeamLeader && (
+          <S.access.Button onClick={openUserAddModal}>
+            사용자 추가
+          </S.access.Button>
+        )}
       </S.access.AccessTop>
       {isUserAddModalOpen && (
         <SelectUser

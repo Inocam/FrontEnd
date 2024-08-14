@@ -17,7 +17,6 @@ const Header = () => {
   const teamDropdownRef = useRef(null);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  console.log(user);
   const toggleProjectDropdown = () => {
     setIsProjectDropdownOpen((prevState) => !prevState);
     setIsTeamDropdownOpen(false);
@@ -60,10 +59,12 @@ const Header = () => {
 
       <S.header.LeftSection>
         <S.header.NavItems>
-          <S.header.NavItem onClick={toggleProjectDropdown}>
-            프로젝트 <ArrowIcon />
-          </S.header.NavItem>
-          {user.Id == user.TeamLeader && (
+          {user.Id && user.TeamLeader && (
+            <S.header.NavItem onClick={()=>navigate("/team")}>
+              프로젝트 <ArrowIcon />
+            </S.header.NavItem>
+          )}
+          {user.Id && user.TeamLeader && (
             <S.header.NavItem onClick={() => navigate("/access")}>
               팀
             </S.header.NavItem>
@@ -86,7 +87,7 @@ const Header = () => {
         <S.header.LogoutButton>Logout</S.header.LogoutButton>
       </S.header.RightSection>
 
-      {isProjectDropdownOpen &&
+      {/* {isProjectDropdownOpen &&
         ReactDOM.createPortal(
           <S.header.ProjectDropdown ref={projectDropdownRef}>
             <S.header.DropdownItem>
@@ -100,7 +101,7 @@ const Header = () => {
             </S.header.DropdownItem>
           </S.header.ProjectDropdown>,
           document.body
-        )}
+        )} */}
 
       {isTeamDropdownOpen &&
         ReactDOM.createPortal(

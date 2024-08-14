@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-
+import * as C from "./chart/index.chart";
+import { useGetMTeamUserList } from "../api/Team/useTeam";
+import { useGetTaskcount, useGetTaskstatuscount } from "../api/task/useTask";
 const DashboardContainer = styled.div`
+  height: 80%;
+  overflow-y: auto;
   position: absolute;
   top: 10%;
   right: 0;
@@ -72,9 +76,17 @@ const LoadingOverlay = styled.div`
   font-size: 1.5rem;
   color: #333;
 `;
-const EnhancedTeamOverview = ({ isLoading }) => {
+const EnhancedTeamOverview = ({ isLoading, TeamId, createDate }) => {
   const [isVisible, setIsVisible] = useState(false);
-
+  const { data } = useGetMTeamUserList(TeamId);
+  const { TaskStatuscount } = useGetTaskstatuscount({
+    TeamId,
+    createDate: createDate.split("T")[0],
+  });
+  const sum = Object.values(TaskStatuscount).reduce(
+    (acc, value) => acc + value,
+    0
+  );
   useEffect(() => {
     if (!isLoading) {
       const timer = setTimeout(() => setIsVisible(true), 100);
@@ -94,20 +106,20 @@ const EnhancedTeamOverview = ({ isLoading }) => {
           <CardContent>
             <GridContainer>
               <StatItem>
-                <StatValue>12</StatValue>
-                <StatLabel>Active Teams</StatLabel>
+                <StatValue>{TaskStatuscount["delay"]}</StatValue>
+                <StatLabel>Delay Projects</StatLabel>
               </StatItem>
               <StatItem>
-                <StatValue>48</StatValue>
-                <StatLabel>Team Members</StatLabel>
+                <StatValue>{data.length}</StatValue>
+                <StatLabel>팀 멤버수</StatLabel>
               </StatItem>
               <StatItem>
-                <StatValue>8</StatValue>
+                <StatValue>{TaskStatuscount["ongoing"]}</StatValue>
                 <StatLabel>Ongoing Projects</StatLabel>
               </StatItem>
               <StatItem>
-                <StatValue>92%</StatValue>
-                <StatLabel>Team Productivity</StatLabel>
+                <StatValue>{(TaskStatuscount["done"] / sum) * 100}%</StatValue>
+                <StatLabel>project Complete</StatLabel>
               </StatItem>
             </GridContainer>
           </CardContent>
@@ -116,32 +128,48 @@ const EnhancedTeamOverview = ({ isLoading }) => {
         <GridContainer>
           <Card>
             <CardHeader>
-              <CardTitle>Project Status</CardTitle>
+              <CardTitle>이번달 요약</CardTitle>
             </CardHeader>
-            <CardContent></CardContent>
+            <CardContent>
+              <C.BarChart TeamId={TeamId}></C.BarChart>
+            </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Team Composition</CardTitle>
+              <CardTitle>전체프로젝트 상황</CardTitle>
             </CardHeader>
-            <CardContent></CardContent>
+            <CardContent>
+              <C.DonutChart data={TaskStatuscount}></C.DonutChart>
+            </CardContent>
           </Card>
         </GridContainer>
 
-        {/* KPI 및 Upcoming Milestones 카드도 유사한 방식으로 구현 */}
+        <HeaderCard>
+          <CardHeader>
+            <CardTitle>달별 일정 갯수</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <C.Lastweek TeamId={TeamId}></C.Lastweek>
+          </CardContent>
+        </HeaderCard>
       </DashboardContainer>
     </>
   );
 };
 
 // 부모 컴포넌트
-const MDashboard = ({ isLoading, setItemHandler }) => {
+const MDashboard = ({ TeamId, isLoading, setItemHandler, createDate }) => {
+  console.log(createDate);
   return (
     <>
       {isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}
-      <LoadingOverlay onClick={()=>setItemHandler()}>
-        <EnhancedTeamOverview isLoading={isLoading} />
+      <LoadingOverlay onClick={() => setItemHandler()}>
+        <EnhancedTeamOverview
+          createDate={createDate}
+          TeamId={TeamId}
+          isLoading={isLoading}
+        />
       </LoadingOverlay>
     </>
   );

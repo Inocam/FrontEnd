@@ -10,15 +10,23 @@ import Cookies from "js-cookie";
 import Login from "./pages/Login";
 import AccessPage from "./pages/Access";
 import SettingPage from "./pages/Setting";
+import { useSelector } from "react-redux";
+import Message from "./components/Messsage";
 
 const Authorization = ({ children }) => {
   const accessToken = Cookies.get("AccessToken");
   if (accessToken) {
-    console.log("집으로");
     return <>{children}</>;
   } else {
     return <Navigate to={"/"} />;
   }
+};
+const TeamAuthorization = ({ children }) => {
+  const user = useSelector((state) => state.user);
+  if (!user.TeamLeader && !user.TeamId) {
+    return <Navigate to={"/team"} />;
+  }
+  return <>{children}</>;
 };
 
 const App = () => {
@@ -26,7 +34,7 @@ const App = () => {
     <BrowserRouter>
       <GlobalCss></GlobalCss>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Message />} />
         <Route
           path="/team"
           element={
@@ -39,7 +47,9 @@ const App = () => {
           path="/calender"
           element={
             <Authorization>
-              <Dashboard />
+              <TeamAuthorization>
+                <Dashboard />
+              </TeamAuthorization>
             </Authorization>
           }
         />
@@ -47,7 +57,9 @@ const App = () => {
           path="/kanban"
           element={
             <Authorization>
-              <CanbanB />
+              <TeamAuthorization>
+                <CanbanB />
+              </TeamAuthorization>
             </Authorization>
           }
         />
@@ -55,7 +67,9 @@ const App = () => {
           path="/access"
           element={
             <Authorization>
-              <AccessPage />
+              <TeamAuthorization>
+                <AccessPage />
+              </TeamAuthorization>
             </Authorization>
           }
         />
@@ -63,7 +77,9 @@ const App = () => {
           path="/teamsetting"
           element={
             <Authorization>
-              <SettingPage />
+              <TeamAuthorization>
+                <SettingPage />
+              </TeamAuthorization>
             </Authorization>
           }
         />

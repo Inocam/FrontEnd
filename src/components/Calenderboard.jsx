@@ -13,7 +13,7 @@ const Calenderboard = () => {
   const values = Object.values(statusCount).reduce((a, b) => {
     return a + b;
   }, 0);
-  console.log(TaskData);
+
   const projectProgress = [
     {
       name: "진행전",
