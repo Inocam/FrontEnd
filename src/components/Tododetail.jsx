@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import * as S from "../styles/index.style";
+import axios from 'axios'; 
 
 const Tododetail = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,20 +35,17 @@ const Tododetail = () => {
             }
         };
 
-        
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [dropdownRef]);
 
-
     useEffect(() => {
         if (isModalOpen) {
             setOriginalData({ title, explain, startDate, endDate, status });
         }
     }, [isModalOpen]);
-
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -75,7 +73,6 @@ const Tododetail = () => {
 
     const statusOptions = ['진행전', '진행중', '완료', '지연'];
 
-    // 삭제 버튼 
     const handleDelete = () => {
         setTitle(INITIAL_STATE.title);
         setExplain(INITIAL_STATE.explain);
@@ -86,7 +83,6 @@ const Tododetail = () => {
         console.log("모든 정보가 초기화되었습니다.");
     };
 
-    // 취소 버튼 
     const handleCancel = () => {
         setTitle(originalData.title);
         setExplain(originalData.explain);
@@ -96,10 +92,31 @@ const Tododetail = () => {
         setIsModalOpen(false);
     };
 
-    // 수정 버튼 
+    // API 
+    const createTask = async () => {
+        try {
+            const response = await axios.post("https://footapi.o-r.kr/foot/task/create", {
+                taskId: 0, 
+                teamId: 0, 
+                userId: 0,
+                title: title,
+                description: explain,
+                status: status,
+                startDate: startDate,
+                dueDate: endDate,
+                endDate: endDate,
+                parentTask: 0 
+            });
+
+            console.log("성공적으로 생성되었습니다:", response.data);
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error("오류 발생:", error);
+        }
+    };
+
     const handleEdit = () => {
-        console.log("수정된 데이터가 저장되었습니다.", { title, explain, startDate, endDate, status });
-        setIsModalOpen(false);
+        createTask();
     };
 
     return (
@@ -202,7 +219,7 @@ const Tododetail = () => {
                         </S.tododetail.TodoContentWrapper>
 
                         <S.tododetail.ButtonContainer>
-                            <S.tododetail.EditButton onClick={handleEdit}>수정</S.tododetail.EditButton>
+                            <S.tododetail.EditButton onClick={handleEdit}>저장</S.tododetail.EditButton>
                             <S.tododetail.BackButton onClick={handleCancel}>취소</S.tododetail.BackButton>
                         </S.tododetail.ButtonContainer>
                     </S.tododetail.TodoModalContent>
