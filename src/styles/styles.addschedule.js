@@ -1,33 +1,24 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  padding: 44px 24px;
-  display: flex; 
+  padding: 2rem;
+  display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1040px;
-  height: 100%;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 export const Section = styled.div`
-  padding: 20px;
-  height: 100%;
+  padding: 1rem;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: #EAEAEA;
-  margin: 4px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  &.no-background {
-    background-color: transparent;
-    box-shadow: none;
-  }
+  align-items: center;
+  background-color: #f8f9fa;
+  margin-bottom: 1rem;
+  border-radius: 4px;
 `;
 
 export const SectionItem = styled.div`
@@ -37,116 +28,75 @@ export const SectionItem = styled.div`
 `;
 
 export const Label = styled.label`
-  flex: 1;
   font-weight: bold;
-  margin-bottom: 8px;
+  width: 120px;
+  margin-right: 1rem;
 `;
 
 export const Input = styled.input`
-  padding: 5px;
-  margin: 0px 20px;
-  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
   border-radius: 4px;
-
+  flex: 1;
   &:focus {
-    border-color: #0278AE;
     outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
 `;
 
 export const TextArea = styled.textarea`
-  padding: 12px;
-  margin-left: 4px;
-  height: 100px;
-  min-height: 100px;
-  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
   border-radius: 4px;
+  width: 100%;
+  height: 100px;
   resize: vertical;
-
   &:focus {
-    border-color: #0278AE;
     outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
 `;
 
 export const Image = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  margin-left: 1rem;
 `;
 
-export const Button = styled.bus.Container = styled.div`
-padding: 44px 24px;
-display: flex; 
-flex-direction: column;
-width: 100%;
-max-width: 1040px;
-height: 100%;
-box-sizing: border-box;
-`;
-
-s.Section = styled.div`
-padding: 20px;
-height: 100%;
-display: flex;
-align-items: center;
-background-color: #EAEAEA;
-margin: 4px;
-`;
-
-s.SectionItem = styled.div`
-display: flex;
-align-items: center;
-`;
-
-s.Label = styled.label`
-flex: 1;
-font-weight: bold;
-`;
-
-s.Input = styled.input`
-padding: 5px;
-margin: 0px 20px;
-border: 0;
-`;
-
-s.TextArea = styled.textarea`
-padding: 12px;
-margin-left: 4px;
-height: 100px;
-border: 0;
-`;
-
-s.Image = styled.img`
-width: 50px;
-height: 50px;
-border-radius: 50%;
-`;
-
-s.Button = styled.button`
-padding: 10px 20px;
-margin: 5px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-background-color: ${props => props.selected ? '#0278AE' : '#fff'};
-color: ${props => props.selected ? '#fff' : '#000'};
-border: 1px solid ${props => props.selected ? '#0278AE' : '#ccc'};
-
-&:hover {
-  opacity: 0.8;
-}
-`;tton`
-  padding: 10px 20px;
-  margin: 5px;
+export const Button = styled.button`
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  background-color: ${props => props.color ? 'transparent' : (props.selected ? '#0278AE' : '#fff')};
-  color: ${props => props.color ? props.color : (props.selected ? '#fff' : '#000')};
-  border: 1px solid ${props => props.color ? props.color : (props.selected ? '#0278AE' : '#ccc')};
+  font-weight: bold;
+  transition: all 0.3s ease;
+  background-color: ${(props) => (props.selected ? "#007bff" : "#fff")};
+  color: ${(props) => (props.selected ? "#fff" : "#007bff")};
+  border: 1px solid #007bff;
 
   &:hover {
     opacity: 0.8;
   }
+`;
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(199, 214, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 `;

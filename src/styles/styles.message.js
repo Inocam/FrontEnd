@@ -50,7 +50,7 @@ export const Flexdiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  
+
   svg {
     width: 24px;
     height: 24px;
@@ -125,15 +125,15 @@ export const TalkingRoom = styled.div`
 `;
 
 export const MessageBubble = styled.div`
-  background-color: #e9ecef;
+  background-color: ${(props) => (props.$myChat ? "#e9ecef" : "#0278ae")};
+  align-self: ${(props) => (props.$myChat ? "flex-end" : "flex-start")};
+  color: ${(props) => (props.$myChat ? "#495057" : "#e9ecef")};
   border-radius: 18px;
   padding: 10px 15px;
   margin-bottom: 10px;
   max-width: 70%;
-  align-self: flex-end;
   word-wrap: break-word;
-  font-size: 0.9rem;
-  color: #495057;
+  font-size: 14px;
 `;
 
 export const TalkingBar = styled.div`

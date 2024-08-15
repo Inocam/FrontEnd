@@ -67,7 +67,7 @@ const Header = () => {
         <S.header.NavItems>
           {user.Id && user.TeamLeader && (
             <S.header.NavItem onClick={() => navigate("/team")}>
-              TEAM <ArrowIcon />
+              TEAM
             </S.header.NavItem>
           )}
           {user.Id && user.TeamLeader && (

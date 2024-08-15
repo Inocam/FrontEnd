@@ -24,17 +24,15 @@ const Sidenav = ({ children }) => {
           </S.sidenav.SToggleButton>
           <S.sidenav.STitle>{teamName}</S.sidenav.STitle>
           <S.sidenav.SSubtitle>Widgets</S.sidenav.SSubtitle>
-          {/* <S.sidenav.SParagraph>Timeline</S.sidenav.SParagraph> */}
           <S.sidenav.SParagraph onClick={() => navigate("/calender")}>
             Calendar
           </S.sidenav.SParagraph>
-          <S.sidenav.SParagraph onClick={() => navigate("/Kanban")}>
+          {/* <S.sidenav.SParagraph onClick={() => navigate("/Kanban")}>
             Kanban Board
           </S.sidenav.SParagraph>
           <S.sidenav.SSubtitle>Git</S.sidenav.SSubtitle>
           <S.sidenav.SParagraph>Code</S.sidenav.SParagraph>
-          <S.sidenav.SParagraph>Issue</S.sidenav.SParagraph>
-          <S.sidenav.SParagraph>?</S.sidenav.SParagraph>
+          <S.sidenav.SParagraph>Issue</S.sidenav.SParagraph> */}
         </div>
       </S.sidenav.SNav>
       <S.sidenav.Sbody $isOpen={isNavOpen}>{children}</S.sidenav.Sbody>

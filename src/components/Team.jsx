@@ -5,11 +5,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import MDashboard from "./ModalChart";
 import { useCreateTeam } from "../api/Team/createTeam";
-import {
-  useAcceptTeam,
-  useGetinvite,
-  useGetMTeamList,
-} from "../api/Team/useTeam";
+import { useAcceptTeam } from "../api/Team/useTeam";
 import { startTransition } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -18,18 +14,26 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import TeamInviteList from "./teamInviteList";
 import { Suspense } from "react";
-
+const Styledimg = styled.img`
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  border: 1px black solid;
+`;
 const Team = () => {
   const navigate = useNavigate();
   const creatorId = useSelector((state) => state.user.Id);
   const { mutate } = useCreateTeam();
   const dispatch = useDispatch();
   const { mutate: Accpet } = useAcceptTeam();
-  // console.log(TeamList);
   const [selectId, setselectId] = useState("");
+  const imageB = useRef("");
   const [selectDate, setselectDate] = useState("");
   const [selectTeamName, setselectTeamName] = useState("");
-  // console.log(creatorId);
+  const [img, setimg] = useState("");
+  const [preimg, setpreimg] = useState("");
   const selectIdHandler = (Id, Date) => {
     startTransition(() => {
       setselectId(Id);
@@ -37,10 +41,9 @@ const Team = () => {
     });
   };
   useEffect(() => {
-    dispatch(setTeamId({ TeamId: "", TeamLeader: "" ,name: "" }));
+    dispatch(setTeamId({ TeamId: "", TeamLeader: "", name: "" }));
   });
   const selectTeamIdHandler = (Id, Leader, name) => {
-    console.log(Id, Leader, name)
     dispatch(setTeamId({ TeamId: Id, TeamLeader: Leader, name: name }));
     navigate("/calender");
   };
@@ -66,9 +69,33 @@ const Team = () => {
         description: description.current.value,
         creatorId,
       },
+      image: img,
     });
+    setselectDate("");
+    setimg("");
+    setpreimg("");
+    // setselectId("");
+    name.current.value=""
+    description.current.value=""
   };
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setimg(file);
+    if (file) {
+      const maxSizeInMB = 2;
+      const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
 
+      if (file.size > maxSizeInBytes) {
+        alert("파일 크기는 2MB 이하이어야 합니다.");
+        return;
+      }
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        setpreimg(URL.createObjectURL(file));
+      };
+    }
+  };
   return (
     <div>
       <S.team.Container>
@@ -76,8 +103,17 @@ const Team = () => {
           <h3>팀 생성하기</h3>
           <S.team.CreateBox>
             <S.team.LeftIcon>
-              <L.TeamIcon />
-              <S.team.AddButton>프로필 사진 추가</S.team.AddButton>
+              <Styledimg src={preimg} />
+              <input
+                type="file"
+                ref={imageB}
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+              <S.team.AddButton onClick={() => imageB.current.click()}>
+                프로필 사진 추가
+              </S.team.AddButton>
             </S.team.LeftIcon>
             <S.team.RightBox>
               <S.team.TeamNameBox>

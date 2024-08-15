@@ -18,8 +18,6 @@ import { useCreateChatRoom } from "../api/message/useRoom.js";
 
 const MessageBox = () => {
   const queryClient = useQueryClient();
-  const [messages, setMessages] = useState([]);
-  const [userNAme, setuserNAme] = useState([]);
   const [isUserAddModalOpen, setIsUserAddModalOpen] = useState(false);
   const inputMessage = useRef("");
   const talkingRoomRef = useRef("");
@@ -36,7 +34,7 @@ const MessageBox = () => {
     if (talkingRoomRef.current) {
       talkingRoomRef.current.scrollTop = talkingRoomRef.current.scrollHeight;
     }
-  }, [messages, messageData]);
+  }, [messageData]);
   useEffect(() => {
     if (!stompClient.current) {
       stompClient.current = new Client({
@@ -53,7 +51,6 @@ const MessageBox = () => {
       });
 
       stompClient.current.onConnect = () => {
-
         // 현재 대화방 구독
         subscriptions.current.room = stompClient.current.subscribe(
           `/topic/room/${userId}`,
@@ -157,6 +154,7 @@ const MessageBox = () => {
         userId: userId, // 여기에 실제 사용자 이름이나 ID를 넣으세요
         roomId: isTeam,
       };
+      console.log(message);
       // 메시지를 STOMP 서버로 전송
       stompClient.current.publish({
         destination: `/foot/chat/rooms/sendMessage`,
@@ -168,7 +166,6 @@ const MessageBox = () => {
   };
 
   const handleKeyPress = (e) => {
-    
     if (e.key === "Enter") {
       handleSendMessage();
     }
@@ -193,7 +190,9 @@ const MessageBox = () => {
         <S.message.MessageContent>
           <S.message.ConversationList>
             <S.message.Flexdiv>
-              <S.message.ConversationHeader>Conversations</S.message.ConversationHeader>
+              <S.message.ConversationHeader>
+                Conversations
+              </S.message.ConversationHeader>
               <MessagePlusIcon onClick={() => openUserAddModal()} />
             </S.message.Flexdiv>
             <div style={{ overflowY: "auto" }}>
@@ -202,7 +201,6 @@ const MessageBox = () => {
                   return (
                     <S.message.ConversationBox
                       onClick={() => {
-                        setuserNAme(state.targetUserName);
                         dispatch(setMessageId({ TeamId: state.roomId }));
                       }}
                       key={state.roomId}

@@ -93,7 +93,8 @@ const Access = () => {
                 <S.access.Td>{user.dateAdded}</S.access.Td>
                 <S.access.Td>
                   {user.userId != userinfo.TeamLeader &&
-                    user.userId != userinfo.Id && (
+                    user.userId != userinfo.Id &&
+                    userinfo.Id == userinfo.TeamLeader && (
                       <S.access.ActionButton
                         onClick={() => handleRemoveUser(user.userId)}
                       >
