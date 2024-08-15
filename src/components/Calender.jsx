@@ -2,14 +2,11 @@ import { useState } from "react";
 import * as S from "../styles/index.style";
 import { setDate } from "../store/module/Date";
 import { useDispatch } from "react-redux";
-import { useGetTaskcount } from "../api/task/useTask";
 
-const Calendarcom = () => {
-  const { Taskcount = {}, isLoading, isError } = useGetTaskcount();
+const Calendarcom = ({ Taskcount }) => {
   const dispatch = useDispatch();
 
   const [currentDate, setCurrentDate] = useState(new Date());
-
   const Tdate = {
     Year: currentDate.getFullYear(),
     Month: currentDate.getMonth() + 1,

@@ -162,7 +162,6 @@ const EnhancedTeamOverview = ({ isLoading, TeamId, createDate }) => {
 
 // 부모 컴포넌트
 const MDashboard = ({ TeamId, isLoading, setItemHandler, createDate }) => {
-  console.log(createDate);
   return (
     <>
       {isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}

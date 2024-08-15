@@ -1,8 +1,8 @@
 //내부 데이터
-import Header from "../components/Header";
-import Sidenav from "../components/Sidenav";
-import * as S from "../styles/index.style";
-import * as C from "../components/chart/index.chart";
+import Header from "../Header";
+import Sidenav from "../Sidenav";
+import * as S from "../../styles/index.style";
+import * as C from "../chart/index.chart";
 import Topsummary from "../components/Topsummary";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

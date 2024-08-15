@@ -67,12 +67,12 @@ const Header = () => {
         <S.header.NavItems>
           {user.Id && user.TeamLeader && (
             <S.header.NavItem onClick={() => navigate("/team")}>
-              프로젝트 <ArrowIcon />
+              TEAM <ArrowIcon />
             </S.header.NavItem>
           )}
           {user.Id && user.TeamLeader && (
             <S.header.NavItem onClick={() => navigate("/access")}>
-              팀
+              Acess
             </S.header.NavItem>
           )}
           {user.TeamLeader && user.TeamId && (

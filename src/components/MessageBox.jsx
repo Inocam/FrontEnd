@@ -30,8 +30,8 @@ const MessageBox = () => {
   const { data: messageData, isLoading: isMessageLoading } = useGetMessage();
   const { mutate } = useCreateChatRoom();
   const stompClient = useRef(null);
-  const Actoken = Cookies.get("AccessToken");
   const subscriptions = useRef({});
+  const Actoken = Cookies.get("AccessToken");
   useEffect(() => {
     if (talkingRoomRef.current) {
       talkingRoomRef.current.scrollTop = talkingRoomRef.current.scrollHeight;
@@ -53,7 +53,6 @@ const MessageBox = () => {
       });
 
       stompClient.current.onConnect = () => {
-        console.log("Connected to WebSocket");
 
         // 현재 대화방 구독
         subscriptions.current.room = stompClient.current.subscribe(
@@ -97,8 +96,6 @@ const MessageBox = () => {
           `/topic/chat/${isTeam}`,
           (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log("Team message:", receivedMessage);
-            console.log(messageData);
             queryClient.setQueryData(["getMessage", isTeam], (oldData) => {
               return {
                 ...oldData,
@@ -171,6 +168,7 @@ const MessageBox = () => {
   };
 
   const handleKeyPress = (e) => {
+    
     if (e.key === "Enter") {
       handleSendMessage();
     }
@@ -191,13 +189,13 @@ const MessageBox = () => {
   };
   return (
     <>
-      <MessageOutline onClick={(e) => e.stopPropagation()}>
-        <MessageContent>
-          <ConversationList>
-            <Flexdiv>
-              <ConversationHeader>Conversations</ConversationHeader>
+      <S.message.MessageOutline onClick={(e) => e.stopPropagation()}>
+        <S.message.MessageContent>
+          <S.message.ConversationList>
+            <S.message.Flexdiv>
+              <S.message.ConversationHeader>Conversations</S.message.ConversationHeader>
               <MessagePlusIcon onClick={() => openUserAddModal()} />
-            </Flexdiv>
+            </S.message.Flexdiv>
             <div style={{ overflowY: "auto" }}>
               {teamData.length != 0 ? (
                 teamData.content?.map((state) => {
@@ -220,37 +218,37 @@ const MessageBox = () => {
                 </S.message.ConversationBox>
               )}
             </div>
-          </ConversationList>
-          <TalkingBox>
-            <TalkingBoxHeader>
+          </S.message.ConversationList>
+          <S.message.TalkingBox>
+            <S.message.TalkingBoxHeader>
               <MessageUserIcon />
               <a>{""}</a>
-            </TalkingBoxHeader>
-            <TalkingRoom>
+            </S.message.TalkingBoxHeader>
+            <S.message.TalkingRoom>
               {!isMessageLoading &&
                 messageData.content &&
                 messageData.content?.map((msg) => (
-                  <MessageBubble
+                  <S.message.MessageBubble
                     $myChat={msg.userId == userId}
                     key={msg.sendDate}
                   >
                     {msg.message}
-                  </MessageBubble>
+                  </S.message.MessageBubble>
                 ))}
-            </TalkingRoom>
-            <TalkingBar>
-              <MessageInput
+            </S.message.TalkingRoom>
+            <S.message.TalkingBar>
+              <S.message.MessageInput
                 type="text"
                 ref={inputMessage}
                 onKeyPress={handleKeyPress}
               />
-              <MessageSendButton onClick={handleSendMessage}>
+              <S.message.MessageSendButton onClick={handleSendMessage}>
                 <MessageSendIcon />
-              </MessageSendButton>
-            </TalkingBar>
-          </TalkingBox>
-        </MessageContent>
-      </MessageOutline>
+              </S.message.MessageSendButton>
+            </S.message.TalkingBar>
+          </S.message.TalkingBox>
+        </S.message.MessageContent>
+      </S.message.MessageOutline>
       {isUserAddModalOpen && (
         <SelectUser
           closeUserAddModal={closeUserAddModal}
@@ -263,238 +261,3 @@ const MessageBox = () => {
 };
 
 export default MessageBox;
-import styled from "styled-components";
-
-export const MessageOutline = styled.div`
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 70%;
-  max-width: 1000px;
-  height: 60vh;
-  display: flex;
-  overflow: hidden;
-`;
-
-export const MessageContent = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-`;
-
-export const ConversationList = styled.div`
-  width: 30%;
-  background-color: #f8f9fa;
-  border-right: 1px solid #e9ecef;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ConversationHeader = styled.h3`
-  padding: 20px;
-  margin: 0;
-  font-size: 20px;
-  color: #495057;
-  border-bottom: 1px solid #e9ecef;
-`;
-
-export const Flexdiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-
-  svg {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    color: #6c757d;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: #495057;
-    }
-  }
-`;
-
-export const ConversationBox = styled.div`
-  padding: 15px 20px;
-  border-bottom: 1px solid #e9ecef;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #e9ecef;
-  }
-
-  h5 {
-    margin: 0 0 5px 0;
-    font-size: 16px;
-    color: #495057;
-  }
-
-  p {
-    margin: 0;
-    font-size: 14px;
-    color: #6c757d;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
-
-export const TalkingBox = styled.div`
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const TalkingBoxHeader = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #e9ecef;
-
-  svg {
-    width: 30px;
-    height: 30px;
-    margin-right: 15px;
-    color: #6c757d;
-  }
-
-  a {
-    font-size: 20px;
-    color: #495057;
-    font-weight: 500;
-  }
-`;
-
-export const TalkingRoom = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const MessageBubble = styled.div`
-  background-color: ${(props) => (props.$myChat ? "#e9ecef" : "#0278ae")};
-  align-self: ${(props) => (props.$myChat ? "flex-end" : "flex-start")};
-  color: ${(props) => (props.$myChat ? "#495057" : "#e9ecef")};
-  border-radius: 18px;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  max-width: 70%;
-  word-wrap: break-word;
-  font-size: 14px;
-`;
-
-export const TalkingBar = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-  border-top: 1px solid #e9ecef;
-`;
-
-export const MessageInput = styled.input`
-  flex: 1;
-  height: 40px;
-  padding: 0 15px;
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-  border-radius: 20px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s ease;
-
-  &:focus {
-    border-color: #6c757d;
-  }
-`;
-
-export const MessageSendButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  padding: 0;
-
-  svg {
-    width: 24px;
-    height: 24px;
-    color: #6c757d;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: #495057;
-    }
-  }
-`;
-{
-  /* <MessageOverlay>
-  <MessageOutline>
-    <MessageContent>
-      <ConversationList>
-        <ConversationHeader>Conversations</ConversationHeader>
-        <Flexdiv>
-          <MessagePlusIcon onClick={() => openUserAddModal()} />
-        </Flexdiv>
-        <div style={{ overflowY: "auto" }}>
-          {teamData.length != 0 ? (
-            teamData.content?.map((state) => {
-              return (
-                <S.message.ConversationBox
-                  onClick={() => {
-                    setuserNAme(state.targetUserName);
-                    dispatch(setMessageId({ TeamId: state.roomId }));
-                  }}
-                  key={state.roomId}
-                >
-                  <h5>{state.targetUserName}</h5> <br />
-                  {state["lastMessage"]["message"] || "대화가 아직없습니다"}
-                </S.message.ConversationBox>
-              );
-            })
-          ) : (
-            <S.message.ConversationBox>
-              <p>방이 없습니다 생성해주세요 !</p>
-            </S.message.ConversationBox>
-          )}
-        </div>
-      </ConversationList>
-      <TalkingBox>
-        <TalkingBoxHeader>
-          <MessageUserIcon />
-          <a>{userName}</a>
-        </TalkingBoxHeader>
-        <TalkingRoom>
-          {" "}
-          {!isMessageLoading &&
-            messageData.content &&
-            messageData.content?.map((msg) => (
-              <S.message.MessageBubble key={msg.sendDate}>
-                {msg.message}
-              </S.message.MessageBubble>
-            ))}
-        </TalkingRoom>
-        <TalkingBar>
-          <MessageInput
-            type="text"
-            ref={inputMessage}
-            onKeyPress={handleKeyPress}
-          />
-          <MessageSendButton onClick={handleSendMessage}>
-            <MessageSendIcon />
-          </MessageSendButton>
-        </TalkingBar>
-      </TalkingBox>
-    </MessageContent>
-  </MessageOutline>
-  {isUserAddModalOpen && (
-    <SelectUser
-      closeUserAddModal={closeUserAddModal}
-      submitHandler={submitHandler}
-    />
-  )}
-</MessageOverlay>; */
-}
