@@ -19,17 +19,17 @@ const user = createSlice({
   initialState,
   reducers: {
     setDate: (state, action) => {
-      state.date = { ...action.payload.Date, refetch: false };
+      state.date = { ...action.payload.Date, refetch: state.refetch };
     },
     setRefetch: (state) => {
       state.date.refetch = !state.date.refetch;
     },
-    setInitialDate :(state)=>{
-      state.date = initialState.date
-    }
+    setInitialDate: (state) => {
+      state.date = initialState.date;
+    },
   },
 });
 
 export default user.reducer;
 
-export const { setDate, setRefetch,setInitialDate } = user.actions;
+export const { setDate, setRefetch, setInitialDate } = user.actions;

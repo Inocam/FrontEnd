@@ -1,12 +1,31 @@
 //내부 컴포넌트
 import * as S from "../styles/index.style";
 import Calendarcom from "../components/Calender";
-import { useGetTask, useGetTaskstatuscount } from "../api/task/useTask";
+import {
+  useGetTask,
+  useGetTaskcount,
+  useGetTaskstatuscount,
+} from "../api/task/useTask";
 import ScheduleDetailCard from "../api/ui/taskcard";
-
+import { useRef } from "react";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { Client } from "@stomp/stompjs";
+import { useEffect } from "react";
 const Calenderboard = () => {
-  const { TaskData } = useGetTask();
-  const { TaskStatuscount: statusCount } = useGetTaskstatuscount();
+  const { TaskData, addTask } = useGetTask();
+  const { TaskStatuscount: statusCount, AddTTask } = useGetTaskstatuscount();
+  const { Taskcount = {}, addDate } = useGetTaskcount();
+  const stompClient = useRef(null);
+  const subscriptions = useRef({});
+  const Actoken = Cookies.get("AccessToken");
+  const date = useSelector((state) => state.Date.date);
+  const isTeam = useSelector((state) => state.user.TeamId);
+  const dateRef = useRef(date);
+
+  useEffect(() => {
+    dateRef.current = date;
+  }, [date]);
   const values = Object.values(statusCount).reduce((a, b) => {
     return a + b;
   }, 0);
@@ -37,7 +56,66 @@ const Calenderboard = () => {
         : 0,
     },
   ];
+  useEffect(() => {
+    if (!stompClient.current) {
+      stompClient.current = new Client({
+        brokerURL: "wss://footapi.o-r.kr/foot/chat",
+        connectHeaders: {
+          Authorization: `Bearer ${Actoken}`,
+        },
+        debug: function (str) {
+          console.log(str);
+        },
+        reconnectDelay: 5000,
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
+      });
 
+      stompClient.current.onConnect = () => {
+        // 현재 대화방 구독
+        subscriptions.current.room = stompClient.current.subscribe(
+          `/topic/task/${isTeam}`,
+          (message) => {
+            const receivedMessage = JSON.parse(message.body);
+            addDate(receivedMessage.dueDate);
+            if (
+              `${dateRef.current.year}-${dateRef.current.month
+                .toString()
+                .padStart(2, "0")}-${dateRef.current.day
+                .toString()
+                .padStart(2, "0")}` == receivedMessage.dueDate
+            ) {
+              addTask(receivedMessage);
+            }
+            if (
+              `${dateRef.current.year}-${dateRef.current.month
+                .toString()
+                .padStart(2, "0")}` == receivedMessage.dueDate.slice(0, 7)
+            ) {
+              AddTTask(receivedMessage.status);
+            }
+          }
+        );
+      };
+
+      stompClient.current.onStompError = (frame) => {
+        console.error("STOMP error: ", frame.headers.message);
+      };
+
+      stompClient.current.activate();
+    }
+
+    return () => {
+      Object.values(subscriptions.current).forEach((subscription) => {
+        if (subscription) {
+          subscription.unsubscribe();
+        }
+      });
+      if (stompClient.current) {
+        stompClient.current.deactivate();
+      }
+    };
+  }, [Actoken, isTeam]);
   return (
     <S.calender.DashboardContainer style={{ margin: "0 20px" }}>
       <S.calender.CardFlexDiv>
@@ -46,7 +124,7 @@ const Calenderboard = () => {
             <S.calender.CardTitle>일정 캘린더</S.calender.CardTitle>
           </S.calender.CardHeader>
           <S.calender.CardContent>
-            <Calendarcom />
+            <Calendarcom Taskcount={Taskcount} />
           </S.calender.CardContent>
         </S.calender.Card>
         <S.calender.InfoCard>

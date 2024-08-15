@@ -18,7 +18,16 @@ export const useGetTaskcount = (subdate = []) => {
   const [Taskcount, setTaskcount] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const addDate =(data)=>setTaskcount((prevstate=>[...prevstate,data])) 
+  const addDate = (date) => {
+    console.log(date);
+    setTaskcount((prevState) => {
+      const existingValue = prevState[date] || 0;
+      return {
+        ...prevState,
+        [date]: existingValue + 1,
+      };
+    });
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -35,8 +44,8 @@ export const useGetTaskcount = (subdate = []) => {
     };
 
     fetchData();
-  }, [TeamId, date]);
-  return { Taskcount, isLoading, isError ,addDate};
+  }, [TeamId, date.month]);
+  return { Taskcount, isLoading, isError, addDate };
 };
 
 // export const useGetTask = () => {
@@ -70,7 +79,11 @@ export const useGetTask = () => {
   const [TaskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
+  const addTask = (Tdate) => {
+    {
+      setTaskData((prevstate) => [...prevstate, Tdate]);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -93,9 +106,9 @@ export const useGetTask = () => {
     };
 
     fetchData();
-  }, [TeamId, date]);
+  }, [TeamId, date.day]);
 
-  return { TaskData, isLoading, isError };
+  return { TaskData, isLoading, isError, addTask };
 };
 
 export const useGetTaskstatuscount = (subdate = []) => {
@@ -112,6 +125,16 @@ export const useGetTaskstatuscount = (subdate = []) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  const AddTTask = (date) => {
+    console.log(date);
+    setTaskStatuscount((prevState) => {
+      const existingValue = prevState[date] || 0;
+      return {
+        ...prevState,
+        [date]: existingValue + 1,
+      };
+    });
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -128,9 +151,9 @@ export const useGetTaskstatuscount = (subdate = []) => {
     };
 
     fetchData();
-  }, [TeamId, date]);
+  }, [TeamId, date.month]);
 
-  return { TaskStatuscount, isLoading, isError };
+  return { TaskStatuscount, isLoading, isError, AddTTask };
 };
 // export const useGetTaskstatuscount = () => {
 //   const TeamId = useSelector((state) => state.user.TeamId);

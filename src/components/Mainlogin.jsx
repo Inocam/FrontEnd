@@ -12,7 +12,7 @@ const MainLogin = ({ signHandler }) => {
     handleSubmit,
   } = useForm();
 
-  const { mutate, isSuccess, isError, error } = usePostSignInData();
+  const { mutate, isError, error } = usePostSignInData();
 
   const onSubmit = (data) => {
     mutate({ email: data.email, password: data.password });
