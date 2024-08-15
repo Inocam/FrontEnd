@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 const MUTATION_KEY = {
   SIGN_IN: "SIGN_IN",
 };
-
 export const usePostSignInData = () => {
   const navigate = useNavigate();
   const URL = "/api/user/login";

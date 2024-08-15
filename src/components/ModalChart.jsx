@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import * as C from "./chart/index.chart";
 import { useGetMTeamUserList } from "../api/Team/useTeam";
-import { useGetTaskcount, useGetTaskstatuscount } from "../api/task/useTask";
+import { useGetTaskstatuscount } from "../api/task/useTask";
 const DashboardContainer = styled.div`
   height: 80%;
   overflow-y: auto;

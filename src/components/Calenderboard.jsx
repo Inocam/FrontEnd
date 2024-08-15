@@ -1,13 +1,10 @@
 //내부 컴포넌트
 import * as S from "../styles/index.style";
 import Calendarcom from "../components/Calender";
-import { useSelector } from "react-redux";
 import { useGetTask, useGetTaskstatuscount } from "../api/task/useTask";
 import ScheduleDetailCard from "../api/ui/taskcard";
 
 const Calenderboard = () => {
-  const date = useSelector((state) => state.Date.date);
-  console.log(date);
   const { TaskData } = useGetTask();
   const { TaskStatuscount: statusCount } = useGetTaskstatuscount();
   const values = Object.values(statusCount).reduce((a, b) => {

@@ -5,197 +5,175 @@ export const MessageOverlay = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 45px;
-  backdrop-filter: blur(0.2rem);
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: end;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const MessageOutline = styled.div`
-  position: relative;
-  background-color: #f1f1f1;
-  margin-right: 50px;
-  margin-top: 50px;
-  padding: 200px 500px 400px 400px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 1000px;
+  height: 80vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  border-radius: 30px;
-`;
-
-export const MessageContent = styled.div`
-  position: absolute;
-  background-color: #c7dde7;
-  border-radius: 20px;
-  margin: 10px 20px 20px 10px;
-  padding: 190px 490px 390px 390px;
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
-  top: 0;
-  left: 0;
-
-  width: 600px;
-  height: 400px;
   overflow: hidden;
 `;
 
+export const MessageContent = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
+
 export const ConversationList = styled.div`
+  width: 30%;
+  background-color: #f8f9fa;
+  border-right: 1px solid #e9ecef;
   display: flex;
   flex-direction: column;
-  width: 300px;
-  height: 400px;
-  margin: -140px 0px 0px -380px;
-  padding: 10px;
 `;
 
 export const ConversationHeader = styled.h3`
-  display: flex;
-  padding: 10px;
+  padding: 20px;
+  margin: 0;
+  font-size: 1.2rem;
+  color: #495057;
+  border-bottom: 1px solid #e9ecef;
 `;
 
 export const Flexdiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  svg{
-    width: 20px;
-    height: 20px;
+  padding: 0 20px;
+  
+  svg {
+    width: 24px;
+    height: 24px;
     cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #495057;
+    }
   }
 `;
 
 export const ConversationBox = styled.div`
-  display: flex;
-  flex-direction: column;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  &:hover {
+    background-color: #e9ecef;
+  }
+
+  h5 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: #495057;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const TalkingBox = styled.div`
+  width: 70%;
   display: flex;
-  position: absolute;
-  top: 90px;
-  left: 340px;
-  background-color: white;
-  margin: 0px 0px 0px -20px;
-  padding: 310px 200px 180px 350px;
-  justify-content: flex-start;
-  border-radius: 5px 5px 0px 0px;
-
-  width: 500px;
-  height: 400px;
-  overflow: hidden;
+  flex-direction: column;
 `;
 
 export const TalkingBoxHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: -320px;
-  margin-left: -330px;
-  margin-bottom: 250px;
-  gap: 310px;
-`;
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
 
-export const HeaderLeft = styled.div`
-  display: flex;
-  display: absolute;
-  align-items: center;
-  gap: 15px;
   svg {
     width: 30px;
     height: 30px;
-    cursor: pointer;
+    margin-right: 15px;
+    color: #6c757d;
   }
-  a {
-    font-size: 25px;
-  }
-`;
 
-export const HeaderRight = styled.div`
-  display: flex;
-  display: absolute;
-  align-items: center;
-  gap: 20px;
-  svg {
-    width: 29px;
-    height: 29px;
-    cursor: pointer;
+  a {
+    font-size: 1.2rem;
+    color: #495057;
+    font-weight: 500;
   }
 `;
 
 export const TalkingRoom = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  height: 300px;
-  padding: 10px;
-  margin-top: -240px;
-  margin-left: -380px;
-  margin-right: 50px;
-  width: 450px;
 `;
 
 export const MessageBubble = styled.div`
-  background-color: #e6e6e6;
-  border-radius: 10px;
-  padding: 8px 12px;
-  margin-bottom: 8px;
+  background-color: #e9ecef;
+  border-radius: 18px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
   max-width: 70%;
   align-self: flex-end;
   word-wrap: break-word;
+  font-size: 0.9rem;
+  color: #495057;
 `;
 
 export const TalkingBar = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: 140px;
-  margin-left: -470px;
-  margin-bottom: 20px;
-  margin-right: -150px;
-  gap: 30px;
-`;
-
-export const TalkingBarLeft = styled.div`
-  display: flex;
-  display: absolute;
-  align-items: center;
-  gap: 15px;
-  svg {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-  }
-`;
-
-export const TalkingBarRight = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 18px;
+  padding: 15px 20px;
+  border-top: 1px solid #e9ecef;
 `;
 
 export const MessageInput = styled.input`
   flex: 1;
-  height: 36px;
-  padding: 0 70px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  border-radius: 18px;
-  font-size: 14px;
+  height: 40px;
+  padding: 0 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 20px;
+  font-size: 0.9rem;
   outline: none;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: #6c757d;
+  }
 `;
 
-export const MessageSendButton = styled.div`
+export const MessageSendButton = styled.button`
+  background: none;
+  border: none;
   cursor: pointer;
+  margin-left: 10px;
+  padding: 0;
+
   svg {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
+    color: #6c757d;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #495057;
+    }
   }
 `;
