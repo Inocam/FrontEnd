@@ -15,6 +15,7 @@ export const useCreateTask = () => {
     },
     onSuccess: () => {
       // dispatch(setRefetch()); //탠스택 쿼리를 사용하지 않아서 axios를 만료 하는거 처럼 사용
+      alert("등록완료")
     },
     onError: (error) => {
       console.error(error.message);

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import AddSchedule from "../components/AddSchedule";
 export * as header from "./styles.header";
 export * as login from "./styles.login";
 export * as message from "./styles.message";
@@ -9,6 +10,7 @@ export * as team from "./styles.team";
 export * as access from "./styles.access";
 export * as setting from "./styles.setting";
 export * as tododetail from "./styles.todos";
+export * as addschedule from "./styles.addschedule";
 
 export const GlobalCss = createGlobalStyle`
 *{

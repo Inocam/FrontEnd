@@ -18,8 +18,6 @@ import { useCreateChatRoom } from "../api/message/useRoom.js";
 
 const MessageBox = () => {
   const queryClient = useQueryClient();
-  const [messages, setMessages] = useState([]);
-  const [userNAme, setuserNAme] = useState([]);
   const [isUserAddModalOpen, setIsUserAddModalOpen] = useState(false);
   const inputMessage = useRef("");
   const talkingRoomRef = useRef("");
@@ -36,7 +34,7 @@ const MessageBox = () => {
     if (talkingRoomRef.current) {
       talkingRoomRef.current.scrollTop = talkingRoomRef.current.scrollHeight;
     }
-  }, [messages, messageData]);
+  }, [messageData]);
   useEffect(() => {
     if (!stompClient.current) {
       stompClient.current = new Client({
@@ -203,7 +201,6 @@ const MessageBox = () => {
                   return (
                     <S.message.ConversationBox
                       onClick={() => {
-                        setuserNAme(state.targetUserName);
                         dispatch(setMessageId({ TeamId: state.roomId }));
                       }}
                       key={state.roomId}

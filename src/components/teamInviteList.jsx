@@ -37,7 +37,6 @@ const TeamInviteList = ({
       });
 
       stompClient.current.onConnect = () => {
-
         // 현재 대화방 구독
         subscriptions.current.room = stompClient.current.subscribe(
           `/topic/invite/${userId}`,
@@ -70,6 +69,13 @@ const TeamInviteList = ({
       }
     };
   }, [Actoken, userId]);
+  const Styledimg = styled.img`
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+  `;
   return (
     <S.team.TeamExampleContainer>
       {inviteList
@@ -78,7 +84,7 @@ const TeamInviteList = ({
           return (
             <S.team.ExampleBox key={data.teamId}>
               <S.team.ExampleIcon>
-                <img src={data.imageUrl} />
+                <Styledimg src={data.imageUrl} />
               </S.team.ExampleIcon>
               <S.team.TeamInfo>
                 <S.team.TeamName>{data.name}</S.team.TeamName>
@@ -104,7 +110,7 @@ const TeamInviteList = ({
         return (
           <S.team.ExampleBox key={data.teamId}>
             <S.team.ExampleIcon>
-              <img src={data.imageUrl} />
+              <Styledimg src={data.imageUrl} />
             </S.team.ExampleIcon>
             <S.team.TeamInfo>
               <S.team.TeamName>{data.name}</S.team.TeamName>
