@@ -5,10 +5,7 @@ import LoginIcon from "../assets/icons/loginlogo.svg?react";
 import KakaoIcon from "../assets/icons/kakao.svg?react";
 import * as S from "../styles/index.style";
 import { usePostSignInData } from "../api/Login/Login";
-import { useEffect } from "react";
-
 const MainLogin = ({ signHandler }) => {
-  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -28,7 +25,7 @@ const MainLogin = ({ signHandler }) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <S.login.InputGroup>
-          <S.login.Label htmlFor="email">User Name</S.login.Label>
+          <S.login.Label htmlFor="email">Email</S.login.Label>
           <S.login.Input
             type="email"
             id="email"

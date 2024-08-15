@@ -9,7 +9,6 @@ const TeamInviteList = ({
   selectTeamIdHandler,
   selectTeamName,
 }) => {
-  console.log(selectTeamName);
   const { data: TeamList = [], isLoading } = useGetMTeamList();
   const { data: inviteList = [] } = useGetinvite();
   return (

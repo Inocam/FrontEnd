@@ -8,11 +8,11 @@ const MESSEGE_URL = (Id) => `/foot/chat/rooms/${Id}/messages`;
 export const useGetTeam = () => {
   const userId = useSelector((state) => state.user.Id);
   const query = useQuery({
-    queryKey: ["getMuser"],
+    queryKey: ["getMmuser"],
     queryFn: async () => {
       try {
         if (!userId) throw new Error("userId가 없습니다"); //userId가 없으면 실행안됨
-        const response = await http.get(`${TEAMBASE_URL}/${userId}`);
+        const response = await http.get(`${TEAMBASE_URL}/${userId}?size=100`);
         return response;
       } catch (error) {
         //에러 발생 핸들링

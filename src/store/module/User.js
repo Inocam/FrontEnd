@@ -25,9 +25,10 @@ const user = createSlice({
       state.TeamLeader = action.payload.TeamLeader;
       state.TeamName = action.payload.name;
     },
+    Logout: () => initialState,
   },
 });
 
 export default user.reducer;
 
-export const { setUser, clearUser, setTeamId } = user.actions;
+export const { setUser, clearUser, setTeamId, Logout } = user.actions;

@@ -99,7 +99,9 @@ export const useInviteTeam = () => {
       });
       return response;
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      alert("초대완료")
+    },
     onError: (error) => {
       console.error(error.message);
     },

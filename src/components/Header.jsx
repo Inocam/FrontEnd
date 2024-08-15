@@ -9,17 +9,23 @@ import * as S from "../styles/index.style";
 import AddSchedule from "./AddSchedule";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Logout } from "../store/module/User";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
   const [isTeamDropdownOpen, setIsTeamDropdownOpen] = useState(false);
   const projectDropdownRef = useRef(null);
   const teamDropdownRef = useRef(null);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const toggleProjectDropdown = () => {
-    setIsProjectDropdownOpen((prevState) => !prevState);
-    setIsTeamDropdownOpen(false);
+  const LogoutHandler = () => {
+    dispatch(Logout());
+    Cookies.remove("AccessToken");
+    alert("성공적으로 로그아웃되었습니다");
+    navigate("/");
   };
 
   const toggleTeamDropdown = () => {
@@ -60,7 +66,7 @@ const Header = () => {
       <S.header.LeftSection>
         <S.header.NavItems>
           {user.Id && user.TeamLeader && (
-            <S.header.NavItem onClick={()=>navigate("/team")}>
+            <S.header.NavItem onClick={() => navigate("/team")}>
               프로젝트 <ArrowIcon />
             </S.header.NavItem>
           )}
@@ -84,24 +90,10 @@ const Header = () => {
         <S.header.IconWrapper>
           <UserIcon />
         </S.header.IconWrapper>
-        <S.header.LogoutButton>Logout</S.header.LogoutButton>
+        <S.header.LogoutButton onClick={() => LogoutHandler()}>
+          Logout
+        </S.header.LogoutButton>
       </S.header.RightSection>
-
-      {/* {isProjectDropdownOpen &&
-        ReactDOM.createPortal(
-          <S.header.ProjectDropdown ref={projectDropdownRef}>
-            <S.header.DropdownItem>
-              <p>최근</p>
-            </S.header.DropdownItem>
-            <S.header.DropdownItem>
-              <p>모든 프로젝트 보기</p>
-            </S.header.DropdownItem>
-            <S.header.DropdownItem>
-              <p>프로젝트 만들기</p>
-            </S.header.DropdownItem>
-          </S.header.ProjectDropdown>,
-          document.body
-        )} */}
 
       {isTeamDropdownOpen &&
         ReactDOM.createPortal(

@@ -23,7 +23,7 @@ const Message = () => {
     <>
       <SMessageButton
         onClick={() => {
-          queryClient.invalidateQueries(["getMuser"]);
+          queryClient.invalidateQueries(["getMmuser"]);
           dispatch(massageopenHandler());
         }}
       >

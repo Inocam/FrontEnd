@@ -24,15 +24,13 @@ export const useCreateChatRoom = () => {
   return useMutation({
     mutationKey: ["CREATE_ROOM"],
     mutationFn: async (body) => {
+      console.log(body)
       const response = await http.post(URL, {
         userId: userId,
         roomName: String(body.userId) + String(userId),
+        targetId: body.userId,
       });
-      const response2 = await http.post(URL + "/join", {
-        roomId: response.data.roomId,
-        userId: body.userId,
-      });
-      return response2;
+      return response;
     },
     onSuccess: () => {},
     onError: (error) => {
