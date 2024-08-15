@@ -4,14 +4,13 @@ import { Route } from "react-router-dom";
 import { GlobalCss } from "./styles/index.style";
 import { Navigate } from "react-router-dom";
 import Dashboard from "./pages/Calender";
-import CanbanB from "./pages/Canban";
 import TeamPage from "./pages/Team";
 import Cookies from "js-cookie";
 import Login from "./pages/Login";
 import AccessPage from "./pages/Access";
 import SettingPage from "./pages/Setting";
 import { useSelector } from "react-redux";
-import Message from "./components/Messsage";
+
 
 const Authorization = ({ children }) => {
   const accessToken = Cookies.get("AccessToken");
@@ -49,16 +48,6 @@ const App = () => {
             <Authorization>
               <TeamAuthorization>
                 <Dashboard />
-              </TeamAuthorization>
-            </Authorization>
-          }
-        />
-        <Route
-          path="/kanban"
-          element={
-            <Authorization>
-              <TeamAuthorization>
-                <CanbanB />
               </TeamAuthorization>
             </Authorization>
           }

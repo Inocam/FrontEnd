@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import * as S from "../styles/index.style";
 import LoginIcon from "../assets/icons/loginlogo.svg?react";
-import ArrowIcon from "../assets/icons/signuparrow.svg?react";
 import RArrowIcon from "../assets/icons/rarrow.svg?react";
 import { usePostSignUpData } from "../api/Login/signup";
 

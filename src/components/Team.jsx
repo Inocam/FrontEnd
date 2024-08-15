@@ -74,7 +74,6 @@ const Team = () => {
     setselectDate("");
     setimg("");
     setpreimg("");
-    // setselectId("");
     name.current.value=""
     description.current.value=""
   };
