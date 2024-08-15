@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Logout } from "../store/module/User";
 import Cookies from "js-cookie";
+import { useCreateTask } from "../api/task/useCreateTask";
 
 const Header = () => {
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
@@ -21,6 +22,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const { mutate, isLoading, isError, Toast } = useCreateTask();
   const LogoutHandler = () => {
     dispatch(Logout());
     Cookies.remove("AccessToken");
@@ -58,51 +60,54 @@ const Header = () => {
   }, [isProjectDropdownOpen, isTeamDropdownOpen]);
 
   return (
-    <S.header.HeaderWrapper>
-      <S.header.Icon>
-        <LogoIcon />
-      </S.header.Icon>
-
-      <S.header.LeftSection>
-        <S.header.NavItems>
-          {user.Id && user.TeamLeader && (
-            <S.header.NavItem onClick={() => navigate("/team")}>
-              TEAM
-            </S.header.NavItem>
+    <div>
+      <S.header.HeaderWrapper>
+        <S.header.Icon>
+          <LogoIcon />
+        </S.header.Icon>
+        <S.header.LeftSection>
+          <S.header.NavItems>
+            {user.Id && user.TeamLeader && (
+              <S.header.NavItem onClick={() => navigate("/team")}>
+                TEAM
+              </S.header.NavItem>
+            )}
+            {user.Id && user.TeamLeader && (
+              <S.header.NavItem onClick={() => navigate("/access")}>
+                Acess
+              </S.header.NavItem>
+            )}
+            {user.TeamLeader && user.TeamId && (
+              <S.header.NavItem onClick={toggleTeamDropdown}>
+                Task추가
+              </S.header.NavItem>
+            )}
+          </S.header.NavItems>
+        </S.header.LeftSection>
+        <S.header.RightSection>
+          <S.header.IconWrapper>
+            <BellIcon />
+          </S.header.IconWrapper>
+          <S.header.IconWrapper>
+            <UserIcon />
+          </S.header.IconWrapper>
+          <S.header.LogoutButton onClick={() => LogoutHandler()}>
+            Logout
+          </S.header.LogoutButton>
+        </S.header.RightSection>
+        {isTeamDropdownOpen &&
+          ReactDOM.createPortal(
+            <div ref={teamDropdownRef}>
+              <AddSchedule
+                mutate={mutate}
+                onClickHandler={toggleTeamDropdown}
+              />
+            </div>,
+            document.body
           )}
-          {user.Id && user.TeamLeader && (
-            <S.header.NavItem onClick={() => navigate("/access")}>
-              Acess
-            </S.header.NavItem>
-          )}
-          {user.TeamLeader && user.TeamId && (
-            <S.header.NavItem onClick={toggleTeamDropdown}>
-              Task추가
-            </S.header.NavItem>
-          )}
-        </S.header.NavItems>
-      </S.header.LeftSection>
-
-      <S.header.RightSection>
-        <S.header.IconWrapper>
-          <BellIcon />
-        </S.header.IconWrapper>
-        <S.header.IconWrapper>
-          <UserIcon />
-        </S.header.IconWrapper>
-        <S.header.LogoutButton onClick={() => LogoutHandler()}>
-          Logout
-        </S.header.LogoutButton>
-      </S.header.RightSection>
-
-      {isTeamDropdownOpen &&
-        ReactDOM.createPortal(
-          <div ref={teamDropdownRef}>
-            <AddSchedule onClickHandler={toggleTeamDropdown} />
-          </div>,
-          document.body
-        )}
-    </S.header.HeaderWrapper>
+      </S.header.HeaderWrapper>
+      {Toast}
+    </div>
   );
 };
 

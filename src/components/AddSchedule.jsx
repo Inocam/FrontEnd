@@ -1,15 +1,14 @@
 import { useState } from "react";
 import * as S from "../styles/index.style";
 import UserIcon from "../assets/icons/user.svg";
-import { useCreateTask } from "../api/task/useCreateTask";
+import { useCreateTask } from "../api/task/useCreateTask.jsx";
 import { useSelector } from "react-redux";
-const AddSchedule = ({ onClickHandler }) => {
+const AddSchedule = ({ onClickHandler, mutate }) => {
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [details, setDetails] = useState("");
   const [status, setStatus] = useState("진행 전");
-  const { mutate, isSuccess, isError } = useCreateTask();
   const user = useSelector((state) => state.user);
   const handleSubmit = async () => {
     const payload = {
