@@ -86,6 +86,14 @@ export const ResetButton = styled.button`
   color: white;
   cursor: pointer;
 `;
+export const RefuseButton = styled.button`
+  border: none;
+  border-radius: 4px;
+  padding: 7px 15px;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+`;
 
 export const ConfirmButton = styled.button`
   margin-left: 15px;
@@ -148,7 +156,7 @@ export const TeamExampleContainer = styled.div`
   max-width: 900px;
   margin-top: 20px;
   overflow-y: scroll;
-  height: 300px;
+  height: 350px;
 `;
 
 export const ExampleBox = styled.div`

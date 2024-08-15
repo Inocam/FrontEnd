@@ -37,9 +37,10 @@ const Team = () => {
     });
   };
   useEffect(() => {
-    dispatch(setTeamId({ TeamId: "", TeamLeader: "" }));
+    dispatch(setTeamId({ TeamId: "", TeamLeader: "" ,name: "" }));
   });
   const selectTeamIdHandler = (Id, Leader, name) => {
+    console.log(Id, Leader, name)
     dispatch(setTeamId({ TeamId: Id, TeamLeader: Leader, name: name }));
     navigate("/calender");
   };

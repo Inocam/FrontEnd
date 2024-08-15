@@ -18,6 +18,7 @@ export const useGetTaskcount = (subdate = []) => {
   const [Taskcount, setTaskcount] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const addDate =(data)=>setTaskcount((prevstate=>[...prevstate,data])) 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -35,7 +36,7 @@ export const useGetTaskcount = (subdate = []) => {
 
     fetchData();
   }, [TeamId, date]);
-  return { Taskcount, isLoading, isError };
+  return { Taskcount, isLoading, isError ,addDate};
 };
 
 // export const useGetTask = () => {

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { initial } from "lodash";
 
 const initialState = {
   Id: "",
@@ -23,7 +24,7 @@ const user = createSlice({
     setTeamId: (state, action) => {
       state.TeamId = action.payload.TeamId;
       state.TeamLeader = action.payload.TeamLeader;
-      state.TeamName = action.payload.name;
+      state.name = action.payload.name;
     },
     Logout: () => initialState,
   },
