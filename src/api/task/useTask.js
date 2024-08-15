@@ -19,7 +19,6 @@ export const useGetTaskcount = (subdate = []) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const addDate = (date) => {
-    console.log(date);
     setTaskcount((prevState) => {
       const existingValue = prevState[date] || 0;
       return {
@@ -126,7 +125,6 @@ export const useGetTaskstatuscount = (subdate = []) => {
   const [isError, setIsError] = useState(false);
 
   const AddTTask = (date) => {
-    console.log(date);
     setTaskStatuscount((prevState) => {
       const existingValue = prevState[date] || 0;
       return {

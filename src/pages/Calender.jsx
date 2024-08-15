@@ -10,8 +10,8 @@ const Dashboard = () => {
       <Header />
       <Sidenav>
         <Calenderboard />
-      </Sidenav>
       <Message />
+      </Sidenav>
     </div>
   );
 };

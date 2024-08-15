@@ -53,7 +53,6 @@ const MessageBox = () => {
       });
 
       stompClient.current.onConnect = () => {
-        console.log("Connected to WebSocket");
 
         // 현재 대화방 구독
         subscriptions.current.room = stompClient.current.subscribe(
@@ -97,8 +96,6 @@ const MessageBox = () => {
           `/topic/chat/${isTeam}`,
           (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log("Team message:", receivedMessage);
-            console.log(messageData);
             queryClient.setQueryData(["getMessage", isTeam], (oldData) => {
               return {
                 ...oldData,

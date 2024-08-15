@@ -37,7 +37,6 @@ const TeamInviteList = ({
       });
 
       stompClient.current.onConnect = () => {
-        console.log("Connected to WebSocket");
 
         // 현재 대화방 구독
         subscriptions.current.room = stompClient.current.subscribe(
