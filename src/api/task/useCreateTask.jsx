@@ -12,7 +12,7 @@ const ToastContainer = styled.div`
   padding: 16px;
   border-radius: 4px;
   z-index: 1000;
-  opacity: ${({ show }) => (show ? "1" : "0")};
+  opacity: ${({ $show }) => ($show ? "1" : "0")};
   transition: opacity 0.3s ease-in-out;
 `;
 
@@ -50,6 +50,6 @@ export const useCreateTask = () => {
 
   return {
     ...mutation,
-    Toast: <Toast message="등록완료" show={showToast} />,
+    Toast: <Toast message="등록완료" $show={showToast} />,
   };
 };

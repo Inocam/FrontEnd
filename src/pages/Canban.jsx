@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import Sidenav from "../components/Sidenav";
-import Canbancom from "../components/Canban";
+import Canbancom from "../components/chart/Canban";
 import Message from "../components/Messsage";
 
 const CanbanB = () => {

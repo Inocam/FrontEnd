@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import Sidenav from "../components/Sidenav";
-import Setting from "../components/Setting";
+import Setting from "../components/useless/Setting";
 
 const SettingPage = () => {
   // const [isSign, setisSign] = useState(false);

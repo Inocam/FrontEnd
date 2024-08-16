@@ -9,7 +9,7 @@ const DashboardContainer = styled.div`
   position: absolute;
   top: 10%;
   right: 0;
-  padding: 2rem;
+  padding: 32px;
   transition: all 0.5s ease-in-out;
   transform: ${({ $isVisible }) =>
     $isVisible ? "translateX(0)" : "translateX(100%)"};
@@ -21,31 +21,31 @@ const Card = styled.div`
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 `;
 const HeaderCard = styled(Card)`
   width: 620px;
 `;
 
 const CardHeader = styled.div`
-  padding: 1rem;
+  padding: 16px;
   border-bottom: 1px solid #eaeaea;
 `;
 
 const CardTitle = styled.h2`
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 18px;
   color: #333;
 `;
 
 const CardContent = styled.div`
-  padding: 1rem;
+  padding: 16px;
 `;
 
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 16px;
 `;
 
 const StatItem = styled.div`
@@ -53,7 +53,7 @@ const StatItem = styled.div`
 `;
 
 const StatValue = styled.h3`
-  font-size: 1.5rem;
+  font-size: 24px;
   margin: 0;
   color: #0066cc;
 `;
@@ -73,7 +73,7 @@ const LoadingOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 24px;
   color: #333;
 `;
 const EnhancedTeamOverview = ({ isLoading, TeamId, createDate }) => {

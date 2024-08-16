@@ -8,6 +8,13 @@ import { useRef } from "react";
 import { Client } from "@stomp/stompjs";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
+const Styledimg = styled.img`
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+`;
 const TeamInviteList = ({
   acceptHandler,
   selectIdHandler,
@@ -28,9 +35,7 @@ const TeamInviteList = ({
         connectHeaders: {
           Authorization: `Bearer ${Actoken}`,
         },
-        debug: function (str) {
-          console.log(str);
-        },
+        debug: function (str) {},
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,
@@ -42,7 +47,6 @@ const TeamInviteList = ({
           `/topic/invite/${userId}`,
           (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log("Room message:", receivedMessage);
             queryClient.setQueryData(["getinvite"], (oldData) => [
               ...oldData,
               receivedMessage,
@@ -69,13 +73,7 @@ const TeamInviteList = ({
       }
     };
   }, [Actoken, userId]);
-  const Styledimg = styled.img`
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    overflow: hidden;
-  `;
+
   return (
     <S.team.TeamExampleContainer>
       {inviteList
