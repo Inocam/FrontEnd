@@ -42,8 +42,7 @@ const MessageBox = () => {
         connectHeaders: {
           Authorization: `Bearer ${Actoken}`,
         },
-        debug: function (str) {
-        },
+        debug: function (str) {},
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,
@@ -217,17 +216,17 @@ const MessageBox = () => {
               <MessageUserIcon />
               <a>{""}</a>
             </S.message.TalkingBoxHeader>
-            <S.message.TalkingRoom>
+            <S.message.TalkingRoom ref={talkingRoomRef}>
               {!isMessageLoading &&
                 messageData.content &&
                 messageData.content?.map((msg) => (
-                  <S.message.MessageBubble
-                    $myChat={msg.userId == userId}
-                    key={msg.sendDate}
-                  >
-                    {msg.message}
-                  </S.message.MessageBubble>
-                ))}
+                    <S.message.MessageBubble
+                      $myChat={msg.userId == userId}
+                      key={msg.sendDate}
+                    >
+                      {msg.message}
+                    </S.message.MessageBubble>
+                  ))}
             </S.message.TalkingRoom>
             <S.message.TalkingBar>
               <S.message.MessageInput
