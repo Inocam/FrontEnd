@@ -78,16 +78,15 @@ const Calenderboard = () => {
         subscriptions.current.room = stompClient.current.subscribe(
           `/topic/task/${isTeam}`,
           (message) => {
+            const nowdate = `${dateRef.current.year}-${dateRef.current.month
+              .toString()
+              .padStart(2, "0")}-${dateRef.current.day
+              .toString()
+              .padStart(2, "0")}`;
             const receivedMessage = JSON.parse(message.body);
             if (receivedMessage.type == "create") {
               addDate(receivedMessage.dueDate);
-              if (
-                `${dateRef.current.year}-${dateRef.current.month
-                  .toString()
-                  .padStart(2, "0")}-${dateRef.current.day
-                  .toString()
-                  .padStart(2, "0")}` == receivedMessage.dueDate
-              ) {
+              if (nowdate == receivedMessage.dueDate) {
                 addTask(receivedMessage);
               }
               if (
@@ -108,17 +107,10 @@ const Calenderboard = () => {
                 );
               }
               if (
-                `${dateRef.current.year}-${dateRef.current.month
-                  .toString()
-                  .padStart(2, "0")}-${dateRef.current.day
-                  .toString()
-                  .padStart(2, "0")}` == receivedMessage.beforeDueDate||`${dateRef.current.year}-${dateRef.current.month
-                  .toString()
-                  .padStart(2, "0")}-${dateRef.current.day
-                  .toString()
-                  .padStart(2, "0")}` == receivedMessage.taskResponseDto.dueDate
+                nowdate == receivedMessage.beforeDueDate ||
+                nowdate == receivedMessage.taskResponseDto.dueDate
               ) {
-                configTask(receivedMessage);
+                configTask(receivedMessage,nowdate);
               }
               conFigTTask(
                 receivedMessage.beforeStatus,

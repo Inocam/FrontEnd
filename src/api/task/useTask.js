@@ -95,13 +95,21 @@ export const useGetTask = () => {
       setTaskData((prevstate) => [...prevstate, Tdate]);
     }
   };
-  const configTask = (tdata) => {
+  const configTask = (tdata, nowdate) => {
     console.log("들어옴");
     console.log(tdata);
+    console.log(nowdate);
     if (tdata.beforeDueDate != tdata.taskResponseDto.dueDate) {
-      setTaskData((prevstate) =>
-        [...prevstate].filter((as) => as.taskId != tdata.taskResponseDto.taskId)
-      );
+      if (tdata.beforeDueDate == nowdate) {
+        setTaskData((prevstate) =>
+          [...prevstate].filter(
+            (as) => as.taskId != tdata.taskResponseDto.taskId
+          )
+        );
+      }
+      if (tdata.taskResponseDto.dueDate == nowdate) {
+        setTaskData((prevstate) => [...prevstate, tdata.taskResponseDto])
+      }
     } else {
       setTaskData((prevstate) => {
         const Restate = prevstate.map((item) => {
