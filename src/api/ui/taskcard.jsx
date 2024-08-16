@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import Tododetail from "../../components/Tododetail";
 
 const Card = styled.div`
   width: 100%;
@@ -54,33 +55,43 @@ const Label = styled.span`
 
 const ExpandableScheduleCard = ({ scheduleData }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    <Card>
-      <CardHeader onClick={toggleOpen}>
-        <Title>{scheduleData.title}</Title>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <DueDate>마감: {scheduleData.dueDate}</DueDate>
-          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </div>
-      </CardHeader>
-      <CardContent $isOpen={isOpen}>
-        <InfoItem>
-          <Label>설명:</Label> {scheduleData.description}
-        </InfoItem>
-        <InfoItem>
-          <Label>상태:</Label> {scheduleData.status}
-        </InfoItem>
-        <InfoItem>
-          <Label>시작일:</Label> {scheduleData.startDate}
-        </InfoItem>
-        <InfoItem>
-          <Label>종료일:</Label> {scheduleData.endDate || "지정되지 않음"}
-        </InfoItem>
-      </CardContent>
-    </Card>
+    <div>
+      <Card>
+        <CardHeader onClick={toggleOpen}>
+          <Title>{scheduleData.title}</Title>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <DueDate>마감: {scheduleData.dueDate}</DueDate>
+            {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          </div>
+        </CardHeader>
+        <CardContent $isOpen={isOpen} onClick={() => setIsModalOpen(true)}>
+          <InfoItem>
+            <Label>설명:</Label> {scheduleData.description}
+          </InfoItem>
+          <InfoItem>
+            <Label>상태:</Label> {scheduleData.status}
+          </InfoItem>
+          <InfoItem>
+            <Label>시작일:</Label> {scheduleData.startDate}
+          </InfoItem>
+          <InfoItem>
+            <Label>종료일:</Label> {scheduleData.endDate || "지정되지 않음"}
+          </InfoItem>
+        </CardContent>
+      </Card>
+      {isModalOpen && (
+        <Tododetail
+          data={scheduleData}
+          setIsModalOpen={setIsModalOpen}
+          isModalOpen={isModalOpen} 
+        />
+      )}
+    </div>
   );
 };
 
