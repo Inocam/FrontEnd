@@ -2,8 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import * as S from "../styles/index.style";
 import _ from "lodash";
-import { useTaskupDate } from "../api/task/useTask";
-const Tododetail = ({ data, setIsModalOpen, isModalOpen }) => {
+const Tododetail = ({
+  data,
+  setIsModalOpen,
+  isModalOpen,
+  delMutate,
+  mutate,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isExplainEditing, setIsExplainEditing] = useState(false);
   const [showTitleWarning, setShowTitleWarning] = useState(false);
@@ -15,7 +20,7 @@ const Tododetail = ({ data, setIsModalOpen, isModalOpen }) => {
   const [endDate, setEndDate] = useState(data.endDate);
   const [status, setStatus] = useState(data.status);
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
-  const { mutate } = useTaskupDate();
+
   const INITIAL_STATE = {
     title: data.title,
     explain: data.description,
@@ -24,7 +29,6 @@ const Tododetail = ({ data, setIsModalOpen, isModalOpen }) => {
     dueDate: data.dueDate,
     status: data.status,
   };
-  console.log(data);
   const [originalData, setOriginalData] = useState({});
 
   const dropdownRef = useRef(null);
@@ -70,14 +74,8 @@ const Tododetail = ({ data, setIsModalOpen, isModalOpen }) => {
 
   // 삭제 버튼
   const handleDelete = () => {
-    setTitle(INITIAL_STATE.title);
-    setExplain(INITIAL_STATE.explain);
-    setStartDate(INITIAL_STATE.startDate);
-    setEndDate(INITIAL_STATE.endDate);
-    setDueDate(INITIAL_STATE.dueDate);
-    setStatus(INITIAL_STATE.status);
+    delMutate(data.taskId);
     setIsModalOpen(false);
-    console.log("모든 정보가 초기화되었습니다.");
   };
 
   // 취소 버튼
@@ -104,10 +102,8 @@ const Tododetail = ({ data, setIsModalOpen, isModalOpen }) => {
       status: status,
     };
     if (_.isEqual(beforeData, afterData)) {
-      console.log("같음");
       setIsModalOpen("false");
     } else {
-      console.log("다름");
       mutate(afterData);
       setIsModalOpen(false);
     }

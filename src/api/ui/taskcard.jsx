@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Tododetail from "../../components/Tododetail";
+import { useTaskDelete, useTaskupDate } from "../task/useTaskedit";
 
 const Card = styled.div`
   width: 100%;
@@ -56,11 +57,14 @@ const Label = styled.span`
 const ExpandableScheduleCard = ({ scheduleData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { mutate: delMutate, Toast: DelToast } = useTaskDelete();
+  const { mutate, Toast } = useTaskupDate();
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
     <div>
+      {Toast}
+      {DelToast}
       <Card>
         <CardHeader onClick={toggleOpen}>
           <Title>{scheduleData.title}</Title>
@@ -88,7 +92,9 @@ const ExpandableScheduleCard = ({ scheduleData }) => {
         <Tododetail
           data={scheduleData}
           setIsModalOpen={setIsModalOpen}
-          isModalOpen={isModalOpen} 
+          isModalOpen={isModalOpen}
+          delMutate={delMutate}
+          mutate={mutate}
         />
       )}
     </div>

@@ -13,14 +13,14 @@ import Cookies from "js-cookie";
 import { Client } from "@stomp/stompjs";
 import { useEffect } from "react";
 const Calenderboard = () => {
-  const { TaskData, addTask, configTask } = useGetTask();
+  const { TaskData, addTask, configTask, delTask } = useGetTask();
   const {
     TaskStatuscount: statusCount,
     AddTTask,
     conFigMTask,
     conFigPTask,
   } = useGetTaskstatuscount();
-  const { Taskcount = {}, addDate, configDate } = useGetTaskcount();
+  const { Taskcount = {}, addDate, configDate, DelDate } = useGetTaskcount();
   const stompClient = useRef(null);
   const subscriptions = useRef({});
   const Actoken = Cookies.get("AccessToken");
@@ -34,7 +34,6 @@ const Calenderboard = () => {
   const values = Object.values(statusCount).reduce((a, b) => {
     return a + b;
   }, 0);
-  console.log(statusCount);
   const projectProgress = [
     {
       name: "진행전",
@@ -97,6 +96,20 @@ const Calenderboard = () => {
               ) {
                 AddTTask(receivedMessage.status);
               }
+            } else if (receivedMessage.type == "delete") {
+              //{"type":"delete","teamId":61,"taskId":213,"dueDate":"2024-08-04","status":"done"}
+              if (nowdate == receivedMessage.dueDate) {
+                delTask(receivedMessage.taskId);
+              }
+              if (
+                `${dateRef.current.year}-${dateRef.current.month
+                  .toString()
+                  .padStart(2, "0")}` == receivedMessage.dueDate.slice(0, 7)
+              ) {
+                conFigMTask(receivedMessage.status);
+                DelDate(receivedMessage.dueDate);
+              }
+
             } else if (receivedMessage.taskResponseDto.type == "update") {
               if (
                 receivedMessage.beforeDueDate !=
@@ -129,6 +142,7 @@ const Calenderboard = () => {
               ) {
                 conFigPTask(receivedMessage.taskResponseDto.status);
               }
+              // }else if(){
             }
           }
         );
