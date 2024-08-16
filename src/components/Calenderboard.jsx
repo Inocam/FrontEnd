@@ -13,13 +13,14 @@ import Cookies from "js-cookie";
 import { Client } from "@stomp/stompjs";
 import { useEffect } from "react";
 const Calenderboard = () => {
-  const { TaskData, addTask, configTask } = useGetTask();
+  const { TaskData, addTask, configTask, delTask } = useGetTask();
   const {
     TaskStatuscount: statusCount,
     AddTTask,
-    conFigTTask,
+    conFigMTask,
+    conFigPTask,
   } = useGetTaskstatuscount();
-  const { Taskcount = {}, addDate, configDate } = useGetTaskcount();
+  const { Taskcount = {}, addDate, configDate, DelDate } = useGetTaskcount();
   const stompClient = useRef(null);
   const subscriptions = useRef({});
   const Actoken = Cookies.get("AccessToken");
@@ -33,29 +34,28 @@ const Calenderboard = () => {
   const values = Object.values(statusCount).reduce((a, b) => {
     return a + b;
   }, 0);
-
   const projectProgress = [
     {
       name: "진행전",
-      progress: !isNaN(statusCount["todo"])
+      progress: !isNaN(statusCount["todo"] / values)
         ? ((statusCount["todo"] / values) * 100).toFixed(0)
         : 0,
     },
     {
       name: "진행중",
-      progress: !isNaN(statusCount["ongoing"])
+      progress: !isNaN(statusCount["ongoing"] / values)
         ? ((statusCount["ongoing"] / values) * 100).toFixed(0)
         : 0,
     },
     {
       name: "완료",
-      progress: !isNaN(statusCount["done"])
+      progress: !isNaN(statusCount["done"] / values)
         ? ((statusCount["done"] / values) * 100).toFixed(0)
         : 0,
     },
     {
       name: "중단",
-      progress: !isNaN(statusCount["delay"])
+      progress: !isNaN(statusCount["delay"] / values)
         ? ((statusCount["delay"] / values) * 100).toFixed(0)
         : 0,
     },
@@ -96,6 +96,20 @@ const Calenderboard = () => {
               ) {
                 AddTTask(receivedMessage.status);
               }
+            } else if (receivedMessage.type == "delete") {
+              //{"type":"delete","teamId":61,"taskId":213,"dueDate":"2024-08-04","status":"done"}
+              if (nowdate == receivedMessage.dueDate) {
+                delTask(receivedMessage.taskId);
+              }
+              if (
+                `${dateRef.current.year}-${dateRef.current.month
+                  .toString()
+                  .padStart(2, "0")}` == receivedMessage.dueDate.slice(0, 7)
+              ) {
+                conFigMTask(receivedMessage.status);
+                DelDate(receivedMessage.dueDate);
+              }
+
             } else if (receivedMessage.taskResponseDto.type == "update") {
               if (
                 receivedMessage.beforeDueDate !=
@@ -110,14 +124,25 @@ const Calenderboard = () => {
                 nowdate == receivedMessage.beforeDueDate ||
                 nowdate == receivedMessage.taskResponseDto.dueDate
               ) {
-                configTask(receivedMessage,nowdate);
+                configTask(receivedMessage, nowdate);
               }
-              conFigTTask(
-                receivedMessage.beforeStatus,
-                receivedMessage.beforeDueDate,
-                receivedMessage.taskResponseDto.status,
-                receivedMessage.taskResponseDto.dueDate
-              );
+              if (
+                `${dateRef.current.year}-${dateRef.current.month
+                  .toString()
+                  .padStart(2, "0")}` ==
+                receivedMessage.beforeDueDate.slice(0, 7)
+              ) {
+                conFigMTask(receivedMessage.beforeStatus);
+              }
+              if (
+                `${dateRef.current.year}-${dateRef.current.month
+                  .toString()
+                  .padStart(2, "0")}` ==
+                receivedMessage.taskResponseDto.dueDate.slice(0, 7)
+              ) {
+                conFigPTask(receivedMessage.taskResponseDto.status);
+              }
+              // }else if(){
             }
           }
         );

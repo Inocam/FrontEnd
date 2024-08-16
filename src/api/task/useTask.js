@@ -3,6 +3,7 @@ import { http } from "../interceptor";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
+import styled from "styled-components";
 const BASE_URL = "/foot/task/read/";
 //탠스택 쿼리로 불러오는과정에서
 export const useGetTaskcount = (subdate = []) => {
@@ -27,8 +28,16 @@ export const useGetTaskcount = (subdate = []) => {
       };
     });
   };
+  const DelDate = (date) => {
+    setTaskcount((prevState) => {
+      const existingValue = prevState[date] || 0;
+      return {
+        ...prevState,
+        [date]: existingValue - 1,
+      };
+    });
+  };
   const configDate = (beforeDueDate, dueDate) => {
-    console.log("들어옴");
     setTaskcount((prevState) => {
       const existing1Value = prevState[beforeDueDate] || 0;
       const existing2Value = prevState[dueDate] || 0;
@@ -56,7 +65,7 @@ export const useGetTaskcount = (subdate = []) => {
 
     fetchData();
   }, [TeamId, date.month]);
-  return { Taskcount, isLoading, isError, addDate, configDate };
+  return { Taskcount, isLoading, isError, addDate, configDate, DelDate };
 };
 
 // export const useGetTask = () => {
@@ -95,10 +104,14 @@ export const useGetTask = () => {
       setTaskData((prevstate) => [...prevstate, Tdate]);
     }
   };
+  const delTask = (taskId) => {
+    {
+      setTaskData((prevstate) =>
+        [...prevstate].filter((as) => as.taskId != taskId)
+      );
+    }
+  };
   const configTask = (tdata, nowdate) => {
-    console.log("들어옴");
-    console.log(tdata);
-    console.log(nowdate);
     if (tdata.beforeDueDate != tdata.taskResponseDto.dueDate) {
       if (tdata.beforeDueDate == nowdate) {
         setTaskData((prevstate) =>
@@ -108,18 +121,16 @@ export const useGetTask = () => {
         );
       }
       if (tdata.taskResponseDto.dueDate == nowdate) {
-        setTaskData((prevstate) => [...prevstate, tdata.taskResponseDto])
+        setTaskData((prevstate) => [...prevstate, tdata.taskResponseDto]);
       }
     } else {
       setTaskData((prevstate) => {
         const Restate = prevstate.map((item) => {
-          console.log(item);
           if (item.taskId === tdata.taskResponseDto.taskId) {
             return tdata.taskResponseDto;
           }
           return item;
         });
-        console.log(Restate);
         return Restate;
       });
     }
@@ -148,7 +159,7 @@ export const useGetTask = () => {
     fetchData();
   }, [TeamId, date.day]);
 
-  return { TaskData, isLoading, isError, addTask, configTask };
+  return { TaskData, isLoading, isError, addTask, configTask, delTask };
 };
 
 export const useGetTaskstatuscount = (subdate = []) => {
@@ -174,7 +185,19 @@ export const useGetTaskstatuscount = (subdate = []) => {
       };
     });
   };
-  const conFigTTask = (bs, bd, ns, nd) => {
+  const conFigPTask = (bs) => {
+    console.log("들어옴");
+    setTaskStatuscount((prevState) => {
+      const existingValue = prevState[bs] || 0;
+      const newData = {
+        ...prevState,
+        [bs]: existingValue + 1,
+      };
+
+      return newData;
+    });
+  };
+  const conFigMTask = (bs) => {
     console.log("들어옴");
     setTaskStatuscount((prevState) => {
       const existingValue = prevState[bs] || 0;
@@ -182,14 +205,7 @@ export const useGetTaskstatuscount = (subdate = []) => {
         ...prevState,
         [bs]: existingValue - 1,
       };
-      if (bd.slice(0, 7) == nd.slice(0, 7)) {
-        const existing2Value = newData[ns] || 0;
-        const NnewData = {
-          ...newData,
-          [ns]: existing2Value + 1,
-        };
-        return NnewData;
-      }
+
       return newData;
     });
   };
@@ -211,7 +227,14 @@ export const useGetTaskstatuscount = (subdate = []) => {
     fetchData();
   }, [TeamId, date.month]);
 
-  return { TaskStatuscount, isLoading, isError, AddTTask, conFigTTask };
+  return {
+    TaskStatuscount,
+    isLoading,
+    isError,
+    AddTTask,
+    conFigMTask,
+    conFigPTask,
+  };
 };
 // export const useGetTaskstatuscount = () => {
 //   const TeamId = useSelector((state) => state.user.TeamId);
@@ -232,20 +255,3 @@ export const useGetTaskstatuscount = (subdate = []) => {
 
 //   return query;
 // };
-
-export const useTaskupDate = () => {
-  const URL = "/foot/task/update/";
-  return useMutation({
-    mutationKey: ["TaskupDate"],
-    mutationFn: async (body) => {
-      const response = await http.put(URL + body.taskId, body);
-      return response;
-    },
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.error(error.message);
-    },
-  });
-};
