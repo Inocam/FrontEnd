@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { http } from "../interceptor";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -27,6 +27,18 @@ export const useGetTaskcount = (subdate = []) => {
       };
     });
   };
+  const configDate = (beforeDueDate, dueDate) => {
+    console.log("들어옴");
+    setTaskcount((prevState) => {
+      const existing1Value = prevState[beforeDueDate] || 0;
+      const existing2Value = prevState[dueDate] || 0;
+      return {
+        ...prevState,
+        [beforeDueDate]: existing1Value - 1,
+        [dueDate]: existing2Value + 1,
+      };
+    });
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -44,7 +56,7 @@ export const useGetTaskcount = (subdate = []) => {
 
     fetchData();
   }, [TeamId, date.month]);
-  return { Taskcount, isLoading, isError, addDate };
+  return { Taskcount, isLoading, isError, addDate, configDate };
 };
 
 // export const useGetTask = () => {
@@ -83,6 +95,35 @@ export const useGetTask = () => {
       setTaskData((prevstate) => [...prevstate, Tdate]);
     }
   };
+  const configTask = (tdata, nowdate) => {
+    console.log("들어옴");
+    console.log(tdata);
+    console.log(nowdate);
+    if (tdata.beforeDueDate != tdata.taskResponseDto.dueDate) {
+      if (tdata.beforeDueDate == nowdate) {
+        setTaskData((prevstate) =>
+          [...prevstate].filter(
+            (as) => as.taskId != tdata.taskResponseDto.taskId
+          )
+        );
+      }
+      if (tdata.taskResponseDto.dueDate == nowdate) {
+        setTaskData((prevstate) => [...prevstate, tdata.taskResponseDto])
+      }
+    } else {
+      setTaskData((prevstate) => {
+        const Restate = prevstate.map((item) => {
+          console.log(item);
+          if (item.taskId === tdata.taskResponseDto.taskId) {
+            return tdata.taskResponseDto;
+          }
+          return item;
+        });
+        console.log(Restate);
+        return Restate;
+      });
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -107,7 +148,7 @@ export const useGetTask = () => {
     fetchData();
   }, [TeamId, date.day]);
 
-  return { TaskData, isLoading, isError, addTask };
+  return { TaskData, isLoading, isError, addTask, configTask };
 };
 
 export const useGetTaskstatuscount = (subdate = []) => {
@@ -133,6 +174,25 @@ export const useGetTaskstatuscount = (subdate = []) => {
       };
     });
   };
+  const conFigTTask = (bs, bd, ns, nd) => {
+    console.log("들어옴");
+    setTaskStatuscount((prevState) => {
+      const existingValue = prevState[bs] || 0;
+      const newData = {
+        ...prevState,
+        [bs]: existingValue - 1,
+      };
+      if (bd.slice(0, 7) == nd.slice(0, 7)) {
+        const existing2Value = newData[ns] || 0;
+        const NnewData = {
+          ...newData,
+          [ns]: existing2Value + 1,
+        };
+        return NnewData;
+      }
+      return newData;
+    });
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -151,7 +211,7 @@ export const useGetTaskstatuscount = (subdate = []) => {
     fetchData();
   }, [TeamId, date.month]);
 
-  return { TaskStatuscount, isLoading, isError, AddTTask };
+  return { TaskStatuscount, isLoading, isError, AddTTask, conFigTTask };
 };
 // export const useGetTaskstatuscount = () => {
 //   const TeamId = useSelector((state) => state.user.TeamId);
@@ -172,3 +232,20 @@ export const useGetTaskstatuscount = (subdate = []) => {
 
 //   return query;
 // };
+
+export const useTaskupDate = () => {
+  const URL = "/foot/task/update/";
+  return useMutation({
+    mutationKey: ["TaskupDate"],
+    mutationFn: async (body) => {
+      const response = await http.put(URL + body.taskId, body);
+      return response;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.error(error.message);
+    },
+  });
+};

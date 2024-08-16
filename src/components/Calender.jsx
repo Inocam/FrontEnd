@@ -86,12 +86,14 @@ const Calendarcom = ({ Taskcount }) => {
               {
                 <div>
                   {day &&
-                    Taskcount[
-                      `${Tdate.Year}-${Tdate.Month.toString().padStart(
-                        2,
-                        "0"
-                      )}-${day?.toString().padStart(2, "0")}`
-                    ]}
+                    (() => {
+                      const dateKey = `${
+                        Tdate.Year
+                      }-${Tdate.Month.toString().padStart(2, "0")}-${day
+                        .toString()
+                        .padStart(2, "0")}`;
+                      return Taskcount[dateKey] != 0 ? Taskcount[dateKey] : "";
+                    })()}
                 </div>
               }
             </S.calender.Day>

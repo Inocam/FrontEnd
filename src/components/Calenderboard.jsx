@@ -13,9 +13,13 @@ import Cookies from "js-cookie";
 import { Client } from "@stomp/stompjs";
 import { useEffect } from "react";
 const Calenderboard = () => {
-  const { TaskData, addTask } = useGetTask();
-  const { TaskStatuscount: statusCount, AddTTask } = useGetTaskstatuscount();
-  const { Taskcount = {}, addDate } = useGetTaskcount();
+  const { TaskData, addTask, configTask } = useGetTask();
+  const {
+    TaskStatuscount: statusCount,
+    AddTTask,
+    conFigTTask,
+  } = useGetTaskstatuscount();
+  const { Taskcount = {}, addDate, configDate } = useGetTaskcount();
   const stompClient = useRef(null);
   const subscriptions = useRef({});
   const Actoken = Cookies.get("AccessToken");
@@ -74,23 +78,46 @@ const Calenderboard = () => {
         subscriptions.current.room = stompClient.current.subscribe(
           `/topic/task/${isTeam}`,
           (message) => {
+            const nowdate = `${dateRef.current.year}-${dateRef.current.month
+              .toString()
+              .padStart(2, "0")}-${dateRef.current.day
+              .toString()
+              .padStart(2, "0")}`;
             const receivedMessage = JSON.parse(message.body);
-            addDate(receivedMessage.dueDate);
-            if (
-              `${dateRef.current.year}-${dateRef.current.month
-                .toString()
-                .padStart(2, "0")}-${dateRef.current.day
-                .toString()
-                .padStart(2, "0")}` == receivedMessage.dueDate
-            ) {
-              addTask(receivedMessage);
-            }
-            if (
-              `${dateRef.current.year}-${dateRef.current.month
-                .toString()
-                .padStart(2, "0")}` == receivedMessage.dueDate.slice(0, 7)
-            ) {
-              AddTTask(receivedMessage.status);
+            if (receivedMessage.type == "create") {
+              addDate(receivedMessage.dueDate);
+              if (nowdate == receivedMessage.dueDate) {
+                addTask(receivedMessage);
+              }
+              if (
+                `${dateRef.current.year}-${dateRef.current.month
+                  .toString()
+                  .padStart(2, "0")}` == receivedMessage.dueDate.slice(0, 7)
+              ) {
+                AddTTask(receivedMessage.status);
+              }
+            } else if (receivedMessage.taskResponseDto.type == "update") {
+              if (
+                receivedMessage.beforeDueDate !=
+                receivedMessage.taskResponseDto.dueDate
+              ) {
+                configDate(
+                  receivedMessage.beforeDueDate,
+                  receivedMessage.taskResponseDto.dueDate
+                );
+              }
+              if (
+                nowdate == receivedMessage.beforeDueDate ||
+                nowdate == receivedMessage.taskResponseDto.dueDate
+              ) {
+                configTask(receivedMessage,nowdate);
+              }
+              conFigTTask(
+                receivedMessage.beforeStatus,
+                receivedMessage.beforeDueDate,
+                receivedMessage.taskResponseDto.status,
+                receivedMessage.taskResponseDto.dueDate
+              );
             }
           }
         );

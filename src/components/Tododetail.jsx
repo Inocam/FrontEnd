@@ -1,28 +1,30 @@
 import { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import * as S from "../styles/index.style";
-
-const Tododetail = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+import _ from "lodash";
+import { useTaskupDate } from "../api/task/useTask";
+const Tododetail = ({ data, setIsModalOpen, isModalOpen }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isExplainEditing, setIsExplainEditing] = useState(false);
   const [showTitleWarning, setShowTitleWarning] = useState(false);
 
-  const [title, setTitle] = useState("Title");
-  const [explain, setExplain] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [status, setStatus] = useState("");
+  const [title, setTitle] = useState(data.title);
+  const [explain, setExplain] = useState(data.description);
+  const [startDate, setStartDate] = useState(data.startDate);
+  const [dueDate, setDueDate] = useState(data.dueDate);
+  const [endDate, setEndDate] = useState(data.endDate);
+  const [status, setStatus] = useState(data.status);
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
-
+  const { mutate } = useTaskupDate();
   const INITIAL_STATE = {
-    title: "Title",
-    explain: "",
-    startDate: "",
-    endDate: "",
-    status: "",
+    title: data.title,
+    explain: data.description,
+    startDate: data.startDate,
+    endDate: data.endDate,
+    dueDate: data.dueDate,
+    status: data.status,
   };
-
+  console.log(data);
   const [originalData, setOriginalData] = useState({});
 
   const dropdownRef = useRef(null);
@@ -39,12 +41,6 @@ const Tododetail = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      setOriginalData({ title, explain, startDate, endDate, status });
-    }
-  }, [isModalOpen]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -70,7 +66,7 @@ const Tododetail = () => {
     setIsStatusDropdownOpen(false);
   };
 
-  const statusOptions = ["진행전", "진행중", "완료", "지연"];
+  const statusOptions = ["todo", "ongoing", "done", "delay"];
 
   // 삭제 버튼
   const handleDelete = () => {
@@ -78,6 +74,7 @@ const Tododetail = () => {
     setExplain(INITIAL_STATE.explain);
     setStartDate(INITIAL_STATE.startDate);
     setEndDate(INITIAL_STATE.endDate);
+    setDueDate(INITIAL_STATE.dueDate);
     setStatus(INITIAL_STATE.status);
     setIsModalOpen(false);
     console.log("모든 정보가 초기화되었습니다.");
@@ -89,26 +86,35 @@ const Tododetail = () => {
     setExplain(originalData.explain);
     setStartDate(originalData.startDate);
     setEndDate(originalData.endDate);
+    setDueDate(INITIAL_STATE.dueDate);
     setStatus(originalData.status);
     setIsModalOpen(false);
   };
 
   // 수정 버튼
   const handleEdit = () => {
-    console.log("수정된 데이터가 저장되었습니다.", {
-      title,
-      explain,
-      startDate,
-      endDate,
-      status,
-    });
-    setIsModalOpen(false);
+    const beforeData = { ...data };
+    const afterData = {
+      ...data,
+      title: title,
+      description: explain,
+      startDate: startDate,
+      endDate: endDate,
+      dueDate: dueDate,
+      status: status,
+    };
+    if (_.isEqual(beforeData, afterData)) {
+      console.log("같음");
+      setIsModalOpen("false");
+    } else {
+      console.log("다름");
+      mutate(afterData);
+      setIsModalOpen(false);
+    }
   };
 
   return (
     <>
-      <button onClick={() => setIsModalOpen(true)}>모달창 open 버튼</button>
-
       {isModalOpen &&
         ReactDOM.createPortal(
           <S.tododetail.TodoModalOverlay onClick={() => setIsModalOpen(false)}>
@@ -226,6 +232,17 @@ const Tododetail = () => {
                   <S.tododetail.DetailbarItem>
                     <S.tododetail.DetailbarTitle>
                       마감 기한
+                    </S.tododetail.DetailbarTitle>
+                    <S.tododetail.DetailInput
+                      type="date"
+                      value={dueDate}
+                      onChange={(e) => setDueDate(e.target.value)}
+                      style={{ direction: "rtl" }}
+                    />
+                  </S.tododetail.DetailbarItem>
+                  <S.tododetail.DetailbarItem>
+                    <S.tododetail.DetailbarTitle>
+                      완료날짜
                     </S.tododetail.DetailbarTitle>
                     <S.tododetail.DetailInput
                       type="date"
