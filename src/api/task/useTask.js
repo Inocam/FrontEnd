@@ -108,7 +108,7 @@ export const useGetTask = () => {
         );
       }
       if (tdata.taskResponseDto.dueDate == nowdate) {
-        setTaskData((prevstate) => [...prevstate, tdata.taskResponseDto])
+        setTaskData((prevstate) => [...prevstate, tdata.taskResponseDto]);
       }
     } else {
       setTaskData((prevstate) => {
@@ -174,7 +174,19 @@ export const useGetTaskstatuscount = (subdate = []) => {
       };
     });
   };
-  const conFigTTask = (bs, bd, ns, nd) => {
+  const conFigPTask = (bs) => {
+    console.log("들어옴");
+    setTaskStatuscount((prevState) => {
+      const existingValue = prevState[bs] || 0;
+      const newData = {
+        ...prevState,
+        [bs]: existingValue + 1,
+      };
+
+      return newData;
+    });
+  };
+  const conFigMTask = (bs) => {
     console.log("들어옴");
     setTaskStatuscount((prevState) => {
       const existingValue = prevState[bs] || 0;
@@ -182,14 +194,7 @@ export const useGetTaskstatuscount = (subdate = []) => {
         ...prevState,
         [bs]: existingValue - 1,
       };
-      if (bd.slice(0, 7) == nd.slice(0, 7)) {
-        const existing2Value = newData[ns] || 0;
-        const NnewData = {
-          ...newData,
-          [ns]: existing2Value + 1,
-        };
-        return NnewData;
-      }
+
       return newData;
     });
   };
@@ -211,7 +216,14 @@ export const useGetTaskstatuscount = (subdate = []) => {
     fetchData();
   }, [TeamId, date.month]);
 
-  return { TaskStatuscount, isLoading, isError, AddTTask, conFigTTask };
+  return {
+    TaskStatuscount,
+    isLoading,
+    isError,
+    AddTTask,
+    conFigMTask,
+    conFigPTask,
+  };
 };
 // export const useGetTaskstatuscount = () => {
 //   const TeamId = useSelector((state) => state.user.TeamId);
