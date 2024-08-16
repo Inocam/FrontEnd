@@ -63,9 +63,7 @@ const Calenderboard = () => {
         connectHeaders: {
           Authorization: `Bearer ${Actoken}`,
         },
-        debug: function (str) {
-          console.log(str);
-        },
+        debug: function () {},
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,

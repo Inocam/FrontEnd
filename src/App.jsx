@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import AccessPage from "./pages/Access";
 import SettingPage from "./pages/Setting";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 
 const Authorization = ({ children }) => {
@@ -29,6 +31,12 @@ const TeamAuthorization = ({ children }) => {
 };
 
 const App = () => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    return ()=>{
+      dispatch(disconnectWebSocket)
+    }
+  },[])
   return (
     <BrowserRouter>
       <GlobalCss></GlobalCss>

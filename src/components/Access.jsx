@@ -23,8 +23,8 @@ const Access = () => {
   };
   const closeUserAddModal = () => setIsUserAddModalOpen(false);
   useEffect(() => {
-    doREfetch;
-  }, [doREfetch, first]);
+    doREfetch();
+  }, [first]);
   const handleRemoveUser = (id) => {
     mutate({ targetId: id });
     setfirst((prevstate) => !prevstate);

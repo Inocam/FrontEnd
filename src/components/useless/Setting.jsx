@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import * as S from "../styles/index.style";
-import * as L from "../assets/icons/index.Logo";
+import * as S from "../../styles/index.style";
+import * as L from "../../assets/icons/index.Logo";
 
 const Setting = () => {
   const {

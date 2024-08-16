@@ -43,7 +43,6 @@ const MessageBox = () => {
           Authorization: `Bearer ${Actoken}`,
         },
         debug: function (str) {
-          console.log(str);
         },
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
@@ -56,7 +55,6 @@ const MessageBox = () => {
           `/topic/room/${userId}`,
           (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log("Room message:", receivedMessage);
             queryClient.setQueryData(["getMmuser"], (oldData) => {
               if (!oldData) return oldData;
               if (receivedMessage.type === "create") {
@@ -131,7 +129,6 @@ const MessageBox = () => {
         `/topic/chat/${isTeam}`,
         (message) => {
           const receivedMessage = JSON.parse(message.body);
-          console.log("Team message:", receivedMessage);
           queryClient.setQueryData(["getMessage", isTeam], (oldData) => {
             return {
               ...oldData,
@@ -154,7 +151,6 @@ const MessageBox = () => {
         userId: userId, // 여기에 실제 사용자 이름이나 ID를 넣으세요
         roomId: isTeam,
       };
-      console.log(message);
       // 메시지를 STOMP 서버로 전송
       stompClient.current.publish({
         destination: `/foot/chat/rooms/sendMessage`,
@@ -180,7 +176,6 @@ const MessageBox = () => {
   }
   const submitHandler = (e, selectedUser) => {
     e.preventDefault();
-    console.log(selectedUser);
     mutate({ userId: selectedUser.id });
     closeUserAddModal();
   };
