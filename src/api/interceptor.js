@@ -39,7 +39,7 @@ axios.interceptors.response.use(
             expires: 1 / 24,
             overwrite: true,
           }); // 발급받은 새로운 엑세스 토큰을 저장
-          originalRequest.headers.Authorization = `Bearer ${res.data.data.newAccessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
           return axios(originalRequest); // 저장되어있는 마지막 요청을 새토큰으로 재요청
         } else {
           alert("사용자 인증에 실패했습니다. 1재 로그인 해주세요");
