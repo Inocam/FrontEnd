@@ -3,7 +3,7 @@
 - **🧷 [FE GitHub 바로가기](https://github.com/Inocam/FrontEnd)**
 - **🧷 [BE GitHub 바로가기](https://github.com/Inocam/BackEnd)** <br/>
 - **🧷 [서비스 주소](https://foot.o-r.kr/)**
-- **🧷 [시연영상 주](https://www.youtube.com/watch?v=fV0EUKrxBo4)**
+- **🧷 [시연영상 주소](https://www.youtube.com/watch?v=fV0EUKrxBo4)**
 
 ---
 
